@@ -1,0 +1,18 @@
+.god-identity{position:absolute;z-index:19;left:50%;top:12px;transform:translateX(-50%);display:flex;align-items:center;gap:10px;pointer-events:none;padding:6px 12px 6px 7px;border-radius:14px;text-shadow:0 1px 3px #0008}
+.god-identity .god-portrait{width:50px;height:56px;object-fit:cover;object-position:center 36%;border:1px solid var(--village-glass-border);border-radius:45% 45% 48% 48%;box-shadow:0 2px 10px #15231d80;background:rgba(16,16,19,.34)}
+.god-identity strong{font:600 17px var(--font-ui);display:block}.god-identity span{display:block;margin-top:3px;font-size:11px;color:#f1d992;letter-spacing:.08em}
+.belief-announcement{position:absolute;z-index:70;pointer-events:none;left:50%;top:86px;transform:translateX(-50%);color:#fff0cf;font:600 25px var(--font-ui);text-shadow:0 2px 8px #102522,0 0 25px #d8b654;white-space:nowrap}
+.belief-announcement.arrived{animation:belief-rise 3.6s ease both}.belief-announcement[hidden],.god-identity[hidden]{display:none}
+.belief-reward{box-sizing:border-box;width:min(740px,calc(100vw - 28px));max-height:calc(100dvh - 30px);overflow:auto;padding:30px 32px 20px;border-radius:14px;text-align:center;font-family:var(--font-ui)}
+.belief-reward::backdrop{background:rgba(7,7,9,.22)}
+.belief-eyebrow{margin:0 0 10px;color:#d5b86e;text-transform:uppercase;font-size:11px;letter-spacing:.18em}.belief-reward h1{font:500 clamp(25px,4vw,38px) var(--font-ui);margin:0 0 9px}.belief-copy{color:var(--village-glass-muted);font-size:13px;margin:0 0 25px}
+.belief-choices{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;align-items:start}
+.belief-choice{min-width:0;padding:9px 6px 14px;border:1px solid var(--village-glass-border);border-radius:12px;background:rgba(16,16,19,.34);box-shadow:inset 0 1px rgba(255,255,255,.045);color:var(--village-glass-text);cursor:pointer;transition:transform .18s,background .18s,border-color .18s;font:inherit}
+.belief-choice img{display:block;width:100%;height:clamp(135px,26vw,230px);object-fit:contain;filter:drop-shadow(0 5px 8px #07161390)}.belief-choice strong{display:block;margin:8px 0 5px;font:500 20px var(--font-ui)}.belief-choice span{display:block;font-size:11px;color:var(--village-glass-muted)}
+.belief-choice:hover,.belief-choice:focus-visible{transform:translateY(-5px);border-color:var(--wish-colour,#ecd8a2);background:rgba(84,84,88,.38);outline:2px solid var(--wish-colour,#ecd8a2);outline-offset:3px}.belief-card-description{min-height:3em;color:var(--village-glass-muted);line-height:1.5;font-size:12px;margin:24px auto 0;max-width:570px}
+@keyframes belief-rise{0%{opacity:0;translate:0 12px;scale:.92}12%,75%{opacity:1;translate:0 0;scale:1}100%{opacity:0;translate:0 -12px}}
+@media(max-width:1050px){.god-identity{left:16px;top:78px;transform:none}.god-identity .god-portrait{width:38px;height:44px}.god-identity strong{font-size:14px}.god-identity span{font-size:10px}.belief-announcement{top:135px;font-size:22px}}
+@media(max-width:650px){.god-identity{top:60px;left:12px;gap:7px}.belief-reward{padding:24px 14px 15px}.belief-choices{gap:9px}.belief-choice{padding:5px 3px 10px}.belief-choice strong{font-size:15px}.belief-choice span{font-size:10px}.belief-card-description{font-size:11px}.belief-copy{font-size:12px}.belief-announcement{font-size:20px}}
+@media(prefers-reduced-motion:reduce){.belief-choice{transition:none}.belief-announcement.arrived{animation:none}}
+
+.god-identity>div:last-child{min-width:0}.god-identity strong{max-width:min(42vw,260px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}

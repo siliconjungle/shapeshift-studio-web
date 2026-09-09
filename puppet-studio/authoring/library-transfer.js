@@ -1,0 +1,13 @@
+const copy=x=>structuredClone(x),check=(v,m)=>{if(!v)throw Error('Library file: '+m);};
+const unique=(values,base)=>{let id=base,i=2;while(values.includes(id))id=base.slice(0,70)+'-'+i++;return id;};
+export function libraryPacket(project,item){check(item,'select a source');const value={format:'shapeshift-library',version:1,item:copy(item)};delete value.item.originClip;delete value.item.eventIds;delete value.item.emitterIds;value.item.imported=true;if(item.action){const action=project.actions?.find(a=>a.id===item.action);check(action,'missing action recipe');value.action=copy(action);}return value;}
+export function importLibraryPacket(project,value){
+ check(value?.format==='shapeshift-library'&&value.version===1&&value.item,'choose a Shapeshift Library file');const item=copy(value.item);check(typeof item.id==='string','missing source ID');item.id=unique(project.library.items.map(i=>i.id),item.id);delete item.originClip;delete item.eventIds;delete item.emitterIds;item.imported=true;
+ if(item.category==='actions'){check(value.action&&value.action.dimension===item.dimension,'missing action recipe');project.actions??=[];const action=copy(value.action);action.id=unique(project.actions.map(a=>a.id),'lib-'+item.id.slice(0,65));item.action=action.id;project.actions.push(action);}else check(!value.action,'unexpected action recipe');project.library.items.push(item);return item.id;
+}
+// Freeze every embedded document's actual resource records, sharing each fetch.
+// Shader programs and numeric parameters are opaque and are not traversed.
+export async function freezeLibraryPacket(value,{baseURL=document.baseURI,fetcher=fetch}={}){
+ const out=copy(value),jobs=[],cache=new Map();const embed=src=>{if(src.startsWith('data:'))return Promise.resolve(src);const url=new URL(src,baseURL).href;if(!cache.has(url))cache.set(url,(async()=>{const response=await fetcher(url);check(response.ok,'could not embed '+url);const blob=await response.blob();return await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=()=>reject(reader.error);reader.readAsDataURL(blob);});})());return cache.get(url);};
+ const visit=o=>{if(!o||typeof o!=='object')return;if(typeof o.src==='string')jobs.push(async()=>{o.src=await embed(o.src);});if(Array.isArray(o.frames))jobs.push(async()=>{o.frames=await Promise.all(o.frames.map(embed));});for(const [key,v]of Object.entries(o))if(!['program','parameters','frames'].includes(key)&&v&&typeof v==='object')visit(v);};visit(out);let cursor=0;await Promise.all(Array.from({length:Math.min(4,jobs.length)},async()=>{while(cursor<jobs.length)await jobs[cursor++]();}));return out;
+}

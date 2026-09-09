@@ -1,0 +1,5 @@
+import {ProceduralAudio} from '../scene3d/core/audio.js';
+import {random} from '../fx/math.js';
+const cache=new Map();
+// Render the actual authored synthesizer silently, with a repeatable preview variant.
+export async function cueWaveform(definition,cue,duration=2){const signature=JSON.stringify([definition,cue,duration]);if(cache.has(signature))return cache.get(signature);const task=(async()=>{if(!definition?.cues[cue]||typeof OfflineAudioContext==='undefined')return null;const c=new OfflineAudioContext(1,Math.ceil(Math.min(8,Math.max(.25,duration))*22050),22050),audio=new ProceduralAudio(definition,c,{random:random(1049)});audio.cue(cue);const buffer=await c.startRendering(),data=buffer.getChannelData(0),peaks=Array.from({length:160},(_,i)=>{let n=0;for(let j=Math.floor(i*data.length/160);j<Math.floor((i+1)*data.length/160);j++)n=Math.max(n,Math.abs(data[j]));return n;});const max=Math.max(.001,...peaks);audio.master.disconnect();audio.compressor.disconnect();return peaks.map(v=>v/max);})();cache.set(signature,task);if(cache.size>64)cache.delete(cache.keys().next().value);return task;}

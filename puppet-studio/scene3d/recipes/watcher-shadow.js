@@ -1,0 +1,1 @@
+export const watcherShadow={resolution:1024,span:12,minimumLightY:.15,initialSoftness:.002,initialStrength:.38,offset:.012,renderOrder:-2,wideLightSlope:2,wideLightSpan:5,softness:.035,heightSoftness:.028,strength:.42,heightFade:.055};

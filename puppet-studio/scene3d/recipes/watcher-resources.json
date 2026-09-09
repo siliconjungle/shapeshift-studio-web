@@ -1,0 +1,326 @@
+{
+  "files": [
+    [
+      "watcher-prepared-vector-lods-84929fa89c55-face--1",
+      "illustrated/vector-lods/84929fa89c55-face--1.bin"
+    ],
+    [
+      "watcher-prepared-vector-lods-84929fa89c55-face--2",
+      "illustrated/vector-lods/84929fa89c55-face--2.bin"
+    ],
+    [
+      "watcher-prepared-vector-lods-84929fa89c55-face-0",
+      "illustrated/vector-lods/84929fa89c55-face-0.bin"
+    ],
+    [
+      "watcher-prepared-vector-lods-84929fa89c55-face-1",
+      "illustrated/vector-lods/84929fa89c55-face-1.bin"
+    ],
+    [
+      "watcher-prepared-vector-lods-84929fa89c55-face-2",
+      "illustrated/vector-lods/84929fa89c55-face-2.bin"
+    ],
+    [
+      "watcher-prepared-vector-lods-84929fa89c55-face-3",
+      "illustrated/vector-lods/84929fa89c55-face-3.bin"
+    ],
+    [
+      "watcher-prepared-vector-lods-84929fa89c55-front--1",
+      "illustrated/vector-lods/84929fa89c55-front--1.bin"
+    ],
+    [
+      "watcher-prepared-vector-lods-84929fa89c55-front--2",
+      "illustrated/vector-lods/84929fa89c55-front--2.bin"
+    ],
+    [
+      "watcher-prepared-vector-lods-84929fa89c55-front-0",
+      "illustrated/vector-lods/84929fa89c55-front-0.bin"
+    ],
+    [
+      "watcher-prepared-vector-lods-84929fa89c55-front-1",
+      "illustrated/vector-lods/84929fa89c55-front-1.bin"
+    ],
+    [
+      "watcher-prepared-vector-lods-84929fa89c55-front-2",
+      "illustrated/vector-lods/84929fa89c55-front-2.bin"
+    ],
+    [
+      "watcher-prepared-vector-lods-84929fa89c55-front-3",
+      "illustrated/vector-lods/84929fa89c55-front-3.bin"
+    ],
+    [
+      "watcher-prepared-vector-lods-84929fa89c55-iris--1",
+      "illustrated/vector-lods/84929fa89c55-iris--1.bin"
+    ],
+    [
+      "watcher-prepared-vector-lods-84929fa89c55-iris--2",
+      "illustrated/vector-lods/84929fa89c55-iris--2.bin"
+    ],
+    [
+      "watcher-prepared-vector-lods-84929fa89c55-iris-0",
+      "illustrated/vector-lods/84929fa89c55-iris-0.bin"
+    ],
+    [
+      "watcher-prepared-vector-lods-84929fa89c55-iris-1",
+      "illustrated/vector-lods/84929fa89c55-iris-1.bin"
+    ],
+    [
+      "watcher-prepared-vector-lods-84929fa89c55-iris-2",
+      "illustrated/vector-lods/84929fa89c55-iris-2.bin"
+    ],
+    [
+      "watcher-prepared-vector-lods-84929fa89c55-iris-3",
+      "illustrated/vector-lods/84929fa89c55-iris-3.bin"
+    ],
+    [
+      "watcher-prepared-vector-lods-manifest",
+      "illustrated/vector-lods/manifest.json"
+    ],
+    [
+      "watcher-prepared-ground-lods-05bb70f5a91e-1024",
+      "illustrated/ground-lods/05bb70f5a91e-1024.png"
+    ],
+    [
+      "watcher-prepared-ground-lods-074c29f9f2c8-1024",
+      "illustrated/ground-lods/074c29f9f2c8-1024.png"
+    ],
+    [
+      "watcher-prepared-ground-lods-074c29f9f2c8-2048",
+      "illustrated/ground-lods/074c29f9f2c8-2048.png"
+    ],
+    [
+      "watcher-prepared-ground-lods-074c29f9f2c8-4096",
+      "illustrated/ground-lods/074c29f9f2c8-4096.png"
+    ],
+    [
+      "watcher-prepared-ground-lods-07f79193ac8e-4096",
+      "illustrated/ground-lods/07f79193ac8e-4096.png"
+    ],
+    [
+      "watcher-prepared-ground-lods-1762e1684e03-1024",
+      "illustrated/ground-lods/1762e1684e03-1024.png"
+    ],
+    [
+      "watcher-prepared-ground-lods-1762e1684e03-2048",
+      "illustrated/ground-lods/1762e1684e03-2048.png"
+    ],
+    [
+      "watcher-prepared-ground-lods-1762e1684e03-4096",
+      "illustrated/ground-lods/1762e1684e03-4096.png"
+    ],
+    [
+      "watcher-prepared-ground-lods-243faed5188f-1024",
+      "illustrated/ground-lods/243faed5188f-1024.png"
+    ],
+    [
+      "watcher-prepared-ground-lods-409b783ac355-2048",
+      "illustrated/ground-lods/409b783ac355-2048.png"
+    ],
+    [
+      "watcher-prepared-ground-lods-52e42f82c78a-1024",
+      "illustrated/ground-lods/52e42f82c78a-1024.png"
+    ],
+    [
+      "watcher-prepared-ground-lods-574f3bb9514c-4096",
+      "illustrated/ground-lods/574f3bb9514c-4096.png"
+    ],
+    [
+      "watcher-prepared-ground-lods-58297fc59c87-4096",
+      "illustrated/ground-lods/58297fc59c87-4096.png"
+    ],
+    [
+      "watcher-prepared-ground-lods-6b9d3d132fc8-2048",
+      "illustrated/ground-lods/6b9d3d132fc8-2048.png"
+    ],
+    [
+      "watcher-prepared-ground-lods-786003de135d-4096",
+      "illustrated/ground-lods/786003de135d-4096.png"
+    ],
+    [
+      "watcher-prepared-ground-lods-8019a21ba30b-2048",
+      "illustrated/ground-lods/8019a21ba30b-2048.png"
+    ],
+    [
+      "watcher-prepared-ground-lods-8f85e369659b-1024",
+      "illustrated/ground-lods/8f85e369659b-1024.png"
+    ],
+    [
+      "watcher-prepared-ground-lods-97d1727aef28-2048",
+      "illustrated/ground-lods/97d1727aef28-2048.png"
+    ],
+    [
+      "watcher-prepared-ground-lods-9ac25dabd796-2048",
+      "illustrated/ground-lods/9ac25dabd796-2048.png"
+    ],
+    [
+      "watcher-prepared-ground-lods-9e1dc9ecdb14-4096",
+      "illustrated/ground-lods/9e1dc9ecdb14-4096.png"
+    ],
+    [
+      "watcher-prepared-ground-lods-9e3b5dc291d6-1024",
+      "illustrated/ground-lods/9e3b5dc291d6-1024.png"
+    ],
+    [
+      "watcher-prepared-ground-lods-acd9cb2e2670-2048",
+      "illustrated/ground-lods/acd9cb2e2670-2048.png"
+    ],
+    [
+      "watcher-prepared-ground-lods-bb7d9be95c5c-1024",
+      "illustrated/ground-lods/bb7d9be95c5c-1024.png"
+    ],
+    [
+      "watcher-prepared-ground-lods-e0b337c28ead-1024",
+      "illustrated/ground-lods/e0b337c28ead-1024.png"
+    ],
+    [
+      "watcher-prepared-ground-lods-e0b337c28ead-2048",
+      "illustrated/ground-lods/e0b337c28ead-2048.png"
+    ],
+    [
+      "watcher-prepared-ground-lods-e0b337c28ead-4096",
+      "illustrated/ground-lods/e0b337c28ead-4096.png"
+    ],
+    [
+      "watcher-prepared-ground-lods-eea9b13213bb-4096",
+      "illustrated/ground-lods/eea9b13213bb-4096.png"
+    ],
+    [
+      "watcher-prepared-ground-lods-manifest",
+      "illustrated/ground-lods/manifest.json"
+    ],
+    [
+      "watcher-prepared-seamless-floor-dungeon-floor-height",
+      "illustrated/seamless-floor/dungeon-floor-height.png"
+    ],
+    [
+      "watcher-prepared-seamless-floor-dungeon-floor-quiet-height",
+      "illustrated/seamless-floor/dungeon-floor-quiet-height.png"
+    ],
+    [
+      "watcher-prepared-seamless-floor-dungeon-floor-quiet-report",
+      "illustrated/seamless-floor/dungeon-floor-quiet-report.json"
+    ],
+    [
+      "watcher-prepared-seamless-floor-dungeon-floor-quiet-roughness",
+      "illustrated/seamless-floor/dungeon-floor-quiet-roughness.png"
+    ],
+    [
+      "watcher-prepared-seamless-floor-dungeon-floor-quiet-source",
+      "illustrated/seamless-floor/dungeon-floor-quiet-source.png"
+    ],
+    [
+      "watcher-prepared-seamless-floor-dungeon-floor-quiet",
+      "illustrated/seamless-floor/dungeon-floor-quiet.svg"
+    ],
+    [
+      "watcher-prepared-seamless-floor-dungeon-floor-report",
+      "illustrated/seamless-floor/dungeon-floor-report.json"
+    ],
+    [
+      "watcher-prepared-seamless-floor-dungeon-floor-roughness",
+      "illustrated/seamless-floor/dungeon-floor-roughness.png"
+    ],
+    [
+      "watcher-prepared-seamless-floor-dungeon-floor-source",
+      "illustrated/seamless-floor/dungeon-floor-source.png"
+    ],
+    [
+      "watcher-prepared-seamless-floor-dungeon-floor-weathered-height",
+      "illustrated/seamless-floor/dungeon-floor-weathered-height.png"
+    ],
+    [
+      "watcher-prepared-seamless-floor-dungeon-floor-weathered-report",
+      "illustrated/seamless-floor/dungeon-floor-weathered-report.json"
+    ],
+    [
+      "watcher-prepared-seamless-floor-dungeon-floor-weathered-roughness",
+      "illustrated/seamless-floor/dungeon-floor-weathered-roughness.png"
+    ],
+    [
+      "watcher-prepared-seamless-floor-dungeon-floor-weathered-source",
+      "illustrated/seamless-floor/dungeon-floor-weathered-source.png"
+    ],
+    [
+      "watcher-prepared-seamless-floor-dungeon-floor-weathered",
+      "illustrated/seamless-floor/dungeon-floor-weathered.svg"
+    ],
+    [
+      "watcher-prepared-seamless-floor-dungeon-floor",
+      "illustrated/seamless-floor/dungeon-floor.svg"
+    ],
+    [
+      "watcher-prepared-seamless-floor-repeat-proof",
+      "illustrated/seamless-floor/repeat-proof.png"
+    ]
+  ],
+  "resources": {
+    "vector-lods/84929fa89c55-face--1.bin": "watcher-prepared-vector-lods-84929fa89c55-face--1",
+    "vector-lods/84929fa89c55-face--2.bin": "watcher-prepared-vector-lods-84929fa89c55-face--2",
+    "vector-lods/84929fa89c55-face-0.bin": "watcher-prepared-vector-lods-84929fa89c55-face-0",
+    "vector-lods/84929fa89c55-face-1.bin": "watcher-prepared-vector-lods-84929fa89c55-face-1",
+    "vector-lods/84929fa89c55-face-2.bin": "watcher-prepared-vector-lods-84929fa89c55-face-2",
+    "vector-lods/84929fa89c55-face-3.bin": "watcher-prepared-vector-lods-84929fa89c55-face-3",
+    "vector-lods/84929fa89c55-front--1.bin": "watcher-prepared-vector-lods-84929fa89c55-front--1",
+    "vector-lods/84929fa89c55-front--2.bin": "watcher-prepared-vector-lods-84929fa89c55-front--2",
+    "vector-lods/84929fa89c55-front-0.bin": "watcher-prepared-vector-lods-84929fa89c55-front-0",
+    "vector-lods/84929fa89c55-front-1.bin": "watcher-prepared-vector-lods-84929fa89c55-front-1",
+    "vector-lods/84929fa89c55-front-2.bin": "watcher-prepared-vector-lods-84929fa89c55-front-2",
+    "vector-lods/84929fa89c55-front-3.bin": "watcher-prepared-vector-lods-84929fa89c55-front-3",
+    "vector-lods/84929fa89c55-iris--1.bin": "watcher-prepared-vector-lods-84929fa89c55-iris--1",
+    "vector-lods/84929fa89c55-iris--2.bin": "watcher-prepared-vector-lods-84929fa89c55-iris--2",
+    "vector-lods/84929fa89c55-iris-0.bin": "watcher-prepared-vector-lods-84929fa89c55-iris-0",
+    "vector-lods/84929fa89c55-iris-1.bin": "watcher-prepared-vector-lods-84929fa89c55-iris-1",
+    "vector-lods/84929fa89c55-iris-2.bin": "watcher-prepared-vector-lods-84929fa89c55-iris-2",
+    "vector-lods/84929fa89c55-iris-3.bin": "watcher-prepared-vector-lods-84929fa89c55-iris-3",
+    "vector-lods/manifest.json": "watcher-prepared-vector-lods-manifest",
+    "ground-lods/05bb70f5a91e-1024.png": "watcher-prepared-ground-lods-05bb70f5a91e-1024",
+    "ground-lods/074c29f9f2c8-1024.png": "watcher-prepared-ground-lods-074c29f9f2c8-1024",
+    "ground-lods/074c29f9f2c8-2048.png": "watcher-prepared-ground-lods-074c29f9f2c8-2048",
+    "ground-lods/074c29f9f2c8-4096.png": "watcher-prepared-ground-lods-074c29f9f2c8-4096",
+    "ground-lods/07f79193ac8e-4096.png": "watcher-prepared-ground-lods-07f79193ac8e-4096",
+    "ground-lods/1762e1684e03-1024.png": "watcher-prepared-ground-lods-1762e1684e03-1024",
+    "ground-lods/1762e1684e03-2048.png": "watcher-prepared-ground-lods-1762e1684e03-2048",
+    "ground-lods/1762e1684e03-4096.png": "watcher-prepared-ground-lods-1762e1684e03-4096",
+    "ground-lods/243faed5188f-1024.png": "watcher-prepared-ground-lods-243faed5188f-1024",
+    "ground-lods/409b783ac355-2048.png": "watcher-prepared-ground-lods-409b783ac355-2048",
+    "ground-lods/52e42f82c78a-1024.png": "watcher-prepared-ground-lods-52e42f82c78a-1024",
+    "ground-lods/574f3bb9514c-4096.png": "watcher-prepared-ground-lods-574f3bb9514c-4096",
+    "ground-lods/58297fc59c87-4096.png": "watcher-prepared-ground-lods-58297fc59c87-4096",
+    "ground-lods/6b9d3d132fc8-2048.png": "watcher-prepared-ground-lods-6b9d3d132fc8-2048",
+    "ground-lods/786003de135d-4096.png": "watcher-prepared-ground-lods-786003de135d-4096",
+    "ground-lods/8019a21ba30b-2048.png": "watcher-prepared-ground-lods-8019a21ba30b-2048",
+    "ground-lods/8f85e369659b-1024.png": "watcher-prepared-ground-lods-8f85e369659b-1024",
+    "ground-lods/97d1727aef28-2048.png": "watcher-prepared-ground-lods-97d1727aef28-2048",
+    "ground-lods/9ac25dabd796-2048.png": "watcher-prepared-ground-lods-9ac25dabd796-2048",
+    "ground-lods/9e1dc9ecdb14-4096.png": "watcher-prepared-ground-lods-9e1dc9ecdb14-4096",
+    "ground-lods/9e3b5dc291d6-1024.png": "watcher-prepared-ground-lods-9e3b5dc291d6-1024",
+    "ground-lods/acd9cb2e2670-2048.png": "watcher-prepared-ground-lods-acd9cb2e2670-2048",
+    "ground-lods/bb7d9be95c5c-1024.png": "watcher-prepared-ground-lods-bb7d9be95c5c-1024",
+    "ground-lods/e0b337c28ead-1024.png": "watcher-prepared-ground-lods-e0b337c28ead-1024",
+    "ground-lods/e0b337c28ead-2048.png": "watcher-prepared-ground-lods-e0b337c28ead-2048",
+    "ground-lods/e0b337c28ead-4096.png": "watcher-prepared-ground-lods-e0b337c28ead-4096",
+    "ground-lods/eea9b13213bb-4096.png": "watcher-prepared-ground-lods-eea9b13213bb-4096",
+    "ground-lods/manifest.json": "watcher-prepared-ground-lods-manifest",
+    "seamless-floor/dungeon-floor-height.png": "watcher-prepared-seamless-floor-dungeon-floor-height",
+    "seamless-floor/dungeon-floor-quiet-height.png": "watcher-prepared-seamless-floor-dungeon-floor-quiet-height",
+    "seamless-floor/dungeon-floor-quiet-report.json": "watcher-prepared-seamless-floor-dungeon-floor-quiet-report",
+    "seamless-floor/dungeon-floor-quiet-roughness.png": "watcher-prepared-seamless-floor-dungeon-floor-quiet-roughness",
+    "seamless-floor/dungeon-floor-quiet-source.png": "watcher-prepared-seamless-floor-dungeon-floor-quiet-source",
+    "seamless-floor/dungeon-floor-quiet.svg": "watcher-prepared-seamless-floor-dungeon-floor-quiet",
+    "seamless-floor/dungeon-floor-report.json": "watcher-prepared-seamless-floor-dungeon-floor-report",
+    "seamless-floor/dungeon-floor-roughness.png": "watcher-prepared-seamless-floor-dungeon-floor-roughness",
+    "seamless-floor/dungeon-floor-source.png": "watcher-prepared-seamless-floor-dungeon-floor-source",
+    "seamless-floor/dungeon-floor-weathered-height.png": "watcher-prepared-seamless-floor-dungeon-floor-weathered-height",
+    "seamless-floor/dungeon-floor-weathered-report.json": "watcher-prepared-seamless-floor-dungeon-floor-weathered-report",
+    "seamless-floor/dungeon-floor-weathered-roughness.png": "watcher-prepared-seamless-floor-dungeon-floor-weathered-roughness",
+    "seamless-floor/dungeon-floor-weathered-source.png": "watcher-prepared-seamless-floor-dungeon-floor-weathered-source",
+    "seamless-floor/dungeon-floor-weathered.svg": "watcher-prepared-seamless-floor-dungeon-floor-weathered",
+    "seamless-floor/dungeon-floor.svg": "watcher-prepared-seamless-floor-dungeon-floor",
+    "seamless-floor/repeat-proof.png": "watcher-prepared-seamless-floor-repeat-proof"
+  },
+  "sourceHashes": {
+    "face": "384c04cd3be37eea54a9f33bd3e3f6986495671ddc3ae6c707ecfe6d99470f94",
+    "front": "ffd94a3b63f784853d104796ae8b5904a280b02c114025d4c9521c996401cf41",
+    "iris": "4af1e0b7d83840d16dd2aefde8fcef3f9d15dc9e9976621750b33f8654ad033b"
+  }
+}

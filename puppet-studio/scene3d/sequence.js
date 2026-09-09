@@ -1,0 +1,4 @@
+// Authored clip compositions are portable across the editor, CLI and player.
+export function sequenceSteps(scene){return scene.sequence?.steps??scene.clips.map(c=>({clip:c.id}));}
+export function sequenceDuration(scene){return sequenceSteps(scene).reduce((sum,step)=>{const clip=scene.clips.find(c=>c.id===step.clip);return sum+(step.to??clip.duration)-(step.from??0);},0);}
+export function sampleSequence(scene,time){const steps=sequenceSteps(scene),duration=sequenceDuration(scene),loop=scene.sequence?.loop??true;let t=loop?((time%duration)+duration)%duration:Math.min(Math.max(0,time),duration);for(let index=0;index<steps.length;index++){const step=steps[index],clip=scene.clips.find(c=>c.id===step.clip),from=step.from??0,length=(step.to??clip.duration)-from;if(t<length||index===steps.length-1)return{clip:clip.id,time:from+Math.min(t,length),index,...(step.parameters?{parameters:step.parameters}:{}),done:!loop&&time>=duration};t-=length;}}

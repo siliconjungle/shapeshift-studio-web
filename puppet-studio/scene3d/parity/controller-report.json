@@ -1,0 +1,5 @@
+{
+  "frames": 5400,
+  "exact": true,
+  "scope": "Generic state machine vs frozen original: transforms, clocks, freezes, spring positions/velocities, gaze/lids, shader controls, beam state and scale, ordered transitions and audio cues. Renderer and presentation effects remain separate integration gates."
+}

@@ -1,0 +1,9 @@
+node_modules/
+dist/
+assets/
+puppet-studio/scene3d/assets/
+integrations/little-gods-preview.js
+*.zip
+.env*
+*.log
+work/

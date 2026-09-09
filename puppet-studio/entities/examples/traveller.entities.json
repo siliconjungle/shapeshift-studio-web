@@ -1,0 +1,96 @@
+{
+  "format": "shapeshift-entities",
+  "version": 1,
+  "components": [
+    {
+      "id": "Presentation",
+      "name": "Presentation",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "artwork": {
+            "type": "string",
+            "title": "Artwork",
+            "reference": {
+              "kind": "asset"
+            }
+          },
+          "animation": {
+            "type": "string",
+            "title": "Animation",
+            "reference": {
+              "kind": "clip",
+              "dimension": 2
+            }
+          },
+          "ability": {
+            "type": "string",
+            "title": "Ability",
+            "reference": {
+              "kind": "ability"
+            }
+          },
+          "sound": {
+            "type": "string",
+            "title": "Sound library",
+            "reference": {
+              "kind": "audio-library",
+              "dimension": 2
+            }
+          }
+        },
+        "required": [
+          "artwork",
+          "animation",
+          "ability",
+          "sound"
+        ],
+        "additionalProperties": false
+      },
+      "defaults": {
+        "artwork": "",
+        "animation": "",
+        "ability": "",
+        "sound": ""
+      }
+    },
+    {
+      "id": "Movement",
+      "name": "Movement",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "speed": {
+            "type": "number",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "speed"
+        ],
+        "additionalProperties": false
+      },
+      "defaults": {
+        "speed": 3
+      }
+    }
+  ],
+  "entities": [
+    {
+      "id": "traveller",
+      "name": "Traveller",
+      "components": {
+        "Presentation": {
+          "artwork": "",
+          "animation": "",
+          "ability": "",
+          "sound": ""
+        },
+        "Movement": {
+          "speed": 4
+        }
+      }
+    }
+  ],
+  "dependencies": []
+}

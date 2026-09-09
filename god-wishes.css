@@ -1,0 +1,51 @@
+.wish-tray{position:absolute;z-index:30;bottom:17px;left:50%;transform:translateX(-50%);width:min(550px,90vw);height:132px;user-select:none;touch-action:none;isolation:isolate}
+.wish-tray-stone{position:absolute;inset:19px -15px 15px;z-index:-1;pointer-events:none;filter:drop-shadow(0 9px 6px #101b1580)}
+.wish-tray-stone img{display:block;width:100%;height:100%;object-fit:fill}
+.wish-slots{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));align-items:start;gap:9px;padding:15px 9px 0}
+.wish-queue{display:grid;grid-column:span 3;grid-template-columns:repeat(3,minmax(0,1fr));gap:inherit;align-items:start}
+.wish-card{position:relative;display:block;padding:0;border:0;background:#514b3d;border-radius:8px;aspect-ratio:1;width:100%;box-shadow:0 3px 0 #494334,0 5px 7px #201f2080;outline-offset:4px;cursor:pointer;transition:transform .18s,filter .18s,box-shadow .18s;color:#fff0d0}
+.wish-card img{display:block;width:100%;height:100%;object-fit:contain;border-radius:8px;pointer-events:none}
+.wish-card span{position:absolute;top:calc(100% + 12px);left:50%;transform:translateX(-50%);font:700 11px var(--font-ui);text-shadow:0 2px 2px #142016,0 0 5px #142016;white-space:nowrap;letter-spacing:.02em}
+.wish-card:hover,.wish-card:focus-visible{transform:translateY(-10px);filter:brightness(1.08)}
+.wish-card.selected{transform:translateY(-16px);outline:2px solid var(--wish-colour);box-shadow:0 0 22px color-mix(in srgb,var(--wish-colour) 45%,transparent),0 9px 8px #18251ba0}
+.wish-card.selected span{color:var(--wish-colour)}
+.wish-caption{display:block;margin-top:12px;text-align:center;color:#e8dfbf;font-size:10px;font-weight:750;letter-spacing:.06em;text-shadow:0 2px 2px #16251a;white-space:nowrap}
+.wish-pile{position:relative;aspect-ratio:1;width:100%;transform:translateY(-7px)}
+.wish-pile img{position:absolute;inset:0;display:block;width:100%;height:100%;border-radius:8px;box-shadow:0 2px 0 #ae9568,0 4px 0 #453d2c;object-fit:contain}
+.wish-pile img:nth-child(1){transform:translate(2px,7px) rotate(3deg)}
+.wish-pile img:nth-child(2){transform:translate(-1px,3px) rotate(-2deg)}
+.wish-pile img:nth-child(3){transform:rotate(2deg);filter:drop-shadow(0 2px 3px #20221b70)}
+.wish-tooltip{position:absolute;z-index:42;width:220px;padding:12px 15px;border-radius:12px;transform:translate(-50%,-100%);pointer-events:none;text-align:center}
+.wish-tooltip strong{display:block;font:600 20px var(--font-ui);margin-bottom:4px}.wish-tooltip span{font:12px/1.5 var(--font-ui);color:var(--village-glass-muted)}
+.wish-aim,.wish-ground-aim{position:absolute;inset:0;width:100%;height:100%;z-index:31;pointer-events:none;overflow:hidden;display:none}
+.wish-ground-aim{z-index:29}
+.wish-arrow,.wish-arrow-shadow,.wish-area,.wish-area-shadow{fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round}
+.wish-arrow{stroke-width:3.5}.wish-arrow-shadow{stroke:#15231c99;stroke-width:7}.wish-area{stroke-width:2;fill:currentColor;fill-opacity:.055;stroke-dasharray:7 5}.wish-area-shadow{stroke:#132319aa;stroke-width:4}
+.wish-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.wish-card.rejected{animation:wish-reject .22s ease-out}@keyframes wish-reject{25%{translate:-4px}75%{translate:4px}}
+.wish-tray.dealt .wish-queue .wish-card{animation:wish-deal .3s ease-out both}.wish-tray.dealt .wish-queue .wish-card:nth-child(2){animation-delay:.04s}.wish-tray.dealt .wish-queue .wish-card:nth-child(3){animation-delay:.08s}@keyframes wish-deal{from{opacity:0;translate:24px 8px}to{opacity:1;translate:0 0}}
+.village-save-status{bottom:215px}
+@media(max-width:700px){.wish-tray{width:min(550px,94vw);height:clamp(112px,30vw,132px);bottom:10px}.wish-slots{gap:4px;padding:10px 5px 0}.wish-tray-stone{inset:12px -5px 9px}.wish-card span,.wish-caption{font-size:9px;margin-top:9px}.wish-card span{margin-top:0;top:calc(100% + 9px)}.wish-pile{transform:translateY(-4px)}.wish-tooltip{width:210px;padding:9px 12px}}
+@media(prefers-reduced-motion:reduce){.wish-card{transition:none}.wish-tray.dealt .wish-queue .wish-card{animation:none}}
+
+.combat-damage.healed,.combat-damage.healed[data-target="imp"]{color:#b5edaa}
+
+.wish-cooldown{position:absolute;inset:0;display:grid;place-items:center;border-radius:inherit;overflow:hidden;pointer-events:none}
+.wish-cooldown[hidden]{display:none}
+.wish-cooldown::before{content:'';position:absolute;inset:0;background:conic-gradient(transparent calc((1 - var(--wish-cooldown,0))*1turn),rgba(12,17,21,.76) 0)}
+.wish-cooldown b{opacity:0;position:relative;font:700 clamp(21px,4vw,29px)/1 var(--font-ui);font-variant-numeric:tabular-nums;color:#fff3d8;text-shadow:0 2px 4px #000,0 0 8px #000}
+.wish-card[aria-disabled=true]{cursor:wait}
+.wish-card[aria-disabled=true]:hover,.wish-card[aria-disabled=true]:focus-visible{transform:none;filter:none}
+
+.wish-card:hover .wish-cooldown b,.wish-card:focus-visible .wish-cooldown b{opacity:1}
+
+/* The empty socket occupies exactly the same square as a regular card. */
+.wish-reserve .wish-card.empty{background:#332f2440;box-shadow:inset 0 0 0 1px #b2a98a99,inset 0 0 0 3px #48423280,inset 0 2px 6px #1e241b70}
+.wish-reserve .wish-card.empty:hover,.wish-reserve .wish-card.empty:focus-visible{transform:none;filter:none;box-shadow:inset 0 0 0 2px #d3bf88,0 0 10px #f4db9944}
+.wish-reserve .wish-card.empty img{position:absolute;inset:18%;width:64%;height:64%;opacity:.55;mix-blend-mode:multiply}
+.wish-reserve .wish-card>span{display:none}
+.wish-reserve .wish-caption{font:700 11px var(--font-ui);letter-spacing:.02em}
+@media(max-width:700px){.wish-reserve .wish-caption{font-size:9px}}
+
+.wish-hand-hint{position:absolute;z-index:43;bottom:160px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:12px;background:#20342be8;color:#fff0d0;font:12px var(--font-ui);max-width:90%;box-sizing:border-box;backdrop-filter:blur(16px)}
+.wish-hand-hint[hidden]{display:none}.wish-hand-hint button{white-space:nowrap;border:1px solid #e8dab777;background:#f4e3ba16;color:inherit;border-radius:6px;padding:6px 9px;cursor:pointer}

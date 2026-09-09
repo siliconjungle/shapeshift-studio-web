@@ -1,0 +1,13 @@
+{
+  "comparedFrames": 5400,
+  "actions": [
+    "roll",
+    "beam",
+    "slam",
+    "spin",
+    "hurt"
+  ],
+  "autoSequenceSeconds": 40,
+  "identical": true,
+  "scope": "Simulation state, world pose, spring state, camera shake, shader controls, beam/charge/mote/core/eye-hit effect poses. Render pixels, landing/contact sprites and audio are separate gates."
+}

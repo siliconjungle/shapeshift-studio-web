@@ -1,0 +1,11 @@
+import {actorInterior,ensureActorInterior} from './ecs/actor-interior.js';
+import {createRecoveryState} from './ecs/repair-state.js';
+import {actorVitality} from './ecs/actor-vitality.js';
+import {personAge} from './ecs/person-age.js';
+import {actorNeeds} from './ecs/actor-needs.js';
+import {temperatureOf,isCold,isHot} from './village-temperature.js';
+export const recoveryState=createRecoveryState;
+export const recoveryThreats=e=>[...(e.raids?.enemies??[]),...(e.slimes?.enemies??[])].filter(r=>!(actorVitality(r)?.dead)&&!r.gone&&!r.divineHeld&&!['fleeing','departing','fading','emerging','airborne'].includes(r.state));
+export const recoveryDistance=(a,b)=>Math.hypot(a.x-b.x,a.z-b.z);
+export const urgentFood=e=>e.stock.food<1&&e.workers.some(w=>!(actorVitality(w)?.dead)&&(actorNeeds(w)?.hunger??0)>=((personAge(w)?.child)?60:75));
+export const coldFuelNeed=e=>!!e.campfire?.built&&e.campfire.fuel<25&&e.workers.some(w=>!(actorVitality(w)?.dead)&&!(actorInterior(w)?.inside)&&temperatureOf(w)<=25);

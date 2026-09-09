@@ -1,0 +1,10 @@
+import {defineGameData} from './game-data.js';
+import {villageWorld} from './ecs/village-world.js';
+import {syncAppleResources,appleWorkAvailable,validateApples} from './ecs/systems/apples.js';
+export const APPLE_RULES=defineGameData('village-apples.APPLE_RULES',{amount:4,regrow:110,grow:30,hits:1,action:'harvest',contact:'apple-picked'});
+export const APPLE_VARIANT='tree-apple';
+export const isApple=n=>n?.foodSource==='apple';
+export const appleTreeVariant=(culture,index,fallback)=>culture==='hearth'&&index%9===2?APPLE_VARIANT:fallback;
+export const syncApples=e=>syncAppleResources(villageWorld(e));
+export const canWorkAppleResource=(e,node)=>appleWorkAvailable(villageWorld(e),node);
+export const validApples=e=>validateApples(villageWorld(e));

@@ -1,0 +1,16 @@
+import {animationTime} from '../scene3d/animation.js';
+import * as T from '../scene3d/vendor.js';
+import {influence,shortAngle,toolPoint} from './core.js';
+// Scene constraints run after the source pose and before lights/effects sample
+// world matrices. They never write a renderer transform back into the document.
+export function solveSceneTools(host){const sample=host.sample,tools=sample?.clip?.tools;if(!tools)return;host.world.updateMatrixWorld(true);const time=animationTime(sample.clip,sample.time),duration=sample.clip.duration;
+ const world=(id,offset=[0,0,0])=>host.objects.get(id).localToWorld(new T.Vector3(...offset));
+ const aim=(object,tip,target,weight,limit=180)=>{const inv=object.parent?object.parent.matrixWorld.clone().invert():new T.Matrix4(),a=object.position.clone(),b=tip.clone().applyMatrix4(inv).sub(a),g=target.clone().applyMatrix4(inv).sub(a);if(b.lengthSq()<1e-10||g.lengthSq()<1e-10)return;const delta=new T.Quaternion().setFromUnitVectors(b.normalize(),g.normalize()),limited=new T.Quaternion().slerp(new T.Quaternion().rotateTowards(delta,limit*Math.PI/180),weight);object.quaternion.premultiply(limited);object.updateWorldMatrix(false,true);};
+ const supports=new Map();for(const c of tools.constraints??[]){if(!c.assist||!c.chain)continue;const w=influence(c,time,duration),root=host.objects.get(c.chain.root),o=root?.parent;if(!w||!o||o===host.world)continue;const a=o.getWorldPosition(new T.Vector3()),b=world(c.joint,c.origin).sub(a),g=(c.target?world(c.target,toolPoint(c,time)):new T.Vector3(...toolPoint(c,time))).sub(a);if(b.lengthSq()<1e-10||g.lengthSq()<1e-10)continue;const q=new T.Quaternion().setFromUnitVectors(b.normalize(),g.normalize()),angle=2*Math.acos(T.MathUtils.clamp(q.w,-1,1)),axis=new T.Vector3(q.x,q.y,q.z);if(axis.lengthSq()<1e-10)continue;const entry=supports.get(o)??{vector:new T.Vector3(),limit:c.supportLimit??6};entry.vector.add(axis.normalize().multiplyScalar(angle*w*.25));supports.set(o,entry);}for(const [o,s]of supports){const angle=s.vector.length();if(angle<1e-8)continue;const delta=new T.Quaternion().setFromAxisAngle(s.vector.normalize(),Math.min(angle,s.limit*Math.PI/180)),worldQ=o.getWorldQuaternion(new T.Quaternion());o.quaternion.copy(o.parent.getWorldQuaternion(new T.Quaternion()).invert().multiply(delta.multiply(worldQ)));o.updateWorldMatrix(false,true);}
+ for(const c of [...(tools.constraints??[])].sort((a,b)=>(a.type==='look'?0:1)-(b.type==='look'?0:1))){const w=influence(c,time,duration),o=host.objects.get(c.joint);if(!w||!o||host.pipeline?.actors.has(c.joint))continue;const at=world(c.joint,c.origin),target=c.target?world(c.target,toolPoint(c,time)):new T.Vector3(...toolPoint(c,time));
+ if(c.type==='look'){aim(o,world(c.joint,[0,0,1]),target,w,c.limit??70);continue;}
+ const desired=at.clone().lerp(target,w);if(c.type==='ground'){desired.x=at.x;desired.z=at.z;}
+ if(c.chain){for(let i=0;i<24;i++){aim(host.objects.get(c.chain.mid),world(c.joint,c.origin),desired,1);aim(host.objects.get(c.chain.root),world(c.joint,c.origin),desired,1);if(world(c.joint,c.origin).distanceTo(desired)<.0001)break;}}
+ else{const shift=desired.sub(at),p=world(c.joint).add(shift);o.position.copy(o.parent?o.parent.worldToLocal(p):p);o.updateWorldMatrix(false,true);}
+ }
+}

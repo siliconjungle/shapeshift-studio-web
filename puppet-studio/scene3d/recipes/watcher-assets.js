@@ -1,0 +1,2 @@
+export const watcherVectorAssets={manifest:'assets/vector-lods/manifest.json',base:'assets/vector-lods/',names:['face','front','iris'],cacheSize:2};
+export const watcherGround={variants:['dungeon-floor','dungeon-floor-quiet','dungeon-floor-weathered'],manifest:'assets/ground-lods/manifest.json',maps:'assets/seamless-floor/',paint:'assets/ground-lods/',size:96,tileSize:6,y:-1.5,anisotropy:8,initialSize:1024,mediumSize:2048,largeSize:4096,mediumThreshold:1300,largeThreshold:2500,zoomTolerance:.003,zoomIdleMs:180,originalStone:'#344c40',tintExponent:.48};
