@@ -1,5 +1,5 @@
 import {registryForVillage} from '../../gameplay-effects/village-library.js';
-import {RELIC_ART_KEYS} from '../../village-relics.js';
+import {RELIC_ART_KEYS} from '../integrations/little-gods/relic-art.js';
 import {validateGameArtwork,applyGameArtworkCommand} from '../integrations/little-gods/artwork.js';
 import {validateGrading} from '../../rendering/color-grading.js';
 import {jsonValue} from '../../game-data.js';

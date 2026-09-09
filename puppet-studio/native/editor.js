@@ -1,5 +1,5 @@
 import {abilityPacket,nativeAbilityBindings} from '../authoring/abilities.js';
-import {RELIC_ART_KEYS} from '../../village-relics.js';
+import {RELIC_ART_KEYS} from '../integrations/little-gods/relic-art.js';
 import {projectGrading} from '../authoring/appearance.js';
 import {nativeProject,scenarioFor,RENDER_MODES,EFFECT_KINDS,NATIVE_ACTIONS} from './schema.js';
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
