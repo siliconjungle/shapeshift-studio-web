@@ -1,0 +1,104 @@
+[
+  {
+    "id": "hearth",
+    "width": 724,
+    "height": 2172,
+    "preset": "cel",
+    "settings": {
+      "colors": 8,
+      "speckle": 4,
+      "precision": 6,
+      "difference": 14,
+      "corner": 80,
+      "length": 4.5,
+      "median": 3,
+      "preserveDarkColors": true
+    },
+    "alphaThreshold": 128,
+    "paths": 376,
+    "colours": 7,
+    "curves": 5901,
+    "bytes": 220618,
+    "silhouetteIoU": 1,
+    "meanColorError": 0.006794178928010941,
+    "warnings": [],
+    "vectorPalette": [
+      "#080e0b",
+      "#293329",
+      "#394630",
+      "#4b583b",
+      "#596648",
+      "#899376",
+      "#b3af8f",
+      "#d3c7a2"
+    ]
+  },
+  {
+    "id": "cryos",
+    "width": 724,
+    "height": 2172,
+    "preset": "cel",
+    "settings": {
+      "colors": 8,
+      "speckle": 4,
+      "precision": 6,
+      "difference": 14,
+      "corner": 80,
+      "length": 4.5,
+      "median": 3,
+      "preserveDarkColors": true
+    },
+    "alphaThreshold": 128,
+    "paths": 523,
+    "colours": 7,
+    "curves": 7187,
+    "bytes": 264694,
+    "silhouetteIoU": 1,
+    "meanColorError": 0.010122948276814873,
+    "warnings": [],
+    "vectorPalette": [
+      "#0a111b",
+      "#253443",
+      "#344657",
+      "#455a6d",
+      "#5e788f",
+      "#7b9bb4",
+      "#a1bdd0",
+      "#d0e3e6"
+    ]
+  },
+  {
+    "id": "solis",
+    "width": 724,
+    "height": 2172,
+    "preset": "cel",
+    "settings": {
+      "colors": 8,
+      "speckle": 4,
+      "precision": 6,
+      "difference": 14,
+      "corner": 80,
+      "length": 4.5,
+      "median": 3,
+      "preserveDarkColors": true
+    },
+    "alphaThreshold": 128,
+    "paths": 178,
+    "colours": 6,
+    "curves": 3522,
+    "bytes": 134045,
+    "silhouetteIoU": 1,
+    "meanColorError": 0.009038691057483129,
+    "warnings": [],
+    "vectorPalette": [
+      "#160e09",
+      "#503321",
+      "#70452b",
+      "#885637",
+      "#a06a42",
+      "#b98556",
+      "#cc9e6b",
+      "#e0b880"
+    ]
+  }
+]

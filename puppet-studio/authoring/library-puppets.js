@@ -30,7 +30,7 @@ export function importPuppetDependencies(p,item){
  const prefix=item.id.slice(0,32)+'-rig-'+p.puppetSources.length,joints={},clips={},usedJoints=new Set(p.joints.map(j=>j.id)),usedClips=new Set(p.clips.map(c=>c.id));
  const unique=(base,used)=>{let id=base,i=2;while(used.has(id))id=base+'-'+i++;used.add(id);return id;};
  for(const [i,j]of packet.nodes.entries())joints[j.id]=unique(prefix+'-'+i,usedJoints);for(const [i,c]of packet.motion.clips.entries())clips[c.id]=unique(prefix+'-clip-'+i,usedClips);
- const deps=importComponentDependencies(p,{id:prefix,dimension:2,dependencies:packet.dependencies}),added=componentDependencyNodes(packet.nodes,deps).map(n=>({...n,id:joints[n.id],parent:n.parent?joints[n.parent]:null}));
+ const deps=importComponentDependencies(p,{id:prefix,dimension:2,dependencies:packet.dependencies}),added=componentDependencyNodes(packet.nodes,deps).map(n=>({...n,id:joints[n.id],parent:n.parent?joints[n.parent]:null,...(n.bodyJoin?{bodyJoin:{...n.bodyJoin,targetNode:joints[n.bodyJoin.targetNode]}}:{})}));
  p.joints.push(...added);for(const c of packet.motion.clips)p.clips.push(bindComponentClip(c,2,joints,clips,deps));
  const id=unique(prefix,new Set(p.puppetSources.map(s=>s.id)));p.puppetSources.push({id,name:packet.name,roots:added.filter(j=>!j.parent).map(j=>j.id),clips:Object.values(clips),library:{id:item.id,key,revision:item.revision,joints:copy(joints),clips:copy(clips)}});maps[key]={source:id,joints,clips};
  }return maps;

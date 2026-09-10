@@ -11,3 +11,5 @@ Run `npm ci`, `npm run restore:assets`, `npm run build`, then `npm start`. Open 
 Example artwork and the optional Little Gods preview are private release assets (`examples-v1`). They are not dependencies of Studio Core. The imported Little Gods authoring adapter remains in this application as optional integration source; it does not belong in the shared core. The native preview fixture is pinned to the previously verified game build, and is never published as the game itself.
 
 Little Gods has its own build and deployment, which excludes Studio. Do not use the Little Gods deployment command to publish this editor.
+
+Version 0.1.1 adds optional body joins with outline/colour matching, and the Watcher sanctuary with Hearth/Cryos/Solis pillars, textured bevels and surface maps. Both renderer features consume the shared Studio Core 0.1.1 package. Open `?example=body-joins` for the animated snake or `?3d&scene=watcher-sanctuary` for the cube and pillars.

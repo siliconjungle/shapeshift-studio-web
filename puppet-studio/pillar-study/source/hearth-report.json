@@ -1,0 +1,23 @@
+{
+  "width": 724,
+  "height": 2172,
+  "preset": "cel",
+  "settings": {
+    "colors": 8,
+    "speckle": 4,
+    "precision": 6,
+    "difference": 14,
+    "corner": 80,
+    "length": 4.5,
+    "median": 3,
+    "preserveDarkColors": true
+  },
+  "alphaThreshold": 128,
+  "paths": 376,
+  "colours": 15,
+  "curves": 5901,
+  "bytes": 220618,
+  "silhouetteIoU": 1,
+  "meanColorError": 0.006794178928010941,
+  "warnings": []
+}

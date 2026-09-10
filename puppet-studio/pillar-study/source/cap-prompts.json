@@ -1,0 +1,20 @@
+[
+  {
+    "id": "hearth",
+    "prompt": "Production flat surface-art atlas for the TOP and BOTTOM of the hearth stone pillar. Attached image is the approved vertical face; match its stone hue and graphic black-ink cel shading exactly. Create a wide 2:1 landscape image divided exactly in half at x=50%, TWO SQUARES side by side, full bleed and touching with NO gutter. LEFT square: top surface. RIGHT square: bottom surface. BOTH are bare stone cut faces, different subtle angular stone patches and one or two thick black short edge cracks. 90% quiet stone, simple broad flat solid colors, no gradients or grain, 5-7 colors. Same material as reference. Keep middle of each square calm. No symbols, no runes, no decoration, no metal, no gold, no corner pieces, no frame or borders. This is a perfectly flat orthographic full-bleed TEXTURE ATLAS, NOT a picture of a pillar and NOT perspective. Exact equal squares; fill to ALL outer edges with stone. No text, labels or background.",
+    "mode": "built-in image_gen",
+    "source": "/Users/james/.codex/generated_images/01a08983-7911-7db2-8fcb-8c66e2033cf9/exec-010b60bf-e0e8-4758-8766-7d249007e4fe.png"
+  },
+  {
+    "id": "cryos",
+    "prompt": "Production flat surface-art atlas for the TOP and BOTTOM of the cryos stone pillar. Attached image is the approved vertical face; match its stone hue and graphic black-ink cel shading exactly. Create a wide 2:1 landscape image divided exactly in half at x=50%, TWO SQUARES side by side, full bleed and touching with NO gutter. LEFT square: top surface. RIGHT square: bottom surface. BOTH are bare stone cut faces, different subtle angular stone patches and one or two thick black short edge cracks. 90% quiet stone, simple broad flat solid colors, no gradients or grain, 5-7 colors. Same material as reference. Keep middle of each square calm. No symbols, no runes, no decoration, no metal, no gold, no corner pieces, no frame or borders. This is a perfectly flat orthographic full-bleed TEXTURE ATLAS, NOT a picture of a pillar and NOT perspective. Exact equal squares; fill to ALL outer edges with stone. No text, labels or background.",
+    "mode": "built-in image_gen",
+    "source": "/Users/james/.codex/generated_images/01a08983-7911-7db2-8fcb-8c66e2033cf9/exec-10ba635c-71b8-4cd6-9547-efbfd10ca4bd.png"
+  },
+  {
+    "id": "solis",
+    "prompt": "Production flat surface-art atlas for the TOP and BOTTOM of the solis stone pillar. Attached image is the approved vertical face; match its stone hue and graphic black-ink cel shading exactly. Create a wide 2:1 landscape image divided exactly in half at x=50%, TWO SQUARES side by side, full bleed and touching with NO gutter. LEFT square: top surface. RIGHT square: bottom surface. BOTH are bare stone cut faces, different subtle angular stone patches and one or two thick black short edge cracks. 90% quiet stone, simple broad flat solid colors, no gradients or grain, 5-7 colors. Same material as reference. Keep middle of each square calm. No symbols, no runes, no decoration, no metal, no gold, no corner pieces, no frame or borders. This is a perfectly flat orthographic full-bleed TEXTURE ATLAS, NOT a picture of a pillar and NOT perspective. Exact equal squares; fill to ALL outer edges with stone. No text, labels or background.",
+    "mode": "built-in image_gen",
+    "source": "/Users/james/.codex/generated_images/01a08983-7911-7db2-8fcb-8c66e2033cf9/exec-357c911b-fe4b-4bf3-96c5-b8b8de6d63f2.png"
+  }
+]

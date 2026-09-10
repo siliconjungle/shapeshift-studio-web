@@ -1,12 +1,12 @@
 {
   "name": "@shapeshift-labs/studio-web",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Shapeshift Studio web editor",
   "scripts": {
     "build": "node scripts/build.mjs",
     "start": "node scripts/serve.mjs",
     "restore:assets": "node scripts/restore-assets.mjs",
-    "test": "node --test puppet-studio/entities/definitions.test.mjs puppet-studio/references/references.test.mjs"
+    "test": "node --test puppet-studio/entities/definitions.test.mjs puppet-studio/references/references.test.mjs puppet-studio/body-joins.test.mjs"
   },
   "keywords": [],
   "author": "",
@@ -15,14 +15,14 @@
     "@shapeshift-labs/frontier": "0.1.9",
     "@shapeshift-labs/frontier-scene": "0.1.0",
     "@shapeshift-labs/frontier-virtual": "0.1.0",
+    "@shapeshift-labs/studio-core": "github:siliconjungle/shapeshift-studio-core#075ce7a",
     "@silicon-jungle/inkwell-sdk": "0.0.7",
     "fflate": "0.8.2",
     "gifenc": "1.0.3",
     "gifuct-js": "2.1.2",
     "polygon-clipping": "0.15.7",
     "sharp": "^0.35.4",
-    "three": "0.180.0",
-    "@shapeshift-labs/studio-core": "git+ssh://git@github.com/siliconjungle/shapeshift-studio-core.git#8bc2f53"
+    "three": "0.180.0"
   },
   "private": true,
   "devDependencies": {

@@ -18,6 +18,7 @@ function scopedClip(source,dimension,ids,whole){
 }
 export function captureComponentMotion(p,dimension,nodes,{clipBindings,reverse,origin}={}){
  const d=doc(p,dimension),ids=new Set(nodes.map(n=>n.id)),whole=ids.size===(dimension===3?d.nodes:p.joints).length;
+ for(const n of nodes)if(n.bodyJoin)check(ids.has(n.bodyJoin.targetNode),'include the joined body when saving this character');
  const clips=(clipBindings?Object.entries(clipBindings).map(([id,dest])=>{const c=d.clips.find(c=>c.id===dest);check(c,'restore the removed character clip before publishing');return {...c,id};}):d.clips).map(c=>scopedClip(c,dimension,ids,whole||!!clipBindings));
  if(whole&&dimension===2&&p.fx)for(const c of clips)if(!c.fx)c.fx=copy(p.fx);
  if(reverse){const reverseClips=Object.fromEntries(Object.entries(clipBindings).map(([a,b])=>[b,a]));for(let i=0;i<clips.length;i++){const actualRoot=nodes.find(n=>reverse[n.id]===origin?.id);clips[i]=bindComponentClip(clips[i],dimension,reverse,reverseClips,{});if(origin&&actualRoot)offsetClip(clips[i],dimension,origin.id,dimension===3?origin.position.map((v,j)=>v-actualRoot.position[j]):[origin.rest.x-actualRoot.rest.x,origin.rest.y-actualRoot.rest.y]);}}

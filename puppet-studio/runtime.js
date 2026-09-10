@@ -1,3 +1,8 @@
+import {prepareBodyJoinProfiles} from './body-join-profiles.js';
+export {prepareBodyJoinProfiles} from './body-join-profiles.js';
+import {validateBodyJoins,bodyJoinFrame,deformBodyPoint} from './body-joins.js';
+import {drawJoinedArtwork} from './body-join-render.js';
+export {makeBodyJoin,bodyJoinFrame,deformBodyPoint,deformBodyPositions,bindBodyJoinGeometry} from './body-joins.js';
 import {validateEntityLibrary} from './entities/definitions.js';
 import {validateAbilities} from './authoring/abilities.js';
 import {validatePuppetSources} from './puppet-sources.js';
@@ -126,6 +131,7 @@ export function setKey(clip,id,time,value,easing='smooth'){
 // and immediate children stationary in the rest pose.
 export function moveOrigin(project,id,delta){
   const j=project.joints.find(j=>j.id===id),m=matrix(j.rest);
+  for(const part of project.joints)if(part.bodyJoin?.targetNode===id){part.bodyJoin.anchor[0]-=delta.x;part.bodyJoin.anchor[1]-=delta.y;}
   j.rest.x+=m[0]*delta.x+m[2]*delta.y;j.rest.y+=m[1]*delta.x+m[3]*delta.y;
   if(j.sprite){j.sprite.pivotX+=delta.x/j.sprite.width;j.sprite.pivotY+=delta.y/j.sprite.height;}
   for(const child of project.joints)if(child.parent===id){child.rest.x-=delta.x;child.rest.y-=delta.y;}
@@ -133,7 +139,7 @@ export function moveOrigin(project,id,delta){
 export function removeJoint(project,id){
   const ids=new Set([id]);let changed=true;
   while(changed){changed=false;for(const j of project.joints)if(ids.has(j.parent)&&!ids.has(j.id)){ids.add(j.id);changed=true;}}
-  project.joints=project.joints.filter(j=>!ids.has(j.id));pruneAppearanceTargets(project);
+  project.joints=project.joints.filter(j=>!ids.has(j.id));for(const j of project.joints)if(ids.has(j.bodyJoin?.targetNode))delete j.bodyJoin;pruneAppearanceTargets(project);
   for(const c of project.clips){cleanToolReferences(c,new Set(project.joints.map(j=>j.id)));if(c.resolvedTracks)c.resolvedTracks=c.resolvedTracks.filter(t=>!ids.has(t.node));if(c.lightingTracks)c.lightingTracks=c.lightingTracks.filter(t=>!ids.has(t.node));for(const key of ids)delete c.tracks[key];if(c.effects)c.effects=c.effects.filter(e=>!ids.has(e.joint));for(const [end,chain]of Object.entries(c.ik??{}))if(ids.has(end)||ids.has(chain.root)||ids.has(chain.mid))delete c.ik[end];}
 }
 export function validateProject(input){
@@ -158,6 +164,7 @@ export function validateProject(input){
       if(s.crop){if(!Array.isArray(s.crop)||s.crop.length!==4)fail('Invalid crop.');s.crop.forEach(v=>numeric(v,'crop',1));if(s.crop.some(v=>v<0)||s.crop[2]<=0||s.crop[3]<=0||s.crop[0]+s.crop[2]>1.00001||s.crop[1]+s.crop[3]>1.00001)fail('Invalid crop bounds.');}}
   }
   for(const j of p.joints){let next=j,seen=new Set();while(next){if(seen.has(next.id))fail('The joint hierarchy contains a cycle.');seen.add(next.id);if(next.parent&&!ids.has(next.parent))fail('Missing parent joint.');next=p.joints.find(j=>j.id===next.parent);}}
+  validateBodyJoins(p);
   const clipIds=new Set();
   for(const c of p.clips){
     if(typeof c.id!=='string'||clipIds.has(c.id)||typeof c.name!=='string')fail('Invalid clip name.');clipIds.add(c.id);
@@ -184,14 +191,15 @@ export async function loadImages(project){
  const models=[...(project.fx?.models??[]),...(project.clips??[]).flatMap(c=>(c.fx?.models??[]).map(m=>({...m,id:c.id+':'+m.id})))];if(models.length){const {loadModels}=await import('./fx/models.js');images.models=await loadModels(models);}return images;
 }
 export function drawPuppet(ctx,project,images,pose,{alpha=1}={}){
+  const joins=bodyJoinFrame(project,pose,prepareBodyJoinProfiles(project,images));
   for(const j of [...project.joints].sort((a,b)=>a.layer-b.layer)){
     if(j.hidden||!j.sprite)continue;const s=j.sprite,img=images.get(s.asset);if(!img)continue;
     ctx.save();ctx.globalAlpha*=alpha;ctx.transform(...pose.get(j.id).world);
-    const crop=s.crop??[0,0,1,1];ctx.drawImage(img,crop[0]*img.naturalWidth,crop[1]*img.naturalHeight,crop[2]*img.naturalWidth,crop[3]*img.naturalHeight,-s.pivotX*s.width,-s.pivotY*s.height,s.width,s.height);ctx.restore();
+    const crop=s.crop??[0,0,1,1];if(joins.has(j.id)&&!s.crop){drawJoinedArtwork(ctx,img,s,joins.get(j.id));ctx.restore();continue;}ctx.drawImage(img,crop[0]*img.naturalWidth,crop[1]*img.naturalHeight,crop[2]*img.naturalWidth,crop[3]*img.naturalHeight,-s.pivotX*s.width,-s.pivotY*s.height,s.width,s.height);ctx.restore();
   }
 }
 export function bounds(project,pose){
-  const pts=[];for(const j of project.joints){if(j.hidden)continue;const s=j.sprite,m=pose.get(j.id).world;if(!s){pts.push(point(m,{x:0,y:0}));continue;}const morph=j.visual?.morph,max=v=>Array.isArray(v)?Math.max(0,...v.map(k=>Math.abs(k.value))):Math.abs(v??0),padding=morph?.enabled?s.width*(max(morph.inflate)+max(morph.taper)+2*max(morph.bend))/2:0;for(const x of [-s.pivotX*s.width-padding,(1-s.pivotX)*s.width+padding])for(const y of [-s.pivotY*s.height,(1-s.pivotY)*s.height])pts.push(point(m,{x,y}));}
+  const joins=bodyJoinFrame(project,pose),pts=[];for(const j of project.joints){if(j.hidden)continue;const s=j.sprite,m=pose.get(j.id).world;if(!s){pts.push(point(m,{x:0,y:0}));continue;}const morph=j.visual?.morph,max=v=>Array.isArray(v)?Math.max(0,...v.map(k=>Math.abs(k.value))):Math.abs(v??0),padding=morph?.enabled?s.width*(max(morph.inflate)+max(morph.taper)+2*max(morph.bend))/2:0;if(joins.has(j.id)){for(let row=0;row<=24;row++)for(let col=0;col<=24;col++)pts.push(point(m,deformBodyPoint((col/24-s.pivotX)*s.width,(row/24-s.pivotY)*s.height,joins.get(j.id))));}for(const x of [-s.pivotX*s.width-padding,(1-s.pivotX)*s.width+padding])for(const y of [-s.pivotY*s.height,(1-s.pivotY)*s.height])pts.push(point(m,{x,y}));}
   return {minX:Math.min(...pts.map(p=>p.x)),maxX:Math.max(...pts.map(p=>p.x)),minY:Math.min(...pts.map(p=>p.y)),maxY:Math.max(...pts.map(p=>p.y))};
 }
 // Fit the motion envelope, so a falling tree or reaching arm stays in view.
