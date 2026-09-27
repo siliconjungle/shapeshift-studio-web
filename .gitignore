@@ -1,18 +1,7 @@
 node_modules/
 dist/
-assets/
-puppet-studio/scene3d/assets/
-integrations/little-gods-preview.js
 *.zip
 .env*
 *.log
 work/
-
-# Authored pillar artwork and shading maps are part of the scene recipe.
-!puppet-studio/scene3d/assets/
-puppet-studio/scene3d/assets/*
-!puppet-studio/scene3d/assets/pillars/
-!puppet-studio/pillar-study/assets/
-
-puppet-studio/pillar-study/study.bundle.js
 puppet-studio/body-join-example/qa/

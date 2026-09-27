@@ -1,1 +1,0 @@
-export const watcherEye={geometry:{depth:1.15,halfHeight:1.15,samples:64,normalStep:'.002'},blink:{duration:.25,close:.07,holdEnd:.12,open:.13,cycle:14,at:[2.8,6.9,10.7,10.96]},expressions:{neutral:{open:1,tilt:0},focused:{open:.62,tilt:-.08},surprised:{open:1.08,tilt:0},sleepy:{open:.30,tilt:0},worried:{open:.77,tilt:.11},happy:{open:.42,tilt:0}}};

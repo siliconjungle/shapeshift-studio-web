@@ -1,17 +1,44 @@
-import {watcherStudioFeelCommands} from './recipes/watcher-grounded-launch.js';
-import {watcherIllustrationCommands} from './recipes/watcher-illustration.js';
-import {watcherPlaybackCommands} from './recipes/watcher-playback.js';
-import {applySceneCommand} from './schema.js';
-import {sceneDefaults,materialDefaults} from './schema.js';
-// Ordinary commands, not a special renderer object. The same recipe can be
-// replayed from the CLI, modified in the inspector, or composed with other work.
-export async function watcherCommands({base='./scene3d/assets/'}={}){const landmarks=await fetch(base+'front-landmarks.json').then(r=>r.json());const s=sceneDefaults();s.name='The Watcher';s.camera={...s.camera,position:[5,3.5,7],target:[0,1,0],size:6.5};s.materials[0].heightMap='stone-height';s.materials[0].roughnessMap='stone-roughness';s.materials.push({...materialDefaults('floor'),name:'Dungeon stone',palette:['#c5c3b7','#928061','#aaa086','#211f1c'],ink:.6,map:'watcher-floor',heightMap:'watcher-floor-height',roughnessMap:'watcher-floor-roughness',repeat:[8,8]});const commands=[{op:'scene3d.replace',value:s}];for(const [id,file]of [['side','face.svg'],['front','front.svg'],['iris','iris.svg'],['stone-height','face-height.png'],['stone-roughness','face-roughness.png'],['impact-art','landing-sprite.svg'],['floor','floor.png'],['floor-height','floor-height.png'],['floor-roughness','floor-roughness.png'],['front-height','front-height.png'],['front-roughness','front-roughness.png'],['iris-height','iris-height.png'],['iris-roughness','iris-roughness.png']])commands.push({op:'scene3d.asset.add',id:'watcher-'+id,src:base+file});s.materials[0].heightMap='watcher-stone-height';s.materials[0].roughnessMap='watcher-stone-roughness';
- commands.push({op:'scene3d.node.add',id:'watcher',type:'box',values:{name:'Watcher',ground:0,dimensions:[2.3,2.3,2.3],position:[0,1.15,0]}});
- const eye={center:[-.0009,-.0211],contour:landmarks.eye.contour,open:1,tilt:0,gaze:[0,0],irisScale:.38};for(const face of ['front','back','left','right','top','bottom'])commands.push({op:'scene3d.surface.set',id:'watcher',face,value:{asset:'watcher-'+(face==='front'?'front':'side'),...(face==='front'?{iris:'watcher-iris',eye,heightMap:'watcher-front-height',roughnessMap:'watcher-front-roughness',irisHeightMap:'watcher-iris-height',irisRoughnessMap:'watcher-iris-roughness'}:{})}});
- commands.push({op:'scene3d.node.add',id:'floor',type:'plane',values:{name:'Ground',material:'floor',dimensions:[48,48,.1],position:[0,0,0],rotation:[-90,0,0],castShadow:false}});
- commands.push({op:'scene3d.clip.update',id:'idle',values:{name:'Look around',duration:6}});const keys=(clip,channel,values)=>values.map(([time,value,easing='smooth'])=>({op:'scene3d.key',clip,node:'watcher',channel,time,value,easing}));commands.push(...keys('idle','eye.gaze',[[0,[0,0]],[1.2,[.18,.04]],[2.4,[-.18,-.02]],[3.5,[0,0]],[6,[0,0]]]),...keys('idle','eye.open',[[0,1],[2.8,1],[2.88,0],[3.05,1],[6,1]]));
- for(const id of ['laser','slam','hurt','roll','spin'])commands.push({op:'scene3d.clip.add',id,values:{name:{laser:'Charge & fire',slam:'Leap & slam',hurt:'Eye hit',roll:'Roll',spin:'Spinning laser'}[id],duration:4,loop:true}});
- commands.push(...keys('laser','deform.stretch',[[0,1],[.6,.86],[.95,1.16,'back'],[1.15,.98],[2.6,.98],[3,1.06],[4,1]]),...keys('laser','deform.waist',[[0,0],[.65,-.12],[1,.18],[2.6,.1],[4,0]]),...keys('laser','eye.open',[[0,1],[.7,.62],[.9,1.2,'out'],[2.6,1.2],[4,1]]),{op:'scene3d.event.add',clip:'laser',id:'laser-ray',type:'beam',values:{time:.2,duration:2.5,charge:.6,node:'watcher',origin:[0,-.02,1.18],direction:[0,-.24,1],length:20,width:.10,size:.8,impactAsset:'watcher-impact-art'}},{op:'scene3d.event.add',clip:'laser',id:'laser-sound',type:'sound',values:{time:.8,duration:.4,pitch:190,volume:.1}});
- commands.push(...keys('slam','position',[[0,[0,1.15,0]],[.45,[0,1.15,0]],[1.05,[0,4.4,0],'out'],[1.6,[0,4.4,0]],[1.82,[0,1.15,0],'in'],[4,[0,1.15,0]]]),...keys('slam','deform.stretch',[[0,1],[.45,.76],[.8,1.22],[1.6,1.12],[1.82,.62],[2.12,1.13,'back'],[2.65,.98],[4,1]]),...keys('slam','deform.waist',[[0,0],[.45,-.12],[.85,.18],[1.82,-.2],[2.2,.09],[4,0]]),{op:'scene3d.event.add',clip:'slam',id:'slam-dust',type:'impact',values:{time:1.82,duration:.8,node:'watcher',origin:[0,-1.15,0],size:1.5,asset:'watcher-impact-art'}},{op:'scene3d.event.add',clip:'slam',id:'slam-sound',type:'sound',values:{time:1.82,duration:.4,pitch:65,volume:.2}});
- commands.push(...keys('hurt','material.flash',[[0,0],[.15,0],[.17,1,'step'],[.26,.2],[.4,0],[4,0]]),...keys('hurt','deform.bend',[[0,[0,0]],[.15,[0,0]],[.23,[.23,-.12]],[.44,[-.08,.03],'back'],[.9,[0,0]],[4,[0,0]]]),...keys('hurt','eye.open',[[0,1],[.16,1],[.2,.04],[.45,.5],[1,1],[4,1]]),{op:'scene3d.event.add',clip:'hurt',id:'hurt-sound',type:'sound',values:{time:.16,duration:.4,pitch:320,volume:.1}});
- const rollKeys=[];for(let i=0;i<=16;i++){const t=i/16,angle=t*Math.PI/2;rollKeys.push([.4+t*.7,[1.15*(1-Math.cos(angle)+Math.sin(angle)),1.15*(Math.cos(angle)+Math.sin(angle)),0],'linear']);}commands.push(...keys('roll','position',[[0,[0,1.15,0]],...rollKeys,[2,[2.3,1.15,0]],[3,[0,1.15,0]],[4,[0,1.15,0]]]),...keys('roll','rotation',[[0,[0,0,0]],[.25,[0,0,7]],[.4,[0,0,0]],...Array.from({length:16},(_,i)=>[.4+(i+1)/16*.7,[0,0,-(i+1)/16*90],'linear']),[2,[0,0,-90]],[3,[0,0,0]],[4,[0,0,0]]]),...keys('roll','deform.stretch',[[0,1],[.25,.94],[.4,1],[1.1,1],[1.25,.9],[1.6,1],[4,1]]));commands.push(...keys('spin','rotation',[[0,[0,0,0]],[.6,[0,-18,0]],[1,[0,0,0]],[3.2,[0,540,0],'linear'],[4,[0,720,0]]]),...keys('spin','eye.open',[[0,1],[.6,.65],[1,1.2],[3.2,1.2],[4,1]]),{op:'scene3d.event.add',clip:'spin',id:'spin-beam',type:'beam',values:{time:.35,duration:3,charge:.65,node:'watcher',origin:[0,-.02,1.18],direction:[0,-.24,1],width:.1,impactAsset:'watcher-impact-art'}},{op:'scene3d.event.add',clip:'slam',id:'impact-shake',type:'shake',values:{time:1.82,duration:.32,amount:.08}},{op:'scene3d.event.add',clip:'hurt',id:'hurt-freeze',type:'hitstop',values:{time:.18,duration:.07}});const draft={assets:[],scene3d:null};for(const command of commands)applySceneCommand(draft,command);const playback=await watcherPlaybackCommands(draft.scene3d,{base});commands.push(...playback);for(const c of playback)applySceneCommand(draft,c);const illustrated=await watcherIllustrationCommands(draft.scene3d,{base});commands.push(...illustrated);for(const c of illustrated)applySceneCommand(draft,c);commands.push(...watcherStudioFeelCommands(draft.scene3d));const variants={hearth:['#344c40','#c5973e','#eee0b4','#080e0b','#f0bf4b'],solis:['#ad623e','#dfb347','#fbebc6','#080e0b','#ff923e'],void:['#382f53','#b18bce','#d4d8ed','#080e0b','#b18bff']},roles=['stone','accent','paper','ink','energy'];for(const [i,role]of roles.entries())commands.push({op:'appearance.role',id:'watcher-'+role,name:'Watcher '+role,color:variants.hearth[i]});for(const [name,colors]of Object.entries(variants))commands.push({op:'appearance.variant',id:'watcher-'+name,name:'Watcher · '+name[0].toUpperCase()+name.slice(1),colors:Object.fromEntries(roles.map((r,i)=>['watcher-'+r,colors[i]]))});for(let slot=0;slot<4;slot++)commands.push({op:'appearance.bind',id:'watcher-material-'+slot,role:'watcher-'+roles[slot],target:{kind:'material',id:'ink',slot}});commands.push({op:'appearance.bind',id:'watcher-energy',role:'watcher-energy',target:{kind:'environment',channel:'lightColor'}},{op:'appearance.bind',id:'watcher-instance-energy',role:'watcher-energy',target:{kind:'node',id:'watcher',channel:'effectColor'}},{op:'appearance.select',id:'watcher-hearth'});return commands;}
+import { sceneDefaults } from './schema.js';
+
+export function emitterCommands(project = {}) {
+  const ids = new Set([...(project.entityDefinitions?.components ?? []), ...(project.entityDefinitions?.entities ?? [])].map(item => item.id));
+  const unique = base => { let id = base, index = 2; while (ids.has(id)) id = base + index++; ids.add(id); return id; };
+  const component = unique('EmitterOutput'), entity = unique('EmitterDevice');
+  const enable = value => ['command', 'component.set', { component, path: 'enabled', value }];
+  const scene = sceneDefaults();
+  scene.name = 'Two attachment points';
+  scene.camera = { ...scene.camera, position: [6, 5, 8], target: [0, 1, 1], size: 7 };
+  scene.controllerLibraries = {
+    pulse: {
+      initialState: 'idle',
+      procedures: { start: [['enter', 'active']] },
+      states: {
+        idle: { enter: [enable(false), ['schedule', 0.6, 'activate']], on: { activate: [['enter', 'active']] } },
+        active: { enter: [enable(true), ['schedule', 0.9, 'deactivate']],
+          exit: [enable(false)], on: { deactivate: [['enter', 'idle']] } }
+      }
+    }
+  };
+  return [
+    { op: 'component.define', value: { id: component, schema: { type: 'object', properties: { enabled: { type: 'boolean' } }, required: ['enabled'], additionalProperties: false }, defaults: { enabled: false } } },
+    { op: 'entity.create', id: entity, name: 'Emitter device' },
+    { op: 'entity.assign', id: entity, component },
+    { op: 'scene3d.replace', value: scene },
+    { op: 'scene3d.node.add', id: 'emitter', type: 'box', values: {
+      name: 'Emitter', dimensions: [1.8, 1, 1], position: [0, 1, 0],
+      controller: { library: 'pulse', entity, presentation: {
+        attachments: {
+          left: { position: [-0.55, 0.2, 0.55], direction: [-0.15, 0, 1] },
+          right: { position: [0.55, 0.2, 0.55], direction: [0.15, 0, 1] }
+        },
+        beams: [
+          { id: 'first', origin: 'left', enabled: { path: 'components.' + component + '.enabled' }, length: 2.5, width: 0.045, color: '#7dd3fc' },
+          { id: 'second', origin: 'right', enabled: { path: 'components.' + component + '.enabled' }, length: 2, width: 0.06, color: '#fbbf24' }
+        ]
+      } }
+    } },
+    { op: 'scene3d.key', clip: 'idle', node: 'emitter', channel: 'rotation', time: 0, value: [0, -20, 0] },
+    { op: 'scene3d.key', clip: 'idle', node: 'emitter', channel: 'rotation', time: 3, value: [0, 20, 0] },
+    { op: 'scene3d.key', clip: 'idle', node: 'emitter', channel: 'rotation', time: 6, value: [0, -20, 0] }
+  ];
+}

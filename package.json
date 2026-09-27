@@ -1,12 +1,12 @@
 {
   "name": "@shapeshift-labs/studio-web",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Shapeshift Studio web editor",
   "scripts": {
     "build": "node scripts/build.mjs",
     "start": "node scripts/serve.mjs",
-    "restore:assets": "node scripts/restore-assets.mjs",
-    "test": "node --test puppet-studio/entities/definitions.test.mjs puppet-studio/references/references.test.mjs puppet-studio/body-joins.test.mjs"
+    "test": "node --test puppet-studio/entities/definitions.test.mjs puppet-studio/references/references.test.mjs puppet-studio/body-joins.test.mjs puppet-studio/authoring/behaviour.test.mjs",
+    "test:browser": "node scripts/qa/behaviour.mjs"
   },
   "keywords": [],
   "author": "",
@@ -15,18 +15,16 @@
     "@shapeshift-labs/frontier": "0.1.9",
     "@shapeshift-labs/frontier-scene": "0.1.0",
     "@shapeshift-labs/frontier-virtual": "0.1.0",
-    "@shapeshift-labs/studio-core": "github:siliconjungle/shapeshift-studio-core#075ce7a",
+    "@shapeshift-labs/studio-core": "github:siliconjungle/shapeshift-studio-core#519c4906d4b8a4f7c7f23e69404fd033494436b7",
     "@silicon-jungle/inkwell-sdk": "0.0.7",
     "fflate": "0.8.2",
     "gifenc": "1.0.3",
     "gifuct-js": "2.1.2",
     "polygon-clipping": "0.15.7",
-    "sharp": "^0.35.4",
     "three": "0.180.0"
   },
   "private": true,
   "devDependencies": {
-    "@silicon-jungle/inkwell-cli": "0.0.11",
     "@xmldom/xmldom": "^0.9.12",
     "esbuild": "0.28.2",
     "playwright": "^1.63.0"

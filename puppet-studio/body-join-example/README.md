@@ -1,6 +1,6 @@
 # Body joins
 
-Open `/puppet-studio/index.html?example=body-joins` to load the snake with joins enabled and its animation playing. Narrow windows open with **Focus canvas** enabled; **Show rig panels** restores the inspector and keyframe tracks. The example uses the existing Hearth snake SVG artwork, with look, turn and strike clips.
+Open `/puppet-studio/index.html?example=body-joins` to load the snake with joins enabled and its animation playing. Narrow windows open with **Focus canvas** enabled; **Show rig panels** restores the inspector and keyframe tracks. The example uses the self-contained geometric SVG artwork, with look, turn and strike clips.
 
 In **Body joins**, select a moving artwork piece and the body it should bend, then choose **Join pieces**. The moving piece's pivot supplies the connection point. Adjust **Bend reach**, **Strength**, or **Pick connection on body** to tune the attachment. **Joined movement** temporarily disables the entire join; **Match outlines & colours** independently controls contour matching. **Unjoin pieces** removes the relationship. These edits support undo/redo and project saving.
 
