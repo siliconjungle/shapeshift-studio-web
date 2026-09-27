@@ -1,3 +1,4 @@
+import {trackTask} from '../api/activity.js';
 import {previewDefaults,previewSegment} from './preview.js';
 import {freezeReference} from './preview-snapshot.js';
 import {PreviewPlayer} from './preview-player.js';
@@ -9,7 +10,7 @@ export function mountPreview({project,dispatch,context,toast}){
  document.body.append(panel);const $=id=>panel.querySelector('#'+id);
  let scenario=null,current=null,saved=null,time=0,playing=false,visible=false,generation=0,last=0,reference='',recording=false,layout='split',cameraMode='current',raf=0,disposed=false,loading=false;
  const clips=()=>scenario?.dimension===3?project().scene3d?.clips??[]:project().clips;
- const run=fn=>Promise.resolve().then(fn).catch(e=>{pause();toast(e.message,true);});
+ const run=fn=>trackTask(Promise.resolve().then(fn).catch(e=>{pause();toast(e.message,true);}));
  const selectedReference=()=>project().preview?.references?.find(r=>r.id===reference&&r.scenario.dimension===scenario?.dimension);
  const duration=()=>Math.max(scenario?.duration??0,selectedReference()?.scenario.duration??0);
  const audible=lane=>playing&&$('arena-sound').checked&&$('arena-audio').value===lane;
@@ -85,7 +86,7 @@ export function mountPreview({project,dispatch,context,toast}){
  return{
   async show(){visible=true;panel.hidden=false;const c=context();scenario=structuredClone(project().preview?.scenarios.find(s=>s.dimension===c.dimension)??previewDefaults(project(),c));if(!selectedReference())reference='';controls();await load();},
   hide(){visible=false;panel.hidden=true;pause();generation++;current?.dispose();saved?.dispose();current=saved=null;loading=false;},seek,saveReference:capture,
-  runtime:()=>current?.scene,referenceRuntime:()=>saved?.scene,
+  async playback({playing:next,audible}){if(audible!==undefined)$('arena-sound').checked=!!audible;if(next)await start();else pause();},runtime:()=>current?.scene,referenceRuntime:()=>saved?.scene,
   snapshot:()=>({time,playing,loading,recording,scenario:structuredClone(scenario),reference,layout,cameraMode,current:current?.snapshot(),saved:saved?.snapshot()}),
   dispose(){disposed=true;generation++;pause();cancelAnimationFrame(raf);observer.disconnect();document.removeEventListener('visibilitychange',onVisibility);current?.dispose();saved?.dispose();panel.remove();}
  };

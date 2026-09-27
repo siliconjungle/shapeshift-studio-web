@@ -25,3 +25,9 @@ Library components carry their entity definitions and controller libraries into 
 Version 0.2 removes bundled application simulations, content packs, and fixed ability contracts. Projects using those older integrations require migration in their consuming application. Existing artwork, animation, entity schemas, and generic scene tools remain supported.
 
 With the built editor running, `npm run test:browser` checks behaviour authoring, both renderers, state transitions, backward seeking, portable playback, and the body-join example. This check uses installed Google Chrome through Playwright and mutes audio; set `STUDIO_URL` to test a different local server.
+
+## Live API and CLI
+
+AI tools can operate the same open tab as a person, including project edits, undo/redo, views, panels, selection, tools, playback, canvas gestures, imports and exports. Start with `npm run studio -- sessions`, `npm run studio -- capabilities`, and `npm run studio -- inspect`. Use `--session ID` to choose a tab and `--revision N` to reject stale edits. The browser entry point is `window.shapeshiftStudio.api.call({op,args})`.
+
+See the [live API contract, examples and coverage](docs/live-api.md). Run `npm run test:api` for the CLI-to-browser and human/AI concurrency checks.

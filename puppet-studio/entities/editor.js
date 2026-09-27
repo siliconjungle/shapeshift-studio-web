@@ -1,3 +1,4 @@
+import {revisionGuard} from '../api/activity.js';
 import {entityPacket} from './definitions.js';
 import {referenceIssues} from '../references/catalog.js';
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -31,7 +32,7 @@ export function mountEntities({project,dispatch,revision,toast,download,referenc
  }
  function read(el){if(el.dataset.enum)return JSON.parse(el.dataset.enum)[+el.value];const type=el.dataset.valueType;if(type==='boolean')return el.checked;if(type==='number'||type==='integer'){if(el.value==='')throw Error('Enter a number');return Number(el.value)}if(type==='array'||type==='null')return JSON.parse(el.value);return el.value}
  panel.onchange=async event=>{const el=event.target;try{
-  if(el.hasAttribute('data-file')){const file=el.files[0];if(file){if(file.size>5*1024*1024)throw Error('Entity library must be under 5 MB');if(run({op:'entity.import',mode:panel.querySelector('[data-import-mode]').value,value:JSON.parse(await file.text())})){const count=referenceIssues(project()).length;toast(count?'Imported; '+count+' references need assignment. Open References to review them.':'Definitions imported.')}}return}
+  if(el.hasAttribute('data-file')){const file=el.files[0];if(file){if(file.size>5*1024*1024)throw Error('Entity library must be under 5 MB');const check=revisionGuard(revision),mode=panel.querySelector('[data-import-mode]').value,value=JSON.parse(await file.text());check();if(run({op:'entity.import',mode,value})){const count=referenceIssues(project()).length;toast(count?'Imported; '+count+' references need assignment. Open References to review them.':'Definitions imported.')}}return}
   if(el.hasAttribute('data-select')){selected=el.value;stamp=-1;render()}
   else if(el.hasAttribute('data-component-select')){component=el.value;stamp=-1;render()}
   else if(el.hasAttribute('data-name'))run({op:'entity.rename',id:selected,name:el.value});
