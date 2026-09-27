@@ -23,13 +23,6 @@
               "dimension": 2
             }
           },
-          "ability": {
-            "type": "string",
-            "title": "Ability",
-            "reference": {
-              "kind": "ability"
-            }
-          },
           "sound": {
             "type": "string",
             "title": "Sound library",
@@ -42,7 +35,6 @@
         "required": [
           "artwork",
           "animation",
-          "ability",
           "sound"
         ],
         "additionalProperties": false
@@ -50,7 +42,6 @@
       "defaults": {
         "artwork": "",
         "animation": "",
-        "ability": "",
         "sound": ""
       }
     },
@@ -83,7 +74,6 @@
         "Presentation": {
           "artwork": "",
           "animation": "",
-          "ability": "",
           "sound": ""
         },
         "Movement": {
