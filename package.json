@@ -5,8 +5,10 @@
   "scripts": {
     "build": "node scripts/build.mjs",
     "start": "node scripts/serve.mjs",
-    "test": "node --test puppet-studio/entities/definitions.test.mjs puppet-studio/references/references.test.mjs puppet-studio/body-joins.test.mjs puppet-studio/authoring/behaviour.test.mjs",
-    "test:browser": "node scripts/qa/behaviour.mjs"
+    "test": "node --test puppet-studio/entities/definitions.test.mjs puppet-studio/references/references.test.mjs puppet-studio/body-joins.test.mjs puppet-studio/authoring/behaviour.test.mjs puppet-studio/api/document-commands.test.mjs scripts/api-server.test.mjs",
+    "test:browser": "node scripts/qa/behaviour.mjs",
+    "studio": "node scripts/studio.mjs",
+    "test:api": "node scripts/qa/live-api.mjs"
   },
   "keywords": [],
   "author": "",
@@ -29,5 +31,8 @@
     "esbuild": "0.28.2",
     "playwright": "^1.63.0"
   },
-  "license": "UNLICENSED"
+  "license": "UNLICENSED",
+  "bin": {
+    "shapeshift-studio": "scripts/studio.mjs"
+  }
 }
