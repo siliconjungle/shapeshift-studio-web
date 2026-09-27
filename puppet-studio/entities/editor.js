@@ -3,7 +3,7 @@ import {referenceIssues} from '../references/catalog.js';
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const blank=()=>({version:1,components:[],entities:[]});
 export function mountEntities({project,dispatch,revision,toast,download,references=()=>null}){
- const button=document.createElement('button');button.id='entities-open';button.textContent='Entities';document.getElementById('abilities-open').before(button);
+ const button=document.createElement('button');button.id='entities-open';button.textContent='Entities';document.querySelector('.top-actions').append(button);
  const panel=document.createElement('aside');panel.id='entities-panel';panel.className='author-panel';panel.hidden=true;panel.setAttribute('aria-label','Entity definitions');document.body.append(panel);
  const style=document.createElement('style');style.textContent='#entities-panel fieldset{display:block;margin:12px 0;padding:12px}#entities-panel .entity-field{margin:0 0 12px}#entities-panel .entity-field label{display:flex;flex-direction:column;gap:5px}#entities-panel details{margin:12px 0}#entities-panel textarea{width:100%;box-sizing:border-box}#entities-panel [type=checkbox]{align-self:flex-start;width:auto}#entities-panel [data-component]>.entity-field:last-of-type{margin-bottom:0}';document.head.append(style);
  let tab='entities',selected=null,component=null,stamp=-1;

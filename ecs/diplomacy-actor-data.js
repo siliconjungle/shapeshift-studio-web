@@ -1,2 +1,0 @@
-export const ActorDiplomacy={name:'ActorDiplomacy',validate:r=>r!==null&&typeof r==='object'&&!Array.isArray(r)&&r.person!==null&&typeof r.person==='object'&&(r.helpAfter===undefined||Number.isFinite(r.helpAfter)&&r.helpAfter>=0)};
-export function actorDiplomacyInput(person){if(!Object.hasOwn(person,'diplomacyHelpAfter'))return [];const row={person,helpAfter:person.diplomacyHelpAfter};if(!ActorDiplomacy.validate(row))throw Error('Invalid ActorDiplomacy input');return [{definition:ActorDiplomacy,row,keys:['diplomacyHelpAfter']}];}

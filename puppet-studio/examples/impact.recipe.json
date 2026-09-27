@@ -5,7 +5,7 @@
   {"op":"key","joint":"star","time":0.5,"value":{"x":0,"rotation":0}},
   {"op":"key","joint":"star","time":1.5,"value":{"x":40,"rotation":20}},
   {"op":"visual","joint":"star","values":{"smear":{"enabled":true,"seconds":0.18,"samples":12,"alpha":0.35}}},
-  {"op":"preset","name":"little-gods-contact","joint":"star","time":0.5},
+  {"op":"preset","name":"contact-impact","joint":"star","time":0.5},
   {"op":"preset","name":"explosion","time":0.5},
   {"op":"emitter.update","id":"emitter","values":{"x":0,"y":0,"burst":70,"size":[2,5],"speed":[20,80]}},
   {"op":"node.add","type":"glow","id":"glow","values":{"params":{"radius":3,"strength":0.7,"color":"#ff994e"}}}

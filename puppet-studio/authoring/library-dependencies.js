@@ -16,16 +16,27 @@ function mapAssets(object,map){const out=copy(object);for(const key of assetKeys
 export function captureComponentDependencies(p,dimension,nodes){
  const assets=new Set(),materialIds=new Set(),audioIds=new Set(),effectIds=new Set(),controllerIds=new Set(),vectorIds=new Set();let ground=false;
  const collect=o=>{for(const key of assetKeys)if(typeof o?.[key]==='string')assets.add(o[key]);};
- for(const n of nodes){collect(n);collect(n.sprite);for(const s of Object.values(n.surfaces??{}))collect(s);if(n.material)materialIds.add(n.material);if(n.illustration?.ground){ground=true;if(n.illustration.ground.paletteMaterial)materialIds.add(n.illustration.ground.paletteMaterial);}if(n.illustration?.vectorLibrary)vectorIds.add(n.illustration.vectorLibrary);if(n.controller){controllerIds.add(n.controller.library);const d=n.controller.presentation;if(d?.audioLibrary)audioIds.add(d.audioLibrary);if(d?.effectLibrary)effectIds.add(d.effectLibrary);collect(d?.landing);}}
+ const nodeIds=new Set(nodes.map(n=>n.id));for(const n of nodes)for(const attachment of Object.values(n.controller?.presentation?.attachments??{}))check(!attachment.node||nodeIds.has(attachment.node),'attachment target is outside the component');
+ for(const n of nodes){collect(n);collect(n.sprite);for(const s of Object.values(n.surfaces??{}))collect(s);if(n.material)materialIds.add(n.material);if(n.illustration?.ground){ground=true;if(n.illustration.ground.paletteMaterial)materialIds.add(n.illustration.ground.paletteMaterial);}if(n.illustration?.vectorLibrary)vectorIds.add(n.illustration.vectorLibrary);if(n.controller){controllerIds.add(n.controller.library);const d=n.controller.presentation;if(d?.audioLibrary)audioIds.add(d.audioLibrary);if(d?.effectLibrary)effectIds.add(d.effectLibrary);}}
  const doc=dimension===3?p.scene3d:p,take=(ids,table,label)=>Object.fromEntries([...ids].map(id=>{check(table?.[id],'missing '+label+' '+id);return[id,copy(table[id])];}));
  const materials=(doc.materials??[]).filter(m=>materialIds.has(m.id)).map(m=>{collect(m);return copy(m);});check(materials.length===materialIds.size,'missing component material');
  const packet={version:1,assets:[],materials,audioLibraries:take(audioIds,doc.audioLibraries,'audio'),effectLibraries:take(effectIds,doc.effectLibraries,'effects'),controllerLibraries:take(controllerIds,doc.controllerLibraries,'controller')};
  if(vectorIds.size||ground){packet.rendering=copy(doc.rendering);check(packet.rendering,'missing illustrated rendering profile');packet.rendering.vectorLibraries=take(vectorIds,doc.rendering.vectorLibraries,'vector library');for(const v of Object.values(packet.rendering.vectorLibraries))for(const id of Object.values(v.sources??{}))assets.add(id);packet.resources=copy(doc.resources??[]);const resourceIds=new Set(packet.resources.map(r=>r.id));packet.rendering.resources=Object.fromEntries(Object.entries(packet.rendering.resources??{}).filter(([,id])=>resourceIds.has(id)));}
+ if(controllerIds.size&&p.entityDefinitions)packet.entityDefinitions=copy(p.entityDefinitions);
  if(dimension===3&&nodes.some(n=>n.type==='puppet'))packet.puppets=capturePuppetDependencies(p,nodes);
  for(const id of assets){const a=p.assets.find(a=>a.id===id);check(a,'missing component artwork '+id);packet.assets.push(copy(a));}return packet;
 }
 export function importComponentDependencies(p,item){
- const b=item.dependencies;if(!b)return{assets:{},materials:{},audioLibraries:{},effectLibraries:{},controllerLibraries:{},vectorLibraries:{}};
+ const b=item.dependencies;
+ if(b?.entityDefinitions){
+  const target=p.entityDefinitions??{version:1,components:[],entities:[]};
+  // Programs address component and template IDs as data. Preserve those IDs and
+  // reject incompatible schemas rather than silently rewriting program literals.
+  for(const kind of ['components','entities'])for(const value of b.entityDefinitions[kind]){const existing=target[kind].find(entry=>entry.id===value.id);check(!existing||same(existing,value),'conflicting '+kind+' definition '+value.id);}
+  p.entityDefinitions=copy(target);
+  for(const kind of ['components','entities'])for(const value of b.entityDefinitions[kind])if(!p.entityDefinitions[kind].some(entry=>entry.id===value.id))p.entityDefinitions[kind].push(copy(value));
+ }
+ if(!b)return{assets:{},materials:{},audioLibraries:{},effectLibraries:{},controllerLibraries:{},vectorLibraries:{}};
  const doc=item.dimension===3?p.scene3d:p,prefix=item.id.slice(0,40),maps={};check(doc,'create a destination scene first');maps.assets=arrayImport(p.assets,b.assets,prefix+'-art');
  maps.materials=b.materials?.length?arrayImport(doc.materials??(doc.materials=[]),b.materials,prefix+'-mat',m=>mapAssets(m,maps.assets)):{};
  for(const kind of ['audioLibraries','effectLibraries','controllerLibraries'])maps[kind]=Object.keys(b[kind]??{}).length?objectImport(doc[kind]??(doc[kind]={}),b[kind],prefix+'-'+kind):{};
@@ -44,7 +55,7 @@ export function importComponentDependencies(p,item){
 export function componentDependencyNodes(nodes,maps){return remapPuppetNodes(nodes,maps.puppets??{}).map(source=>{
  const n=mapAssets(source,maps.assets);if(n.sprite)n.sprite=mapAssets(n.sprite,maps.assets);if(n.material)n.material=maps.materials[n.material]??n.material;
  if(n.surfaces)n.surfaces=Object.fromEntries(Object.entries(n.surfaces).map(([face,s])=>[face,mapAssets(s,maps.assets)]));
- if(n.controller){const c=n.controller;c.library=maps.controllerLibraries[c.library]??c.library;if(c.presentation){const d=c.presentation;if(d.audioLibrary)d.audioLibrary=maps.audioLibraries[d.audioLibrary]??d.audioLibrary;if(d.effectLibrary)d.effectLibrary=maps.effectLibraries[d.effectLibrary]??d.effectLibrary;if(d.landing)d.landing=mapAssets(d.landing,maps.assets);}}
+ if(n.controller){const c=n.controller;c.library=maps.controllerLibraries[c.library]??c.library;if(c.presentation){const d=c.presentation;if(d.audioLibrary)d.audioLibrary=maps.audioLibraries[d.audioLibrary]??d.audioLibrary;if(d.effectLibrary)d.effectLibrary=maps.effectLibraries[d.effectLibrary]??d.effectLibrary;}}
  if(n.illustration){const i=n.illustration;if(i.vectorLibrary)i.vectorLibrary=maps.vectorLibraries[i.vectorLibrary]??i.vectorLibrary;if(i.ground){i.ground.paletteMaterial=maps.materials[i.ground.paletteMaterial]??i.ground.paletteMaterial;for(const key of ['manifest','maps','paint'])if(i.ground[key])i.ground[key]=(maps.resourcePrefix??'')+i.ground[key];}}
  return n;
 });}

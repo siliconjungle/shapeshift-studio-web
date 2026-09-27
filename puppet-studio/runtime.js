@@ -4,9 +4,7 @@ import {validateBodyJoins,bodyJoinFrame,deformBodyPoint} from './body-joins.js';
 import {drawJoinedArtwork} from './body-join-render.js';
 export {makeBodyJoin,bodyJoinFrame,deformBodyPoint,deformBodyPositions,bindBodyJoinGeometry} from './body-joins.js';
 import {validateEntityLibrary} from './entities/definitions.js';
-import {validateAbilities} from './authoring/abilities.js';
 import {validatePuppetSources} from './puppet-sources.js';
-import {ensureArtPalette,artImageURL} from '../art-palette.js';
 import {validateLibrary} from './authoring/library.js';
 import {finalChannels,validateResolvedTracks} from './authoring/resolved-channels.js';
 import {validateTiming} from './authoring/timing.js';
@@ -16,13 +14,11 @@ import {validateActions} from './authoring/actions.js';
 import {validateBackdrop} from './authoring/backdrop.js';
 import {validateBezier} from './authoring/easing.js';
 import {validateAppearance,styledAssets,pruneAppearanceTargets,projectAppearance} from './authoring/appearance.js';
-import {migrateLegacyAppearance} from './integrations/little-gods/legacy-appearance.js';
 import {validateVector} from './vector/model.js';
 import {validateGrading} from '../rendering/color-grading.js';
 import {poseLayers,solvePoseTools,validateTools,cleanToolReferences} from './motion-tools/core.js';
 import {validateLighting2D} from './lighting-state.js';
 import {validateScene} from './scene3d/schema.js';
-import {validateNative} from './native/schema.js';
 import {sampleParticleSystem} from './fx/particles.js';
 import {validateVisual,finiteTree} from './fx/validate.js';
 import {dynamicMotion} from './fx/motion.js';
@@ -143,9 +139,8 @@ export function removeJoint(project,id){
   for(const c of project.clips){cleanToolReferences(c,new Set(project.joints.map(j=>j.id)));if(c.resolvedTracks)c.resolvedTracks=c.resolvedTracks.filter(t=>!ids.has(t.node));if(c.lightingTracks)c.lightingTracks=c.lightingTracks.filter(t=>!ids.has(t.node));for(const key of ids)delete c.tracks[key];if(c.effects)c.effects=c.effects.filter(e=>!ids.has(e.joint));for(const [end,chain]of Object.entries(c.ik??{}))if(ids.has(end)||ids.has(chain.root)||ids.has(chain.mid))delete c.ik[end];}
 }
 export function validateProject(input){
- if(input?.game)validateNative(input.game);
   if(!input||input.format!==FORMAT||input.version!==1)throw Error('Choose a Shapeshift Studio v1 project JSON.');
-  const p=migrateLegacyAppearance(clone(input)),fail=message=>{throw Error(message);};
+  const p=clone(input),fail=message=>{throw Error(message);};
   if(typeof p.name!=='string'||p.name.length>200)fail('Invalid project name.');
   if(!Array.isArray(p.joints)||!p.joints.length||p.joints.length>256)fail('A rig needs 1–256 joints.');
   if(!Array.isArray(p.assets)||p.assets.length>256)fail('Too many images.');
@@ -181,12 +176,11 @@ export function validateProject(input){
     }
   }
   for(const c of p.clips)validateTools(c.tools,p.joints,c.duration,2,p.clips);
-  if(p.entityDefinitions)validateEntityLibrary(p.entityDefinitions);validateAbilities(p);validatePuppetSources(p);validateLibrary(p);validateResolvedTracks(p);validateTiming(p);validateSound(p);validatePreview(p,validateProject);validateActions(p);validateBackdrop(p);validateAppearance(p);validateGrading(p.grading);validateLighting2D(p);finiteTree(p);if(p.scene3d){validateScene(p.scene3d,p.assets);if(p.appearance&&(p.scene3d.nodes.some(n=>n.variant||n.puppet?.variant)||p.appearance.variants.some(v=>v.effects||v.voices))){const view=projectAppearance(p);validateScene(view.scene3d,view.assets);}}validateFX(p);for(const c of p.clips){if(c.fx)validateFX({...p,fx:c.fx});validateCues(c);}
+  if(p.entityDefinitions)validateEntityLibrary(p.entityDefinitions);for(const node of p.scene3d?.nodes??[])if(node.controller?.entity&&!p.entityDefinitions?.entities.some(entity=>entity.id===node.controller.entity))fail('Missing controller entity template '+node.controller.entity);validatePuppetSources(p);validateLibrary(p);validateResolvedTracks(p);validateTiming(p);validateSound(p);validatePreview(p,validateProject);validateActions(p);validateBackdrop(p);validateAppearance(p);validateGrading(p.grading);validateLighting2D(p);finiteTree(p);if(p.scene3d){validateScene(p.scene3d,p.assets);if(p.appearance&&(p.scene3d.nodes.some(n=>n.variant||n.puppet?.variant)||p.appearance.variants.some(v=>v.effects||v.voices))){const view=projectAppearance(p);validateScene(view.scene3d,view.assets);}}validateFX(p);for(const c of p.clips){if(c.fx)validateFX({...p,fx:c.fx});validateCues(c);}
   return p;
 }
 export async function loadImages(project){
- await ensureArtPalette();
- const entries=await Promise.all(styledAssets(project).map(async a=>{const img=new Image();img.crossOrigin='anonymous';img.src=await artImageURL(a.src);await img.decode();if(a.frames){img.frames=await Promise.all(a.frames.map(async src=>{const frame=new Image();frame.crossOrigin='anonymous';frame.src=await artImageURL(src);await frame.decode();return frame;}));}img.frameDurations=a.frameDurations;img.vectorModel=a.vector;return[a.id,img];}));const images=new Map(entries);images.contours=new Map();
+ const entries=await Promise.all(styledAssets(project).map(async a=>{const img=new Image();img.crossOrigin='anonymous';img.src=a.src;await img.decode();if(a.frames){img.frames=await Promise.all(a.frames.map(async src=>{const frame=new Image();frame.crossOrigin='anonymous';frame.src=src;await frame.decode();return frame;}));}img.frameDurations=a.frameDurations;img.vectorModel=a.vector;return[a.id,img];}));const images=new Map(entries);images.contours=new Map();
  for(const a of project.assets){const img=images.get(a.id);if([project.fx,...(project.clips??[]).map(c=>c.fx)].some(f=>f?.emitters?.some(e=>e.contour===a.id))){const c=typeof OffscreenCanvas==='function'?new OffscreenCanvas(64,64):Object.assign(document.createElement('canvas'),{width:64,height:64}),ctx=c.getContext('2d');ctx.drawImage(img,0,0,64,64);const d=ctx.getImageData(0,0,64,64).data,points=[];for(let y=1;y<63;y++)for(let x=1;x<63;x++){const i=y*64+x;if(d[i*4+3]>100&&[i-1,i+1,i-64,i+64].some(j=>d[j*4+3]<100))points.push({x:x/64,y:y/64});}images.contours.set(a.id,points);}}
  const models=[...(project.fx?.models??[]),...(project.clips??[]).flatMap(c=>(c.fx?.models??[]).map(m=>({...m,id:c.id+':'+m.id})))];if(models.length){const {loadModels}=await import('./fx/models.js');images.models=await loadModels(models);}return images;
 }

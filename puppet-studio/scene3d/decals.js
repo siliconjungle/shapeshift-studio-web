@@ -3,7 +3,7 @@ import {parseSVG} from './geometry.js';
 import {LayeredVectorEffect} from './core/vector-effects.js';
 const Z=new T.Vector3(0,0,1);
 // A plain authored stamp is still vector geometry. More elaborate layer programs
-// (the Watcher's landing splash, for example) use the same sampler and material.
+// (an animated contact mark, for example) use the same sampler and material.
 export function stampDefinition(duration){return{curveSegments:28,boundsTolerance:4,surfaceOffset:.006,renderOrder:20,color:'#f0bf4b',projection:'surface',buckets:[{when:true,id:'paint'}],animation:{visible:['and',['gte',['var','age'],0],['lt',['var','age'],duration]],root:{'scale.x':1,'scale.y':1,'scale.z':1},layers:[{tracks:{alpha:['sub',1,['smooth',['div',['var','age'],duration]]],time:['var','age'],flutter:0}}]}};}
 export class SceneDecals{
  constructor(parent){this.parent=parent;this.entries=new Map();this.generation=0;this.ray=new T.Raycaster();this.normalMatrix=new T.Matrix3();}
