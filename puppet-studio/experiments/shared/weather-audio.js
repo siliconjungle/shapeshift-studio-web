@@ -24,4 +24,3 @@ export function weatherSamples(sampleRate,seconds,kind,seed=91){
  }
  return channels;
 }
-

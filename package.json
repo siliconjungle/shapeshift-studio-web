@@ -14,7 +14,7 @@
     "vectorize:video": "node scripts/vectorize-video.mjs",
     "build:video": "node scripts/build-video-vectorizer.mjs",
     "serve:video": "node scripts/serve-video-vectorizer.mjs",
-    "test:examples": "node --test puppet-studio/experiments/bramble-map/*.test.mjs puppet-studio/experiments/sunflower-puppet/*.test.mjs puppet-studio/portrait/*.test.mjs"
+    "test:examples": "node --test puppet-studio/experiments/bramble-map/*.test.mjs puppet-studio/experiments/sunflower-puppet/*.test.mjs puppet-studio/portrait/*.test.mjs puppet-studio/experiments/potion/*.test.mjs"
   },
   "keywords": [],
   "author": "",

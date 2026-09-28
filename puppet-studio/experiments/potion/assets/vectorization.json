@@ -1,0 +1,25 @@
+{
+  "width": 1214,
+  "height": 1295,
+  "preset": "cel",
+  "settings": {
+    "colors": 10,
+    "speckle": 4,
+    "precision": 6,
+    "difference": 14,
+    "corner": 80,
+    "length": 4.5,
+    "median": 3,
+    "preserveDarkColors": true
+  },
+  "alphaThreshold": 128,
+  "paths": 170,
+  "colours": 15,
+  "curves": 2701,
+  "bytes": 104586,
+  "silhouetteIoU": 0.9935196671668554,
+  "meanColorError": 0.015362905660843373,
+  "warnings": [
+    "Contains substantial soft transparency; this silhouette preset makes it opaque or transparent."
+  ]
+}

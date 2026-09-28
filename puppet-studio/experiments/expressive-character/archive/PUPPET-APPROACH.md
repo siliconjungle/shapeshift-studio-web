@@ -140,4 +140,3 @@ Add/wire:
 - project data authoring/presets so these are reusable tools rather than hard-coded screenshot animation.
 
 The **first animated proof** should be neutral → smile → cheek puff → extreme panic → recovery, plus one spoken line and a hand-to-face contact. Inspect that continuously at normal speed and in a scrubber before producing the rest of the finished animation assets. More concept art alone does not prove the puppet works.
-

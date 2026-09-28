@@ -101,4 +101,3 @@ The style reset follows direct visual inspection of the official Castle Crashers
 - https://www.devolverdigital.com/games/cult-of-the-lamb
 
 The image prompts and original generated file paths are in concepts/cartoon-generation.json. Images were generated with the built-in image tool. This plan describes proposed animation; concept art alone does not establish that a rig behaves correctly.
-

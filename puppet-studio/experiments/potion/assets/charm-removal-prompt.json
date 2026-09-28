@@ -1,0 +1,6 @@
+{
+  "generator": "Built-in GPT Image",
+  "source": "bottle-open-source.png",
+  "output": "bottle-plain-source.png",
+  "prompt": "Use case: precise-object-edit. Edit this exact empty uncorked glass potion bottle. Remove ONLY the brass crescent moon charm and its metal hanging links; reconstruct the small area of glass behind it. Keep the simple brown twine tied around the neck and its short ends. Preserve exactly the bottle shape, flat teal/cream shading, thick plum ink, empty belly, open oval mouth, front view, registration, and original canvas. No cork, no liquid, no new decoration. The current checkerboard is mistakenly baked in: replace everything outside the bottle with solid pure white #ffffff (no checkerboard), keep the warm pale cream interior opaque. Keep original dimensions and position. Clean limited-palette SVG-style game artwork."
+}

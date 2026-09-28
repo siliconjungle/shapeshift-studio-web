@@ -1,6 +1,6 @@
 # Potion workshop
 
-Live demo: `/puppet-studio/experiments/potion/index.html`  
+Live demo: `/puppet-studio/experiments/potion/index.html`
 Editable Studio puppet: `/puppet-studio/index.html?potion=1`
 
 ## Artwork and construction

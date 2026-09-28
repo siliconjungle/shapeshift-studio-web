@@ -9,4 +9,3 @@ export function treeMotion(mesh) {
   mesh.geometry.boundingSphere.radius+=mesh.userData.base*.1;
   return time=>{uniforms.foliageTime.value=time};
 }
-
