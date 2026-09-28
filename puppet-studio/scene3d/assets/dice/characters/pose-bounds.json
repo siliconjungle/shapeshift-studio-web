@@ -1,0 +1,262 @@
+{
+  "orange-idle": {
+    "bounds": {
+      "left": 102,
+      "top": 70,
+      "right": 411,
+      "bottom": 480
+    },
+    "groundAnchor": [
+      256,
+      480
+    ],
+    "sourceClipped": false
+  },
+  "orange-anticipate": {
+    "bounds": {
+      "left": 116,
+      "top": 70,
+      "right": 397,
+      "bottom": 480
+    },
+    "groundAnchor": [
+      256,
+      480
+    ],
+    "sourceClipped": false
+  },
+  "orange-windup": {
+    "bounds": {
+      "left": 69,
+      "top": 95,
+      "right": 444,
+      "bottom": 480
+    },
+    "groundAnchor": [
+      256,
+      480
+    ],
+    "sourceClipped": false
+  },
+  "orange-attack": {
+    "bounds": {
+      "left": 72,
+      "top": 70,
+      "right": 440,
+      "bottom": 480
+    },
+    "groundAnchor": [
+      256,
+      480
+    ],
+    "sourceClipped": false
+  },
+  "orange-reach": {
+    "bounds": {
+      "left": 38,
+      "top": 90,
+      "right": 474,
+      "bottom": 480
+    },
+    "groundAnchor": [
+      256,
+      480
+    ],
+    "sourceClipped": false
+  },
+  "orange-recover": {
+    "bounds": {
+      "left": 120,
+      "top": 70,
+      "right": 393,
+      "bottom": 480
+    },
+    "groundAnchor": [
+      256,
+      480
+    ],
+    "sourceClipped": false
+  },
+  "orange-hurt": {
+    "bounds": {
+      "left": 95,
+      "top": 80,
+      "right": 418,
+      "bottom": 480
+    },
+    "groundAnchor": [
+      256,
+      480
+    ],
+    "sourceClipped": false
+  },
+  "orange-recoil": {
+    "bounds": {
+      "left": 109,
+      "top": 90,
+      "right": 403,
+      "bottom": 480
+    },
+    "groundAnchor": [
+      256,
+      480
+    ],
+    "sourceClipped": false
+  },
+  "orange-victory": {
+    "bounds": {
+      "left": 105,
+      "top": 60,
+      "right": 407,
+      "bottom": 480
+    },
+    "groundAnchor": [
+      256,
+      480
+    ],
+    "sourceClipped": false
+  },
+  "orange-defeat": {
+    "bounds": {
+      "left": 114,
+      "top": 170,
+      "right": 398,
+      "bottom": 480
+    },
+    "groundAnchor": [
+      256,
+      480
+    ],
+    "sourceClipped": false
+  },
+  "skeleton-idle": {
+    "bounds": {
+      "left": 64,
+      "top": 70,
+      "right": 450,
+      "bottom": 480
+    },
+    "groundAnchor": [
+      256,
+      480
+    ],
+    "sourceClipped": false
+  },
+  "skeleton-anticipate": {
+    "bounds": {
+      "left": 61,
+      "top": 70,
+      "right": 451,
+      "bottom": 480
+    },
+    "groundAnchor": [
+      256,
+      480
+    ],
+    "sourceClipped": false
+  },
+  "skeleton-windup": {
+    "bounds": {
+      "left": 59,
+      "top": 95,
+      "right": 453,
+      "bottom": 480
+    },
+    "groundAnchor": [
+      256,
+      480
+    ],
+    "sourceClipped": false
+  },
+  "skeleton-attack": {
+    "bounds": {
+      "left": 43,
+      "top": 70,
+      "right": 470,
+      "bottom": 480
+    },
+    "groundAnchor": [
+      256,
+      480
+    ],
+    "sourceClipped": false
+  },
+  "skeleton-reach": {
+    "bounds": {
+      "left": 36,
+      "top": 96,
+      "right": 476,
+      "bottom": 480
+    },
+    "groundAnchor": [
+      256,
+      480
+    ],
+    "sourceClipped": false
+  },
+  "skeleton-recover": {
+    "bounds": {
+      "left": 60,
+      "top": 70,
+      "right": 453,
+      "bottom": 480
+    },
+    "groundAnchor": [
+      256,
+      480
+    ],
+    "sourceClipped": false
+  },
+  "skeleton-hurt": {
+    "bounds": {
+      "left": 67,
+      "top": 80,
+      "right": 446,
+      "bottom": 480
+    },
+    "groundAnchor": [
+      256,
+      480
+    ],
+    "sourceClipped": false
+  },
+  "skeleton-recoil": {
+    "bounds": {
+      "left": 57,
+      "top": 90,
+      "right": 456,
+      "bottom": 480
+    },
+    "groundAnchor": [
+      256,
+      480
+    ],
+    "sourceClipped": false
+  },
+  "skeleton-victory": {
+    "bounds": {
+      "left": 83,
+      "top": 60,
+      "right": 431,
+      "bottom": 480
+    },
+    "groundAnchor": [
+      256,
+      480
+    ],
+    "sourceClipped": false
+  },
+  "skeleton-defeat": {
+    "bounds": {
+      "left": 81,
+      "top": 170,
+      "right": 431,
+      "bottom": 480
+    },
+    "groundAnchor": [
+      256,
+      480
+    ],
+    "sourceClipped": false
+  }
+}

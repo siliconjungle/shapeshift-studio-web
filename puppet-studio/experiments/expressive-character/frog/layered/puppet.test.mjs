@@ -1,0 +1,14 @@
+import fs from 'node:fs/promises';import test from 'node:test';import assert from 'node:assert/strict';
+import {preparePuppet,puppetFrame} from './puppet.js';import {exportPose} from './export.js';
+import {correctedArtwork} from '@shapeshift-labs/studio-core/illustration/controls';
+import {influence} from '../../../../motion-tools/core.js';
+import {validateVector} from '@shapeshift-labs/studio-core/vector/model';
+import {validateProject,poseAt} from '../../../../runtime.js';
+const load=p=>fs.readFile(new URL(p,import.meta.url),'utf8').then(JSON.parse);
+const [library,drawings,original,manifest]=await Promise.all(['./assets/layers.json','../intentional/assets/svg/drawings.json','../assets/performance/drawings.json','../audio/babble/manifest.json'].map(load));
+const rig=preparePuppet(library,drawings,original);
+test('all eight poses have separate editable facial and limb assets',()=>{assert.equal(Object.keys(library.poses).length,8);for(const a of Object.values(library.assets))validateVector(a.vector);for(const pose of Object.keys(library.poses)){const f=puppetFrame(rig,0,{pose});assert.equal(f.layers.length,17);assert.equal(new Set(f.layers.map(l=>l.id)).size,17);for(const l of f.layers)assert.ok(l.shapes.every(s=>s.points.every(Number.isFinite)));}});
+test('one wrist moves its hand and connected forearm without changing the other hand or face',()=>{const a=puppetFrame(rig,0,{pose:'settle'}),b=puppetFrame(rig,0,{pose:'settle',leftReach:55});for(const l of a.layers){const other=b.layers.find(k=>k.id===l.id);if(!['leftHand','leftArm'].includes(l.id))assert.deepEqual(other,l);else assert.notDeepEqual(other,l);}});
+test('pose exports retain real parented joints and matching composed transforms',()=>{for(const pose of Object.keys(library.poses)){const f=puppetFrame(rig,0,{pose,headTurn:9,leftReach:15}),p=exportPose(f);validateProject(p);assert.equal(p.joints.find(j=>j.id==='leftHand').parent,'leftArm');assert.equal(p.joints.find(j=>j.id==='leftPupil').parent,'leftEye');const result=poseAt(p,p.clips[0],0);for(const l of f.layers)result.get(l.id).world.forEach((v,i)=>assert.ok(Math.abs(v-l.world[i])<1e-6,l.id));}});
+test('speech changes the mouth geometry without replacing the limb drawings',()=>{const a=puppetFrame(rig,2.76,{manifest}),b=puppetFrame(rig,2.76);for(const id of ['leftHand','rightHand','hat'])assert.equal(a.layers.find(l=>l.id===id).asset,b.layers.find(l=>l.id===id).asset);assert.notDeepEqual(a.layers.find(l=>l.id==='mouth').shapes,b.layers.find(l=>l.id==='mouth').shapes);});
+test('pose library opens all eight registered artwork sets',async()=>{const p=await load('./frog-layered.puppet.json');validateProject(p);assert.equal(p.clips.length,8);for(const clip of p.clips){const frame=poseAt(p,clip,0);for(const j of p.joints.filter(j=>j.sprite))assert.equal(correctedArtwork(j,clip.tools.layers,frame.driverValues,0,(l,t)=>influence(l,t,clip.duration)).sprite.asset,clip.id+'-'+j.id);}});

@@ -1,0 +1,31 @@
+{
+  "tool": "GPT Image built-in",
+  "sourceConcept": "/Users/james/Documents/ChatGPT/3d-modelling/outputs/inkwell-cast-strange-v3/18-daisy-person.png",
+  "method": "Generated directional separated atlases; magenta key removed in asset preparation; Little Gods cel SVG converter.",
+  "jobs": [
+    {
+      "view": "front",
+      "refs": [
+        "/Users/james/.codex/generated_images/01a0a22f-2a24-75d2-87c9-56a2fe7aec5a/exec-7c08d806-8b04-4963-841a-8cdd63dad1a8.png"
+      ],
+      "prompt": "Create the same flower puppet PARTS atlas as the reference, precisely matching its graphic drawing style, proportions of parts, yellow/cream/olive palette and medium-bold dark outlines. Exactly SIX isolated parts in a landscape 1536x1024 THREE COLUMN by TWO ROW grid, generous gutters: top row HEAD, BODY, LEFT HAND; bottom row RIGHT HAND, LEFT FOOT, RIGHT FOOT. Each part centered inside its own equal cell, no overlap, no labels, no whole assembled character. Keep complete hidden attachment ends. Hands and feet are leaves, torso a small green stem ending in a three-leaf hip bud, no clothes. CRITICAL BACKGROUND must be a PERFECTLY FLAT solid saturated magenta #FF00FF uniformly everywhere outside the six parts. This is a chroma key asset sheet. NO checkerboard, NO transparency simulation, NO paper texture, NO wrinkles, NO ground, NO shadow, NO lighting on background. Parts themselves contain no magenta. Flat simple 5-colour cartoon with one cel shadow, no shading gradients. Reproduce these exact FRONT VIEW parts and preserve the face and its grin exactly. Replace ONLY the checkerboard/wrinkled background with uniform flat #FF00FF. Keep the complete head inside its cell with 25px margin (scale down a little if needed). Front-facing camera. One complete flower head with cream petals, round golden yellow face, two dot eyes, blush and very broad white toothy grin.",
+      "generatedPath": "/Users/james/.codex/generated_images/01a0a22f-2a24-75d2-87c9-56a2fe7aec5a/exec-27234def-3a39-4028-b9ec-7235557f2be4.png"
+    },
+    {
+      "view": "back",
+      "refs": [
+        "/Users/james/.codex/generated_images/01a0a22f-2a24-75d2-87c9-56a2fe7aec5a/exec-7c08d806-8b04-4963-841a-8cdd63dad1a8.png"
+      ],
+      "prompt": "Create the same flower puppet PARTS atlas as the reference, precisely matching its graphic drawing style, proportions of parts, yellow/cream/olive palette and medium-bold dark outlines. Exactly SIX isolated parts in a landscape 1536x1024 THREE COLUMN by TWO ROW grid, generous gutters: top row HEAD, BODY, LEFT HAND; bottom row RIGHT HAND, LEFT FOOT, RIGHT FOOT. Each part centered inside its own equal cell, no overlap, no labels, no whole assembled character. Keep complete hidden attachment ends. Hands and feet are leaves, torso a small green stem ending in a three-leaf hip bud, no clothes. CRITICAL BACKGROUND must be a PERFECTLY FLAT solid saturated magenta #FF00FF uniformly everywhere outside the six parts. This is a chroma key asset sheet. NO checkerboard, NO transparency simulation, NO paper texture, NO wrinkles, NO ground, NO shadow, NO lighting on background. Parts themselves contain no magenta. Flat simple 5-colour cartoon with one cel shadow, no shading gradients. Draw the BACK VIEW of this exact same flower, orthographic directly rear camera. Head has exactly the same irregular cream petal ring silhouette but seen from behind, with a round olive-green receptacle/calyx disk in the centre and subtle darker overlapping sepals leading into stem socket at bottom. No face at all, NO yellow disk, eyes, teeth, nose, mouth or blush on back. Body is back of same short stem and three-leaf hip bud. Hands seen on backs of leaf mittens, feet show heel and back of leaf. Keep dark outline weight and sparse veins matching reference. Petal count and arrangement consistent; head must be whole, unclipped.",
+      "generatedPath": "/Users/james/.codex/generated_images/01a0a22f-2a24-75d2-87c9-56a2fe7aec5a/exec-94677d7c-4c09-470b-bd7f-f0a66b5914c9.png"
+    },
+    {
+      "view": "side",
+      "refs": [
+        "/Users/james/.codex/generated_images/01a0a22f-2a24-75d2-87c9-56a2fe7aec5a/exec-7c08d806-8b04-4963-841a-8cdd63dad1a8.png"
+      ],
+      "prompt": "Create the same flower puppet PARTS atlas as the reference, precisely matching its graphic drawing style, proportions of parts, yellow/cream/olive palette and medium-bold dark outlines. Exactly SIX isolated parts in a landscape 1536x1024 THREE COLUMN by TWO ROW grid, generous gutters: top row HEAD, BODY, LEFT HAND; bottom row RIGHT HAND, LEFT FOOT, RIGHT FOOT. Each part centered inside its own equal cell, no overlap, no labels, no whole assembled character. Keep complete hidden attachment ends. Hands and feet are leaves, torso a small green stem ending in a three-leaf hip bud, no clothes. CRITICAL BACKGROUND must be a PERFECTLY FLAT solid saturated magenta #FF00FF uniformly everywhere outside the six parts. This is a chroma key asset sheet. NO checkerboard, NO transparency simulation, NO paper texture, NO wrinkles, NO ground, NO shadow, NO lighting on background. Parts themselves contain no magenta. Flat simple 5-colour cartoon with one cel shadow, no shading gradients. Draw TRUE SIDE PROFILE VIEW facing RIGHT of this exact same flower. Head must genuinely be profile not front or three-quarter: the golden face is a narrow convex vertical disk at RIGHT edge with only ONE little black eye and a funny visible curved strip of the broad tooth grin; cream petals project mostly vertically and overlap in a compressed fan seen edge-on, olive green cupped receptacle behind on LEFT. Keep no nose and no ears. This is a flat sunflower disk rotated 90 degrees so profile should be about 55 percent as wide as front head while the same height, NOT a round front face. Body stem/three-leaf hip bud also side profile, hand leaf mittens narrower, feet are leaf shoes pointing RIGHT with visible ankle attachment toward heel. No human shoes or skin. Preserve extreme joy and flower identity, elegant authored shapes. SIX parts in exact same cell order and no extra drawing.",
+      "generatedPath": "/Users/james/.codex/generated_images/01a0a22f-2a24-75d2-87c9-56a2fe7aec5a/exec-f5ddb545-5912-4eda-9c2e-125f5f563004.png"
+    }
+  ]
+}

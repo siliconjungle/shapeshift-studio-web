@@ -1,0 +1,8 @@
+<!-- GPT Image source: shield-gpt-image-2.png; simplified to the heart/sword flat SVG language. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-labelledby="title desc">
+  <title id="title">Shield</title>
+  <desc id="desc">A warm, hand-inked shield used to block an incoming attack.</desc>
+  <path class="ink" fill="#263c31" fill-rule="evenodd" d="M50 7 88 20v24c0 25-15 42-38 51C27 86 12 69 12 44V20L50 7Z"/>
+  <path class="paint" fill="#dfb748" fill-rule="evenodd" d="M50 16 79 26v18c0 19-11 32-29 41-18-9-29-22-29-41V26l29-10Z"/>
+  <path fill="none" stroke="#fff4d9" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="m29 30 21-7 21 7M50 25v50" opacity=".9"/>
+</svg>

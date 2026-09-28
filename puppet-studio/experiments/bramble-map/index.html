@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Little Gods · Inkwell map study</title><link rel="stylesheet" href="./style.css"></head>
+<body>
+<section id="title-screen" class="title-screen" aria-label="Little Gods title screen" data-state="loading">
+ <button id="title-start" class="title-start" aria-label="Start Little Gods" disabled>
+  <img class="title-logo" src="../../../assets/bramble-map/title-logo-ui.svg" alt="little gods" width="912" height="559">
+  <span id="title-prompt" class="title-prompt" role="status">Unfolding your map…</span>
+ </button>
+</section>
+<main class="map-shell" inert>
+ <div id="loading" role="status">Unfolding your map…</div>
+ <div class="map-viewport"><svg id="map" viewBox="0 0 1440 960" aria-label="Little Gods, an interactive illustrated map"><defs id="art"></defs><g id="world"><use href="#background" width="1440" height="960"/><g aria-hidden="true" opacity=".65"><use href="#compass" x="1325" y="48" width="60" height="72"/><text x="1355" y="35" class="compass-label">N</text></g><g id="routes"></g><g id="scenery"></g><g id="locations"></g><g id="traveller" opacity="0" pointer-events="none"><g id="traveller-pin"><use href="#marker" x="-33" y="-85" width="66" height="85"/></g></g><g id="ambience" pointer-events="none"></g></g></svg>
+ <button id="travel" class="travel-action" hidden>Travel here</button>
+ </div>
+ <div id="announcer" class="sr-only" role="status" aria-live="polite"></div>
+</main><script type="module" src="./app.js"></script></body></html>

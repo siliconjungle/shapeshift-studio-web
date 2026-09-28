@@ -1,0 +1,24 @@
+import {gridMesh,triangulate,validateMeshes,sampleMeshPositions,bindMesh,pruneMeshes,insideContour,at} from './model.js';
+import {normalizeWeights} from '../bone-binding/model.js';
+import {poseAt} from '../runtime.js';
+export function applyMeshCommand(project,c){const j=project.joints.find(j=>j.id===c.joint);if(!j?.sprite)throw Error('Mesh: select image artwork in the 2D rig');const old=j.sprite.mesh,tracks=project.clips.map(clip=>clip.meshTracks);try{
+ let m=old?structuredClone(old):null;const clip=project.clips.find(x=>x.id===c.clip)??project.clips[0];
+ const topology=()=>{if(m.binding||project.clips.some(c=>c.meshTracks?.some(t=>t.joint===j.id&&t.keys.length)))throw Error('Mesh: unbind bones and delete mesh keys before changing the contour or topology');};
+ if(c.op==='mesh.create'){m=gridMesh(c.columns??1,c.rows??1);for(const clip of project.clips)if(clip.meshTracks)clip.meshTracks=clip.meshTracks.filter(t=>t.joint!==j.id);}
+ else if(c.op==='mesh.remove'){delete j.sprite.mesh;pruneMeshes(project);return j.id;}
+ else if(c.op==='mesh.paste'){m=structuredClone(c.value);delete m.binding;for(const clip of project.clips)if(clip.meshTracks)clip.meshTracks=clip.meshTracks.filter(t=>t.joint!==j.id);}
+ else {if(!m)throw Error('Mesh: create a mesh first');if(c.op==='mesh.enabled')m.enabled=c.enabled;
+ else if(c.op==='mesh.contour'){topology();m={version:1,enabled:true,vertices:[...c.vertices],positions:[...c.vertices],contour:c.contour??Array.from({length:c.vertices.length/2},(_,i)=>i),edges:[],triangles:[]};m.triangles=triangulate(m.vertices,m.contour,m.edges);}
+ else if(c.op==='mesh.vertex'){topology();const i=c.index;if(!Number.isInteger(i)||i<0||i>=m.vertices.length/2||!Array.isArray(c.position)||c.position.length!==2)throw Error('Mesh: choose a vertex');m.vertices.splice(i*2,2,...c.position);m.positions.splice(i*2,2,...c.position);m.triangles=triangulate(m.vertices,m.contour,m.edges);}
+ else if(c.op==='mesh.addVertex'){topology();const p=c.position;if(!Array.isArray(p)||p.length!==2)throw Error('Mesh: provide a point');const index=m.vertices.length/2;m.vertices.push(...p);m.positions.push(...p);if(c.after!==undefined){const i=m.contour.indexOf(c.after);if(i<0)throw Error('Mesh: choose a contour edge');m.contour.splice(i+1,0,index);}m.triangles=triangulate(m.vertices,m.contour,m.edges);}
+ else if(c.op==='mesh.removeVertex'){topology();const i=c.index;if(!Number.isInteger(i)||i<0||i>=m.vertices.length/2)throw Error('Mesh: choose a vertex');m.vertices.splice(i*2,2);m.positions.splice(i*2,2);m.contour=m.contour.filter(n=>n!==i).map(n=>n>i?n-1:n);m.edges=m.edges.filter(e=>!e.includes(i)).map(e=>e.map(n=>n>i?n-1:n));m.triangles=triangulate(m.vertices,m.contour,m.edges);}
+ else if(c.op==='mesh.edge'){topology();const [a,b]=c.vertices;m.edges=m.edges.filter(e=>!e.includes(a)||!e.includes(b));if(!c.remove)m.edges.push([a,b]);m.triangles=triangulate(m.vertices,m.contour,m.edges);}
+ else if(c.op==='mesh.generate'){topology();const oldVertices=[...m.vertices];for(let i=0;i<m.triangles.length;i+=3){const t=m.triangles.slice(i,i+3),p=[0,1].map(axis=>t.reduce((sum,n)=>sum+oldVertices[n*2+axis],0)/3);if(m.vertices.length>=512)throw Error('Mesh: generating would exceed 256 vertices');m.vertices.push(...p);m.positions.push(...p);}m.triangles=triangulate(m.vertices,m.contour,m.edges);}
+ else if(c.op==='mesh.positions')m.positions=structuredClone(c.positions);
+ else if(c.op==='mesh.key'){const time=c.time??0,value=c.positions??sampleMeshPositions(m,clip,j.id,time);clip.meshTracks=structuredClone(clip.meshTracks??[]);let t=clip.meshTracks.find(t=>t.joint===j.id);if(!t){t={joint:j.id,keys:[]};clip.meshTracks.push(t);if(!c.remove&&time>0)t.keys.push({time:0,value:[...m.positions],easing:'smooth'});}t.keys=t.keys.filter(k=>Math.abs(k.time-time)>1e-6);if(!c.remove)t.keys.push({time,value:structuredClone(value),easing:c.easing??'smooth'});t.keys.sort((a,b)=>a.time-b.time);}
+ else if(c.op==='mesh.bind')m.binding=bindMesh({...j,sprite:{...j.sprite,mesh:m}},poseAt(project,clip,c.time??0),c.bones,sampleMeshPositions(m,clip,j.id,c.time??0));
+ else if(c.op==='mesh.unbind')delete m.binding;
+ else if(c.op==='mesh.weights'){if(!m.binding)throw Error('Mesh: bind bones first');const weights=normalizeWeights(c.weights,m.binding.bones.map(b=>b.joint));if(!Array.isArray(c.vertices)||!c.vertices.length||c.vertices.some(i=>!Number.isInteger(i)||i<0||i>=m.positions.length/2))throw Error('Mesh: select vertices');for(const i of c.vertices)m.binding.weights[i]=structuredClone(weights);}
+ else throw Error('Unknown mesh command');}
+ j.sprite.mesh=m;validateMeshes(project);return j.id;
+ }catch(e){if(old)j.sprite.mesh=old;else delete j.sprite.mesh;project.clips.forEach((clip,i)=>{if(tracks[i]===undefined)delete clip.meshTracks;else clip.meshTracks=tracks[i];});throw e;}}

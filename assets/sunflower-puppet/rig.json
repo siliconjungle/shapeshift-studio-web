@@ -1,0 +1,68 @@
+{
+  "format": "inkwell-directional-puppet",
+  "version": 1,
+  "name": "Sunflower",
+  "views": {
+    "front": {
+      "project": "sunflower-front.puppet.json",
+      "parts": [
+        "front-head",
+        "front-body",
+        "front-hand-left",
+        "front-hand-right",
+        "front-foot-left",
+        "front-foot-right"
+      ]
+    },
+    "back": {
+      "project": "sunflower-back.puppet.json",
+      "parts": [
+        "back-head",
+        "back-body",
+        "back-hand-left",
+        "back-hand-right",
+        "back-foot-left",
+        "back-foot-right"
+      ]
+    },
+    "side": {
+      "project": "sunflower-side.puppet.json",
+      "parts": [
+        "side-head",
+        "side-body",
+        "side-hand-left",
+        "side-hand-right",
+        "side-foot-left",
+        "side-foot-right"
+      ]
+    }
+  },
+  "facings": {
+    "front": "front",
+    "back": "back",
+    "right": "side",
+    "left": {
+      "view": "side",
+      "mirrorX": true
+    }
+  },
+  "clips": {
+    "idle": {
+      "duration": 3.2,
+      "loop": true
+    },
+    "walk": {
+      "duration": 1.12,
+      "loop": true
+    },
+    "wave": {
+      "duration": 2.4,
+      "loop": false
+    },
+    "delight": {
+      "duration": 1.7,
+      "loop": false
+    }
+  },
+  "source": "Same gait sampler and layered SVG part strategy as bramble-map/traveller-puppet.js; curved plant limbs; head drawing is rigid."
+}

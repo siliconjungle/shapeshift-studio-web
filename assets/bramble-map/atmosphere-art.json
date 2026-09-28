@@ -1,0 +1,103 @@
+{
+  "pipeline": "Built-in image edits/generation → Little Gods cel colour reduction → SVG → palette mapping → edge ink (landmarks and clouds)",
+  "assets": [
+    {
+      "name": "well",
+      "source": "source/well-atmosphere.png",
+      "width": 652,
+      "height": 450,
+      "preset": "cel",
+      "settings": {
+        "colors": 16,
+        "speckle": 4,
+        "precision": 6,
+        "difference": 14,
+        "corner": 80,
+        "length": 4.5,
+        "median": 3
+      },
+      "alphaThreshold": 128,
+      "paths": 169,
+      "colours": 15,
+      "curves": 2624,
+      "bytes": 98370,
+      "silhouetteIoU": 0.9954027365958489,
+      "meanColorError": 0.030466191277919386,
+      "warnings": []
+    },
+    {
+      "name": "keep",
+      "source": "source/keep-atmosphere.png",
+      "width": 652,
+      "height": 629,
+      "preset": "cel",
+      "settings": {
+        "colors": 16,
+        "speckle": 4,
+        "precision": 6,
+        "difference": 14,
+        "corner": 80,
+        "length": 4.5,
+        "median": 3
+      },
+      "alphaThreshold": 128,
+      "paths": 708,
+      "colours": 15,
+      "curves": 10513,
+      "bytes": 392046,
+      "silhouetteIoU": 0.991412295918995,
+      "meanColorError": 0.04637857068103768,
+      "warnings": []
+    },
+    {
+      "name": "cloud-cumulus",
+      "source": "source/cloud-cumulus-atmosphere.png",
+      "width": 652,
+      "height": 175,
+      "preset": "cel",
+      "settings": {
+        "colors": 8,
+        "speckle": 4,
+        "precision": 6,
+        "difference": 14,
+        "corner": 80,
+        "length": 4.5,
+        "median": 3
+      },
+      "alphaThreshold": 128,
+      "paths": 57,
+      "colours": 6,
+      "curves": 816,
+      "bytes": 31499,
+      "silhouetteIoU": 0.9831457953279628,
+      "meanColorError": 0.01716148952813637,
+      "warnings": []
+    },
+    {
+      "name": "cloud-wisp",
+      "source": "source/cloud-wisp-atmosphere.png",
+      "width": 652,
+      "height": 149,
+      "preset": "cel",
+      "settings": {
+        "colors": 8,
+        "speckle": 4,
+        "precision": 6,
+        "difference": 14,
+        "corner": 80,
+        "length": 4.5,
+        "median": 3
+      },
+      "alphaThreshold": 128,
+      "paths": 61,
+      "colours": 9,
+      "curves": 1142,
+      "bytes": 43460,
+      "silhouetteIoU": 0.9724273756770064,
+      "meanColorError": 0.030800862988687745,
+      "warnings": [
+        "Contains substantial soft transparency; this silhouette preset makes it opaque or transparent."
+      ]
+    }
+  ]
+}

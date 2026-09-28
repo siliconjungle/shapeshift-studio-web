@@ -28,7 +28,7 @@ function retime(clip,factor,start=0,end=clip.duration){
 }
 function bind(clip,bindings,dimension){
  const referenceKeys=new Set(['node','joint','root','mid','receiver','targetNode','attachment','sourceNode','target','source']);
- const walk=obj=>{if(!obj||typeof obj!=='object')return;for(const [k,v]of Object.entries(obj)){if(['program','parameters','vector','overLife'].includes(k))continue;if(referenceKeys.has(k)&&typeof v==='string'&&bindings[v])obj[k]=bindings[v];else if(v&&typeof v==='object')walk(v);}};walk(clip);
+ const walk=obj=>{if(!obj||typeof obj!=='object')return;for(const [k,v]of Object.entries(obj)){if(['program','parameters','vector','overLife'].includes(k))continue;if(referenceKeys.has(k)&&typeof v==='string'&&bindings[v])obj[k]=bindings[v];else if(v&&typeof v==='object')walk(v);}};walk(clip);for(const t of clip.soloTracks??[])for(const k of t.keys)k.value=bindings[k.value]??k.value;
  if(dimension===2){clip.tracks=Object.fromEntries(Object.entries(clip.tracks).map(([id,v])=>[bindings[id]??id,v]));if(clip.ik)clip.ik=Object.fromEntries(Object.entries(clip.ik).map(([id,v])=>[bindings[id]??id,v]));}
  if(clip.controllerParameters)clip.controllerParameters=Object.fromEntries(Object.entries(clip.controllerParameters).map(([id,v])=>[bindings[id]??id,v]));
  for(const layer of clip.tools?.layers??[]){if(layer.values)layer.values=Object.fromEntries(Object.entries(layer.values).map(([id,v])=>[bindings[id]??id,v]));if(layer.joints)layer.joints=layer.joints.map(id=>bindings[id]??id);}return clip;

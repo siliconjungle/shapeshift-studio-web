@@ -1,0 +1,334 @@
+{
+  "scale": 0.21,
+  "ink": {
+    "color": "#211e1a",
+    "edgeBandWidth": 4.4,
+    "bannerBandWidth": 3
+  },
+  "parts": {
+    "front-body": {
+      "src": "front-body.svg",
+      "view": "front",
+      "part": "body",
+      "layout": {
+        "width": 78,
+        "height": 96.8,
+        "pivotX": 0.5,
+        "pivotY": 0.4318181818181818,
+        "crop": [
+          0,
+          0.12,
+          1,
+          0.88
+        ],
+        "layer": 20
+      },
+      "sourceKey": "af779422e5f435bb3ea7551b664c9076d4ea75454f09c4f0e62d827dbb630e7c",
+      "cacheKey": "d8ecfa9e8634c72751fc1049571bccf91bd50a039d2a2e54c3416c829116274c",
+      "outputHash": "f9509183b959a8f861136eeb124fe6fb0b75c07bf6c9c8afc9f72c4edb7e4b17"
+    },
+    "front-head": {
+      "src": "front-head.svg",
+      "view": "front",
+      "part": "head",
+      "layout": {
+        "width": 289.2,
+        "height": 288,
+        "pivotX": 0.5,
+        "pivotY": 0.78,
+        "layer": 40
+      },
+      "sourceKey": "1be3bc4bf7325a1c64bc4cdd2f7227597c9f57b0955c3b999be7e57b63c859d8",
+      "cacheKey": "da64711941cf3dbc3688dd3cfacabceda47909c1e734a3b492809ea60e73bcd2",
+      "outputHash": "74339653b9497ed920cf7318388a20855a336d677ccfb98d7ff798180a539843"
+    },
+    "front-foot-left": {
+      "src": "front-foot-left.svg",
+      "view": "front",
+      "part": "foot-left",
+      "layout": {
+        "width": 58,
+        "height": 37.978582677165356,
+        "pivotX": 0.69,
+        "pivotY": -0.05952380952380953,
+        "crop": [
+          0,
+          0.16,
+          1,
+          0.84
+        ],
+        "layer": 2
+      },
+      "sourceKey": "441e4200efdc1b3daab81c5d9b3c5d18ab05d367a9c469099cf61dad0a7d41b8",
+      "cacheKey": "00745d0f8fea73d6a8146c75bcc5a7667bc9c90832dfcd7a0e255efb80f8b10e",
+      "outputHash": "d1cdad132bda3d8bde0b328d01ea9808eeba7ff25f71d14d6301b90a5db10a6c"
+    },
+    "front-hand-left": {
+      "src": "front-hand-left.svg",
+      "view": "front",
+      "part": "hand-left",
+      "layout": {
+        "width": 58,
+        "height": 50.355300859598856,
+        "pivotX": 0.9,
+        "pivotY": 0.5,
+        "layer": 4
+      },
+      "sourceKey": "4e608c1210ce82e40fc0221760cdef99821afb7ea7ac381f69a72ca840ab83d7",
+      "cacheKey": "3cf387b64ce8a7d35ab19d0763a6e3ee755585c948d3956bcbd4c9f95a6bb236",
+      "outputHash": "e3412e7616d96b5ddd3067d59b0f37bc7eeaf69b49b7334b4466b256fd82b587"
+    },
+    "front-foot-right": {
+      "src": "front-foot-right.svg",
+      "view": "front",
+      "part": "foot-right",
+      "layout": {
+        "width": 58,
+        "height": 38.05044854881266,
+        "pivotX": 0.3,
+        "pivotY": -0.05952380952380953,
+        "crop": [
+          0,
+          0.16,
+          1,
+          0.84
+        ],
+        "layer": 10
+      },
+      "sourceKey": "2e683ca8137929c818391ddad8c43c23aaae26cc1d338f78c94a90163ace3e96",
+      "cacheKey": "7376870eef0f5304559a95026b1032cdf2285fb58b409357a2174ea3da5f40be",
+      "outputHash": "8ecc6a37aa828e0969f064a62dd3fa91a824476bf9e7476d67264e7594535e23"
+    },
+    "front-hand-right": {
+      "src": "front-hand-right.svg",
+      "view": "front",
+      "part": "hand-right",
+      "layout": {
+        "width": 58,
+        "height": 51.46242774566474,
+        "pivotX": 0.1,
+        "pivotY": 0.5,
+        "layer": 60
+      },
+      "sourceKey": "b8daf0de8e68fdeeb5fbfe49f9d2b2efd96c80fa3369c32012e0e29c8d619e0b",
+      "cacheKey": "c1a846f654f2245118e722af82d03fa007d95947e79972a27451eb76a805f4f0",
+      "outputHash": "b11a0ea4a3c323f0dfaaae729f6add8c1a1759e7ce071812e57e637e268b676a"
+    },
+    "back-body": {
+      "src": "back-body.svg",
+      "view": "back",
+      "part": "body",
+      "layout": {
+        "width": 78,
+        "height": 96.8,
+        "pivotX": 0.5,
+        "pivotY": 0.4318181818181818,
+        "crop": [
+          0,
+          0.12,
+          1,
+          0.88
+        ],
+        "layer": 50
+      },
+      "sourceKey": "19f4e854074ec623cc2a5f332c401141a4215f77fb1f0bced224d322de158d4a",
+      "cacheKey": "e1677dc9cc22898469bf122e3ead08886dc32d323b179de65eceddcdbb152f07",
+      "outputHash": "bab2728661ba605ade0d4942c1ac46071c99a0a620dea31aadf497804ec6b03e"
+    },
+    "back-head": {
+      "src": "back-head.svg",
+      "view": "back",
+      "part": "head",
+      "layout": {
+        "width": 288,
+        "height": 288,
+        "pivotX": 0.5,
+        "pivotY": 0.78,
+        "layer": 40
+      },
+      "sourceKey": "73ad7e7076a22cc68dff67d2d534909afc2031b3f8bec97ace8ce59de87468a8",
+      "cacheKey": "4109e16a0c45c24335f8e2bd9ed5d21e5071faf33196f35270a94ab75ee76899",
+      "outputHash": "44a94325451eb9d6813eb36e888d8e29d54f6581aae84cc7cd943f9f922513dc"
+    },
+    "back-foot-left": {
+      "src": "back-foot-left.svg",
+      "view": "back",
+      "part": "foot-left",
+      "layout": {
+        "width": 58,
+        "height": 38.739622641509435,
+        "pivotX": 0.69,
+        "pivotY": -0.05952380952380953,
+        "crop": [
+          0,
+          0.16,
+          1,
+          0.84
+        ],
+        "layer": 2
+      },
+      "sourceKey": "39c61804f78ad76c96a5e9d7d2af8a213ebb0551cb106edefa17dacf48474308",
+      "cacheKey": "05d485c7d646c4b0c9aad7d64d6529ff76f7151a837dab6974f79cac1fba2445",
+      "outputHash": "d1f5474a8d6c4e3561b90e2126ccacc5a0d0499d11301ca67f4694c51b15d253"
+    },
+    "back-hand-left": {
+      "src": "back-hand-left.svg",
+      "view": "back",
+      "part": "hand-left",
+      "layout": {
+        "width": 58,
+        "height": 52.557184750733136,
+        "pivotX": 0.9,
+        "pivotY": 0.5,
+        "layer": 4
+      },
+      "sourceKey": "48e4b801150ff6c2bfcfbb715f1e4f34c6a4ed144c62ac1df4928b37053cc057",
+      "cacheKey": "a4008a3738ec7ca89a0514ee947100964a976d00d86263c6ed707cb88ce97de0",
+      "outputHash": "910721320ad1c1b56a3611ca6bd066f8f0d8eb848318029c65e45888ac71aa08"
+    },
+    "back-foot-right": {
+      "src": "back-foot-right.svg",
+      "view": "back",
+      "part": "foot-right",
+      "layout": {
+        "width": 58,
+        "height": 38.27067024128686,
+        "pivotX": 0.3,
+        "pivotY": -0.05952380952380953,
+        "crop": [
+          0,
+          0.16,
+          1,
+          0.84
+        ],
+        "layer": 10
+      },
+      "sourceKey": "aa419c5518d47aa6a23973b874043025bfefa3f9669d3b32fee54b448bb74080",
+      "cacheKey": "8e063d2faa2bef4679f8d3f197f7605261a847f9f15b9d34bed0e17c2f067139",
+      "outputHash": "7b75e801a4aaaf11029437b1e065daeac4073d0c11d0f83dccf017f615d573af"
+    },
+    "back-hand-right": {
+      "src": "back-hand-right.svg",
+      "view": "back",
+      "part": "hand-right",
+      "layout": {
+        "width": 58,
+        "height": 52.13294797687861,
+        "pivotX": 0.1,
+        "pivotY": 0.5,
+        "layer": 60
+      },
+      "sourceKey": "d20644c676cc797f4fb90849780457dcc7ff8bcb0102f3bb27aabd7f967e3a72",
+      "cacheKey": "e4cc6d3df3bb176588eaf6b62521a2a2a5b4b02a2fbdd5c63dfa19ea4c0d0d1d",
+      "outputHash": "122918d4beacda393e71d0f7144933d705c8e60a5cd3eb8e113105009c6e405c"
+    },
+    "side-body": {
+      "src": "side-body.svg",
+      "view": "side",
+      "part": "body",
+      "layout": {
+        "width": 56,
+        "height": 96.8,
+        "pivotX": 0.5,
+        "pivotY": 0.4318181818181818,
+        "crop": [
+          0,
+          0.12,
+          1,
+          0.88
+        ],
+        "layer": 20
+      },
+      "sourceKey": "a2a8ca76adb7102d688332c0af60a369a3d69310ba748556b62eb3d55b6e7946",
+      "cacheKey": "968a00e317ad56ec5ed9e158e698f51057c2f1cdf19da786612144de648e2953",
+      "outputHash": "edbf8cd7dc4da4fe38d3f2ee9cd045465dc0f382f51118b81405d175fdd1d0e7"
+    },
+    "side-head": {
+      "src": "side-head.svg",
+      "view": "side",
+      "part": "head",
+      "layout": {
+        "width": 144,
+        "height": 288,
+        "pivotX": 0.45,
+        "pivotY": 0.78,
+        "layer": 40
+      },
+      "sourceKey": "97ee1719fc6ca3a015ceafd8926a8283aa7798ca079275616798051b2361e4a7",
+      "cacheKey": "9d1414122921a55cc7113db3b8561b2fbf2b5cc14eed98100ddb47dc2478340d",
+      "outputHash": "61cfef0208712962ab1fc74609ba075025e620162535c80c315a96bf4c848815"
+    },
+    "side-foot-left": {
+      "src": "side-foot-left.svg",
+      "view": "side",
+      "part": "foot-left",
+      "layout": {
+        "width": 59,
+        "height": 36.06792452830189,
+        "pivotX": 0.25,
+        "pivotY": -0.05952380952380953,
+        "crop": [
+          0,
+          0.16,
+          1,
+          0.84
+        ],
+        "layer": 2
+      },
+      "sourceKey": "08730f4fd86e36fd800af0d0860b8d397ec25e615f89ccb7e5646463055590ee",
+      "cacheKey": "ff49c2fdcea22e2ad8bbf07b90c6224bbd57036efd80247d197fa31e55ac5020",
+      "outputHash": "666f752c8840b575a3e0e6bcaa775a1eabfd2846d7b66c5b732342bab739762a"
+    },
+    "side-hand-left": {
+      "src": "side-hand-left.svg",
+      "view": "side",
+      "part": "hand-left",
+      "layout": {
+        "width": 58,
+        "height": 53.74311926605505,
+        "pivotX": 0.9,
+        "pivotY": 0.5,
+        "layer": 4
+      },
+      "sourceKey": "5c35ed2f3f4236d7e10ae40eafccd771d1269f42eb81166c7990c51c49119b6c",
+      "cacheKey": "185abc0f9e3eb0ac7a4608e241e0a7602f2b803824bc4defb5f8767d98ed45a9",
+      "outputHash": "d1ca2c5f9019ffc60844b9ed1d3b6d0cde917e3df5ac01a07970aead74e9da7a"
+    },
+    "side-foot-right": {
+      "src": "side-foot-right.svg",
+      "view": "side",
+      "part": "foot-right",
+      "layout": {
+        "width": 59,
+        "height": 35.26888888888889,
+        "pivotX": 0.25,
+        "pivotY": -0.05952380952380953,
+        "crop": [
+          0,
+          0.16,
+          1,
+          0.84
+        ],
+        "layer": 10
+      },
+      "sourceKey": "f4775c21088ae06f439fc961a4b161d841c624f0abd9d6d2df8d2c49c0a33e25",
+      "cacheKey": "da11c8d5c9e03f558cbed19d6b6a50ecc6ca1dc644f4b6d89f44c892b5d81fe3",
+      "outputHash": "7c295c576100224b721ac47b35da94ac8ba6bf34930a7b6b1c96dd0f373b942e"
+    },
+    "side-hand-right": {
+      "src": "side-hand-right.svg",
+      "view": "side",
+      "part": "hand-right",
+      "layout": {
+        "width": 58,
+        "height": 54.588235294117645,
+        "pivotX": 0.1,
+        "pivotY": 0.5,
+        "layer": 60
+      },
+      "sourceKey": "6ff6f4f79ad28710e38ff3848329da1ae183007e0d15f788c36be3260ada9979",
+      "cacheKey": "b35f31065fefb6154cd724f523a2a936052c4ed31d26e0e8fe8fedca42c40219",
+      "outputHash": "da3e3c248a4cbbc3bd0ff350b8dec42b8fe93881a8ade0fce736ed8d0da669fe"
+    }
+  }
+}

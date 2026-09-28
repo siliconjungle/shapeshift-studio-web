@@ -1,0 +1,165 @@
+{
+  "generation_id": "9d31ba72-31cf-47ba-ab98-82210f771d7a",
+  "duration": 1.46,
+  "file_size": 140204,
+  "encoding": {
+    "format": "wav",
+    "sample_rate": 48000
+  },
+  "snippets": [
+    [
+      {
+        "id": "56a802cb-135e-419a-b7de-651cb0b882dc",
+        "text": "Ah! Bim-bala, wee-lo!",
+        "generation_id": "56a802cb-135e-419a-b7de-651cb0b882dc",
+        "utterance_index": 0,
+        "audio_format": "wav",
+        "timestamps": [
+          {
+            "type": "phoneme",
+            "text": "a",
+            "time": {
+              "begin": 80,
+              "end": 100
+            }
+          },
+          {
+            "type": "phoneme",
+            "text": "p",
+            "time": {
+              "begin": 440,
+              "end": 460
+            }
+          },
+          {
+            "type": "phoneme",
+            "text": "e",
+            "time": {
+              "begin": 500,
+              "end": 520
+            }
+          },
+          {
+            "type": "phoneme",
+            "text": "m",
+            "time": {
+              "begin": 560,
+              "end": 580
+            }
+          },
+          {
+            "type": "phoneme",
+            "text": "b",
+            "time": {
+              "begin": 620,
+              "end": 640
+            }
+          },
+          {
+            "type": "phoneme",
+            "text": "a",
+            "time": {
+              "begin": 660,
+              "end": 680
+            }
+          },
+          {
+            "type": "phoneme",
+            "text": "l",
+            "time": {
+              "begin": 760,
+              "end": 780
+            }
+          },
+          {
+            "type": "phoneme",
+            "text": "a",
+            "time": {
+              "begin": 800,
+              "end": 820
+            }
+          },
+          {
+            "type": "phoneme",
+            "text": "w",
+            "time": {
+              "begin": 900,
+              "end": 920
+            }
+          },
+          {
+            "type": "phoneme",
+            "text": "i",
+            "time": {
+              "begin": 940,
+              "end": 960
+            }
+          },
+          {
+            "type": "phoneme",
+            "text": "l",
+            "time": {
+              "begin": 1100,
+              "end": 1120
+            }
+          },
+          {
+            "type": "phoneme",
+            "text": "ɔ",
+            "time": {
+              "begin": 1140,
+              "end": 1160
+            }
+          },
+          {
+            "type": "word",
+            "text": "Ah!",
+            "time": {
+              "begin": 80,
+              "end": 100
+            }
+          },
+          {
+            "type": "word",
+            "text": "Bim-bala,",
+            "time": {
+              "begin": 440,
+              "end": 820
+            }
+          },
+          {
+            "type": "word",
+            "text": "wee-lo!",
+            "time": {
+              "begin": 900,
+              "end": 1160
+            }
+          }
+        ],
+        "transcribed_text": null
+      }
+    ]
+  ],
+  "request": {
+    "version": "2",
+    "include_timestamp_types": [
+      "word",
+      "phoneme"
+    ],
+    "utterances": [
+      {
+        "text": "Ah! Bim-bala, wee-lo!",
+        "voice": {
+          "id": "5bf306e9-a002-4d69-8554-25d19bc21183"
+        },
+        "speed": 1.13,
+        "trailing_silence": 0.06
+      }
+    ],
+    "split_utterances": false,
+    "format": {
+      "type": "wav"
+    },
+    "num_generations": 1
+  }
+}

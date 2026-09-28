@@ -1,0 +1,531 @@
+{
+  "ink": "#211e1a",
+  "method": "Preserve original interior fills; paint vector ink bands only at exterior and transparent-hole boundaries",
+  "assets": {
+    "emote-humming.svg": {
+      "bands": 38,
+      "cacheKey": "0ab85f6aa9c7b22a0d2fb851b212505d98cf651b3a49cd4d16e74693e6ab035c",
+      "outputHash": "4fbf4d1321843085ceebb523df33df0c966ce0b569fb7f636283452524b581f1",
+      "displayWidth": 55.73658536585366,
+      "interiorPaint": "original"
+    },
+    "emote-thinking.svg": {
+      "bands": 24,
+      "cacheKey": "1e20de9e9a5c54c09545eaa820e3c6d0aee130f1739671693d407beb5d6ef7e2",
+      "outputHash": "fb1a8d291e263f1cce5e6abce88374914e371e47ec00caa24aa28a90872ee602",
+      "displayWidth": 58,
+      "interiorPaint": "original"
+    },
+    "emote-idea.svg": {
+      "bands": 42,
+      "cacheKey": "561400f4ab3e360cd38cbe92f0456da28bc4d0c2269c9e3b8390f9c1fc711ce3",
+      "outputHash": "c77447cacb56bbe5cffa008eabd34194fe213b418d9cdb05684ada8d483fbede",
+      "displayWidth": 48,
+      "interiorPaint": "original"
+    },
+    "emote-delight.svg": {
+      "bands": 34,
+      "cacheKey": "bee7bb7af511e191d7cf0e63bef531e8a238ec3b6618b64b7c35e8fb172ad4cd",
+      "outputHash": "ff9ff1574724d0ef81806c9ffc5a350a8790ccd6d8d057ce4af41af0855d0b30",
+      "displayWidth": 55.52245345016429,
+      "interiorPaint": "original"
+    },
+    "emote-determined.svg": {
+      "bands": 29,
+      "cacheKey": "fbd3accf09ebe1e6f9d2b40d9f8ab06a949640a7f4f5acc1874b1bbdeb5165d5",
+      "outputHash": "39deda9d5b4eb3486ed488f5933aad30de31b3d404d162ab49d99c71570b6d4c",
+      "displayWidth": 44.48377581120944,
+      "interiorPaint": "original"
+    },
+    "emote-cold.svg": {
+      "bands": 65,
+      "cacheKey": "fd94cad575e9a4d090eef926787711315f5bafb4a646c6edb56bdf27f716d207",
+      "outputHash": "6bd6e48a9ec6db87e939f44e3484d065f71195f1a9dd9963f5aa0bcf3833b9ac",
+      "displayWidth": 58,
+      "interiorPaint": "original"
+    },
+    "emote-overheated.svg": {
+      "bands": 27,
+      "cacheKey": "6466c5ee057b8fa69f165b6895eda5bebd8c1754a94058b73648b25c2a22f7d2",
+      "outputHash": "e354d4aa09b195820240c2722b445243f8b08d6a173fe74305300fbc5747310d",
+      "displayWidth": 58,
+      "interiorPaint": "original"
+    },
+    "emote-love.svg": {
+      "bands": 24,
+      "cacheKey": "ace34395753d7fd1ce8f9293503742a31666dc51b3b5026c5ebac63e08cbc909",
+      "outputHash": "175848767e67375b237fef55c0372dd5f0a0ea72aea93f022b2d7644c2b830d8",
+      "displayWidth": 58,
+      "interiorPaint": "original"
+    },
+    "map-bird-feather.svg": {
+      "bands": 6,
+      "cacheKey": "43d693bb9639bab08a601a8d54ab819bc429bc21ce69fc9dde2f1d37389968df",
+      "outputHash": "5b8795dcb056ea295098939112db12299a1a78a04b98c7b98917e19707605f79",
+      "displayWidth": 18,
+      "interiorPaint": "original"
+    },
+    "map-stump-pine-large.svg": {
+      "bands": 5,
+      "cacheKey": "382d7f0e7f5d917cedbcaf787290c44dd8e187fdc8f8bdc783a18ddb054414a3",
+      "outputHash": "148c4d6f5577ef7c5259e4f99928ff7c8cb243291e778456cab26907b4c72769",
+      "displayWidth": 62.400000000000006,
+      "interiorPaint": "original"
+    },
+    "map-stump-pine-small.svg": {
+      "bands": 3,
+      "cacheKey": "fcf0df789a519e5b84e0ba8f904fce33be302d290b59288463b2ce09068ce576",
+      "outputHash": "5df0061cf28ec2f73b577219f4686c5f41dd8e90f6fabf48aec334f69549d5e1",
+      "displayWidth": 39,
+      "interiorPaint": "original"
+    },
+    "map-stump-hearth.svg": {
+      "bands": 9,
+      "cacheKey": "40a10b45e744c8fce0642392c06e0a8ab6de7456b679311d973dfc740da2e51d",
+      "outputHash": "158d5e5d4f65d13b8f5ab947c64506653c4add9e43d72e6e1a06fbdc12a15a80",
+      "displayWidth": 114.8,
+      "interiorPaint": "original"
+    },
+    "map-stump-solis.svg": {
+      "bands": 6,
+      "cacheKey": "6deaa5c950c43ff3ac03246852c186a055747020c540244f14e4cf1a7fe4f0d2",
+      "outputHash": "bc204f827ea28e54f7b452aad8273c81f4485a4abd7e5b379294e05cc78981e1",
+      "displayWidth": 74.88,
+      "interiorPaint": "original"
+    },
+    "map-stump-cryos.svg": {
+      "bands": 8,
+      "cacheKey": "7dbb0750e0d0ea0d82a375b7fa5dde8c732b0d3999cbbeee4afcf55ef71d526b",
+      "outputHash": "b1fab8da678a28f48fa870b7f5b991706b8117ec7b18a4e8e5a31bfbaf299a22",
+      "displayWidth": 109.5,
+      "interiorPaint": "original"
+    },
+    "map-leaf-hearth.svg": {
+      "bands": 11,
+      "cacheKey": "92fe6894f1aba56623a254db42b50fcf9ed8b13f0518fba4cc5395d7120051a3",
+      "outputHash": "f3d6eab1e85ffc42b1c0b0b37f09eb4477e63eef76040034f0399dc801b83fd3",
+      "displayWidth": 20,
+      "interiorPaint": "original"
+    },
+    "map-leaf-solis.svg": {
+      "bands": 14,
+      "cacheKey": "ec3db7911c45785f580966c1abde98303f7e6fbe7422b8dc58f97a5abd95922c",
+      "outputHash": "3ea91e363526dadca81e0ba8ab74eccc912f4814ffd81b2d9f761079cc5f5ded",
+      "displayWidth": 20,
+      "interiorPaint": "original"
+    },
+    "map-leaf-cryos.svg": {
+      "bands": 18,
+      "cacheKey": "6a207d16d14ce1a4fd04f25e36bb6116f930f01ae7a29f9798e27ff41e76fc66",
+      "outputHash": "7ad9a0f44e49f801e74897002cc68db2d4f8634fa59d50658c5de13099fe3649",
+      "displayWidth": 20,
+      "interiorPaint": "original"
+    },
+    "map-resource-wood.svg": {
+      "bands": 4,
+      "cacheKey": "b30a74ed66576c04ac1187331de865fe875123ebd52f6a97df61bef90483a6de",
+      "outputHash": "63b31808f0f6799a20e2ac3bb30ba9b04dae20c28669afa10e90294fd5b8f6e5",
+      "displayWidth": 50,
+      "interiorPaint": "original"
+    },
+    "map-resource-stone.svg": {
+      "bands": 4,
+      "cacheKey": "68a6048a698a77ad940175448090302c478eefb87a59cc565251d40f97ec4939",
+      "outputHash": "8c298095fb8cb50f5124765d75500de5faca393fe7ae5892072affa9ba80d0df",
+      "displayWidth": 50,
+      "interiorPaint": "original"
+    },
+    "map-butterfly-left.svg": {
+      "bands": 9,
+      "cacheKey": "08e38b9c7a3164539fce28265d4185274723ad1ae557e58c64d36edbdd2fe7ce",
+      "outputHash": "4eb1802a98303ae1fe923fa1eae52fabbfd70e375daf3e87f03c305aefb4523a",
+      "displayWidth": 21.12,
+      "interiorPaint": "original"
+    },
+    "map-butterfly-body.svg": {
+      "bands": 7,
+      "cacheKey": "cb5814539bdabfaaa74b4cce18bc86cda418ab9df7494cdb95fc92c018cb3736",
+      "outputHash": "746d28635e25cb1e804c38862fe3ff03259e06885d161c5dc56bf03519903eb6",
+      "displayWidth": 8.64,
+      "interiorPaint": "original"
+    },
+    "map-butterfly-right.svg": {
+      "bands": 9,
+      "cacheKey": "153692a480f2e67ecef4f75980bb1a84da7e0ee0071b28fed65a7e5ee260c53d",
+      "outputHash": "a49c7017057b6fc2f7bc66d4a05f1640c3f2d5e38c6c9d77cdf799bb5d3108fb",
+      "displayWidth": 21.12,
+      "interiorPaint": "original"
+    },
+    "map-wren-body.svg": {
+      "bands": 3,
+      "cacheKey": "19fa3441cb7c8b5a28f60cef430061eec67540fd75377501c954b74cc605571a",
+      "outputHash": "2a36cf54ba726c59840b6c412e6a3e3ea4a1b4412fb0fe71fa394c3cfca2384e",
+      "displayWidth": 36,
+      "interiorPaint": "original"
+    },
+    "map-wren-head.svg": {
+      "bands": 3,
+      "cacheKey": "cdd37ef7dc7ba4911404253b19ae3b6ec886621a92cecdc3d332a20a46444874",
+      "outputHash": "9053a134bf514981b330f25e5592b7079bc2aeff0ad667080f53df5c9bbffd5d",
+      "displayWidth": 28,
+      "interiorPaint": "original"
+    },
+    "map-wren-wing.svg": {
+      "bands": 2,
+      "cacheKey": "68a175b1df4fceb7e85a7d554df52faaff477dc78f21c5b7c87dec82bab37249",
+      "outputHash": "810cdbe38e353721b79e9c930616463a4ee29422830f39d058b72954cfdb5996",
+      "displayWidth": 26,
+      "interiorPaint": "original"
+    },
+    "map-wren-tail.svg": {
+      "bands": 2,
+      "cacheKey": "0f51709ad50f37e32e8db6d896dd506b25004ecb1242f140498ed15d0f3576ba",
+      "outputHash": "2d9062dad08572ce157e4840e4aba0d920690ece6257d321f1623a548bcc2883",
+      "displayWidth": 15,
+      "interiorPaint": "original"
+    },
+    "travel-backing.svg": {
+      "bands": 22,
+      "cacheKey": "4dda0e03990f6b815cfd567df825351d6c286b3efe1292cad0e93172a3bba68d",
+      "outputHash": "435f410c51f5097892cac97782a3d036f4e0fde99635ec9bd927fde3e9a8412b",
+      "displayWidth": 200,
+      "interiorPaint": "original"
+    },
+    "title-logo.svg": {
+      "bands": 62,
+      "cacheKey": "a2840437db296ab92d1504d378e199a6e561d33b0ad251628a329d257619255c",
+      "outputHash": "c65cd3aeb71c9b96432c9d1442c3310f8d12ebe6b9bf16046fe82df519206832",
+      "displayWidth": 640,
+      "interiorPaint": "original"
+    },
+    "location-lock.svg": {
+      "bands": 7,
+      "cacheKey": "104129271a284752935e74fb451ae64fb72bb685eb7d788f5e363da6dbe4a33a",
+      "outputHash": "1162c8f7b01488727e57781f2cf432bf7ace7c43cb186befc9c9ded5479b510a",
+      "displayWidth": 54.299065420560744,
+      "interiorPaint": "original"
+    },
+    "destination-pennant.svg": {
+      "bands": 5,
+      "cacheKey": "b2c77b30149237a568d9db90ed978e4ec74f0f6a0fe9718c8ace36e168876f7e",
+      "outputHash": "846ab45a5cf380f8734971eaa182b695d85bdf254623d3409fff61ea9a9ff478",
+      "displayWidth": 48,
+      "interiorPaint": "original"
+    },
+    "selection-arrow.svg": {
+      "bands": 5,
+      "cacheKey": "a283911d13b79d92fad0001acc8e9ebf3c635603b5ffc7bdecf12196c81540ab",
+      "outputHash": "e09a231c3c0b11e6419acf9a0396eaaa4a7b84bc557164e12f64aec2b532b5b4",
+      "displayWidth": 44.73263157894737,
+      "interiorPaint": "original"
+    },
+    "selection-puff.svg": {
+      "bands": 8,
+      "cacheKey": "a127f50734e7e4978c9eaec9b42b7a8dcb0b29e0ebad36664e2dcb8e8f9a1f1f",
+      "outputHash": "021ce6c993f88ae98d5be4e173c097e853aac9739c2ac9006e8b0cce3bdfaf30",
+      "displayWidth": 44,
+      "interiorPaint": "original"
+    },
+    "cloud-wisp.svg": {
+      "bands": 15,
+      "cacheKey": "980ffe5e563f7706b9376395a5bade51b1f1cf16f84f91bc2e51e7bb662dd0ad",
+      "outputHash": "a31e405cb4d08f758e0c39408dcfe7dae704e10c71cfcc900f1a151847bbf2b7",
+      "displayWidth": 255,
+      "interiorPaint": "original"
+    },
+    "cloud-cumulus.svg": {
+      "bands": 12,
+      "cacheKey": "fc9ad561488008e7ed5997c550318c226509dcbcb1bf9a4b5baf261f0307d7d2",
+      "outputHash": "69edde1b5f2a79ea6ef4d7df220e67da6d4ce9785d71a4180c344322563ca321",
+      "displayWidth": 210,
+      "interiorPaint": "original"
+    },
+    "solis-rocks.svg": {
+      "bands": 8,
+      "cacheKey": "3ea22eb7f8901d5dc234a9b40256ba937b112479f674dc6c2d424d859b26a737",
+      "outputHash": "10b4dff9e71cab958e0a9afe45da76123a4943a6d7bf31d30459e380f9daafc6",
+      "displayWidth": 120,
+      "interiorPaint": "original"
+    },
+    "cryos-pine.svg": {
+      "bands": 27,
+      "cacheKey": "b689785f59cfe953af8ec9076403bfe86ca1428adea2116d965063e356540b68",
+      "outputHash": "4fefb0846fcb9999ca841c15bb7d7c358fc7ce9d1ade08ebf554ed6647348f71",
+      "displayWidth": 150,
+      "interiorPaint": "original"
+    },
+    "solis-tree.svg": {
+      "bands": 27,
+      "cacheKey": "df4a40fccba7a733be95cb35d64add09a9c5774446940d7eb31a1976e259d95d",
+      "outputHash": "429650ec077cb5da9b053160cd64f4c3c201778e888bf509b42e2331bfa9cccd",
+      "displayWidth": 144,
+      "interiorPaint": "original"
+    },
+    "cryos-rocks.svg": {
+      "bands": 8,
+      "cacheKey": "3ea22eb7f8901d5dc234a9b40256ba937b112479f674dc6c2d424d859b26a737",
+      "outputHash": "10b4dff9e71cab958e0a9afe45da76123a4943a6d7bf31d30459e380f9daafc6",
+      "displayWidth": 120,
+      "interiorPaint": "original"
+    },
+    "banner.svg": {
+      "bands": 23,
+      "cacheKey": "e138cbe057df5e305922e88a9effc7761a75f06de41a5eed4b0b706bc7cb85fd",
+      "outputHash": "155384f5b98a026c6433662aa09ee225984a3572cfb901d5e46ed908d4c783cc",
+      "displayWidth": 288,
+      "interiorPaint": "original"
+    },
+    "camp.svg": {
+      "bands": 26,
+      "cacheKey": "16834e80524e24fada54bc84b7d6c3b418bfef3d4700d3a30656a7c68f942d16",
+      "outputHash": "935783e07adba50b43eeaddc87ebacfb04693f50cd1906a6328dbe94c2b5079d",
+      "displayWidth": 240,
+      "interiorPaint": "original"
+    },
+    "shop.svg": {
+      "bands": 41,
+      "cacheKey": "c77cbc33ccce13cb71b99884284c2b7cfc4a7385fb6b2526e3b6dc05ac255c6b",
+      "outputHash": "62ec8f9132f1d35beceb30bba86b5d6233c29288c8e9095e9ea1deaa8543f982",
+      "displayWidth": 240,
+      "interiorPaint": "original"
+    },
+    "well.svg": {
+      "bands": 19,
+      "cacheKey": "a28d7075d81cc21ef733e3546c95c1f50f56c11970c566f382b78c8da41c52b3",
+      "outputHash": "e9eacce541a96122d5af48d0e4aa1050bbd4c09dbb2225bfef628c5fcfb525dc",
+      "displayWidth": 240,
+      "interiorPaint": "original"
+    },
+    "shrine.svg": {
+      "bands": 24,
+      "cacheKey": "1b3789c140e6f6b6ed7a9d033e714f1b4ee891b8292e5fdb5c6b7fc3c6330e91",
+      "outputHash": "c36088a7d19ef8ec629c978a19b945db2d2e30c9baebc82f01307b79f95d548b",
+      "displayWidth": 220,
+      "interiorPaint": "original"
+    },
+    "gate.svg": {
+      "bands": 25,
+      "cacheKey": "17c7c76dc5c3c32acf626b8f98d01fdd86668ba42bd22d02a7cdf379c2f234c5",
+      "outputHash": "a5cedc5d2d1e658c8fa8612e619b11f3ecf95a3f0b66ee12dab3f8ea6bd69db2",
+      "displayWidth": 250,
+      "interiorPaint": "original"
+    },
+    "keep.svg": {
+      "bands": 36,
+      "cacheKey": "41a587728258a50a99294080ed3194d187f7b1539f03e7721f5bd2dbe48f4ed5",
+      "outputHash": "d5cfa93593f6d991757c62c4b73c369d85e3e862bcb069b88da5ce32b27af775",
+      "displayWidth": 245,
+      "interiorPaint": "original"
+    },
+    "pine.svg": {
+      "bands": 34,
+      "cacheKey": "c24d9bec313587762f294ff62f080e8488a91a05c77752c6fc10f1fb7a016c73",
+      "outputHash": "996a00ffac9bbaaf3fca9869be86c90bfde13453923ac216fb2d34e7853e44ef",
+      "displayWidth": 156,
+      "interiorPaint": "original"
+    },
+    "oak.svg": {
+      "bands": 26,
+      "cacheKey": "82dec9a3f38654906a7b95003e28ede03d61461984afba370c1cb48de3adc8ec",
+      "outputHash": "a1ad91294b85024bd0b8e17fa57185d94384869139dcca79b47c2e99c07cd0db",
+      "displayWidth": 164,
+      "interiorPaint": "original"
+    },
+    "rocks.svg": {
+      "bands": 18,
+      "cacheKey": "2c237f31d21a9d5d7ffa5341ab8b8d18709a3fc3075ffdf6a2efdee443bbf0f5",
+      "outputHash": "8aaae454a6bcc4edd95a59c533aca3ec19cb6c7e6618e66b9b3cf7fc41d6aa3a",
+      "displayWidth": 288,
+      "interiorPaint": "original"
+    },
+    "traveller-side-head.svg": {
+      "bands": 4,
+      "cacheKey": "667724cc71e2c1e7807f1677ec852d541634360c2f6a05423137fa7924e66caa",
+      "outputHash": "143b86ec7ff7f39b81491f81c017521ab677cc6904697e501b6d865a0b2c97df",
+      "displayWidth": 54,
+      "interiorPaint": "original"
+    },
+    "traveller-side-body.svg": {
+      "bands": 4,
+      "cacheKey": "cfdd9ff25b97d5ed5f28ae0763462585e3df9b68eb98942fafcb9fd8a9c97eff",
+      "outputHash": "cc6c39233dd39b60fb1df50d7f63694b2b1e52bd5f97dece70cf1ce1e72ef29a",
+      "displayWidth": 46,
+      "interiorPaint": "original"
+    },
+    "traveller-side-backpack.svg": {
+      "bands": 3,
+      "cacheKey": "ab79ba77a5023163415807ade4c3027b77b0e774f03ec60da5b1bee6f3f8de36",
+      "outputHash": "5ad154bbd9284c3737b224baf654476786cb6786b101f4b79c519ac51a53cfe7",
+      "displayWidth": 34,
+      "interiorPaint": "original"
+    },
+    "traveller-side-arm-left.svg": {
+      "bands": 2,
+      "cacheKey": "1dce523ca36f1ec361ab42ac26eb6431adf5c2b17556c5a660c8a044dba338e9",
+      "outputHash": "87883a33545feb618beecf0b2beeed4057216365d262d415d4d5df0870282831",
+      "displayWidth": 13,
+      "interiorPaint": "original"
+    },
+    "traveller-side-arm-right.svg": {
+      "bands": 2,
+      "cacheKey": "66070443602b54c3459a6f1e70c82b08764d77bbf5229ff990ded82f05de9c7d",
+      "outputHash": "915a533ec538027cb0cfdf6b9f6af0c19ed914b443b15e04531581d2d60cb97c",
+      "displayWidth": 13,
+      "interiorPaint": "original"
+    },
+    "traveller-side-staff.svg": {
+      "bands": 4,
+      "cacheKey": "e59394620a2f05ebe6499546118a9ea47c3295c94adcd23fd5be1c0f4fd0594a",
+      "outputHash": "61a325a7e9820a77b5f909901c2b857892f9c5b8e6b862df4ac4c46dfaa15a51",
+      "displayWidth": 30,
+      "interiorPaint": "original"
+    },
+    "traveller-side-leg-left.svg": {
+      "bands": 2,
+      "cacheKey": "ca28c3e65f42c0c0d107b81bbdb760b2427bb2915570d358d80e283ba26a31a6",
+      "outputHash": "4b39b1b7b73a931bd7e2e9e68ba3e08572f2b3bc69bec78e02e18f007f5cd20f",
+      "displayWidth": 18,
+      "interiorPaint": "original"
+    },
+    "traveller-side-leg-right.svg": {
+      "bands": 2,
+      "cacheKey": "952ff75cdf2632f85a17df3ce21a5132b78ed8e437f9467df84eb23a71896f79",
+      "outputHash": "d94f19008eaa52c81d2149726bb70ef566750302830588ad489d2812fd464b28",
+      "displayWidth": 18,
+      "interiorPaint": "original"
+    },
+    "traveller-side-cape.svg": {
+      "bands": 3,
+      "cacheKey": "83b21db72deb6a21cd03fa96011ecbbe5ca8ed89f9ce618c96c36c453734dca5",
+      "outputHash": "be51cdf0efb66bdfb07c55b73b37f9d77afbea4dcaf432b0b7641fb8657a2bbe",
+      "displayWidth": 32,
+      "interiorPaint": "original"
+    },
+    "traveller-front-head.svg": {
+      "bands": 4,
+      "cacheKey": "f7eedb3676d2fb67ac9cadda0a2ebf5139c1eefd3acd1f093c335d7596bd7eae",
+      "outputHash": "79959b4e5f675bc3bb5b4e692a394e8b259850873f03208bf24eeb7d2d0af543",
+      "displayWidth": 54,
+      "interiorPaint": "original"
+    },
+    "traveller-front-body.svg": {
+      "bands": 4,
+      "cacheKey": "3c319704c0029d70e228d514a34ab74832a5199b3097887e0fea37c7af3cc3e0",
+      "outputHash": "8dd5c96dceaba18b177d81fd9897f315fd97f698a1cfc7579b6d05110522b89f",
+      "displayWidth": 46,
+      "interiorPaint": "original"
+    },
+    "traveller-front-backpack.svg": {
+      "bands": 3,
+      "cacheKey": "d623f29f33f832787ec8e9d5be2ff04dd53b4b841ea5a1a5f0c2e11924b52d24",
+      "outputHash": "4bfef96329651884467fb8d0bbe0cab0401c71aa7091bbd04ac49e646c3bc75a",
+      "displayWidth": 34,
+      "interiorPaint": "original"
+    },
+    "traveller-front-arm-left.svg": {
+      "bands": 2,
+      "cacheKey": "56b64a525345b29004a0db37a74abe0107d06a8fe0b737968ab6ebbce3034c5c",
+      "outputHash": "71dacd73424c64fb9881e924ed83923cd34d231933970ec7ee212c9f2353fbea",
+      "displayWidth": 13,
+      "interiorPaint": "original"
+    },
+    "traveller-front-arm-right.svg": {
+      "bands": 2,
+      "cacheKey": "f7ae59cd01239cdecd5168b2607af583fefd346bade9699bed9a610c82acfa60",
+      "outputHash": "24cdf13e5d4c440cb01358aaeb66b95452a7cde5a4d86e3caeb168d38cbc488d",
+      "displayWidth": 13,
+      "interiorPaint": "original"
+    },
+    "traveller-front-staff.svg": {
+      "bands": 4,
+      "cacheKey": "e39c9091be04d6f05a654161ccde93cbbaf8d38852659dc477727159996997c9",
+      "outputHash": "56350db0030e3f350c683afee94e73cafd335c0b44c03c863330bbe45335b98d",
+      "displayWidth": 30,
+      "interiorPaint": "original"
+    },
+    "traveller-front-leg-left.svg": {
+      "bands": 2,
+      "cacheKey": "9e5b1520b318b89e4898c17383362a3f033d8baede9ebc6f37da6446ddfb20ad",
+      "outputHash": "07bb1bdf7c42133c191460b8f97894033330fca977db5c46322249b65ccfdcfe",
+      "displayWidth": 18,
+      "interiorPaint": "original"
+    },
+    "traveller-front-leg-right.svg": {
+      "bands": 2,
+      "cacheKey": "030a7113f36095ce593b7a9c1a1b03d809a9ab7290a994c842c9101e614f5a4a",
+      "outputHash": "2e0f3a87e67dcf8c3ef31d62dd90806259f41404bda8e11a3830b570cf839b85",
+      "displayWidth": 18,
+      "interiorPaint": "original"
+    },
+    "traveller-front-cape.svg": {
+      "bands": 2,
+      "cacheKey": "8d8a9b19e7e7c0c0fc26217003a342666e07c628b5cee468480f2d4e79626c2c",
+      "outputHash": "9cd815ede1aaaa451add0aeb575a25ba55fad070bf0406f5f011210e46062fa9",
+      "displayWidth": 32,
+      "interiorPaint": "original"
+    },
+    "traveller-back-head.svg": {
+      "bands": 4,
+      "cacheKey": "c2dbb44c0a8f14aabd77c9134254d48a391aa9fd98014b25a2590ca3f0603978",
+      "outputHash": "c699978c67662eea6baa4eb83ce9880131cadffe1ada1de37550418ddc9c4fb2",
+      "displayWidth": 54,
+      "interiorPaint": "original"
+    },
+    "traveller-back-body.svg": {
+      "bands": 3,
+      "cacheKey": "854bf1456a74bc8b30c68063d5e49d1a58ddb9b65a443cb7e7ea901045407efa",
+      "outputHash": "c3e3f2a9053dfcf759e617170085cb9b116339bcf4ed22f3aa4f3bb725622050",
+      "displayWidth": 46,
+      "interiorPaint": "original"
+    },
+    "traveller-back-backpack.svg": {
+      "bands": 3,
+      "cacheKey": "7a8de7e292b229f571a4fac47b2f035caf3359d39048e937bada0072cef5a7cc",
+      "outputHash": "29634ae7eebd192d3a8261436c49ac37e2ddf67adbf794b7aa84134fd7dde11b",
+      "displayWidth": 34,
+      "interiorPaint": "original"
+    },
+    "traveller-back-arm-left.svg": {
+      "bands": 2,
+      "cacheKey": "f6a4101635ae8be0810610073f86f57d295ccd0c2a4568067ef21b5fe9dc9df7",
+      "outputHash": "43495d7cf4ce8a98c6c0e298a4e3294b51c9cbc20b4d5f91cdfed26923d65a46",
+      "displayWidth": 13,
+      "interiorPaint": "original"
+    },
+    "traveller-back-arm-right.svg": {
+      "bands": 2,
+      "cacheKey": "1be6ccb3fbfb2dbf9a115ea031ea81048ac03f68f34c53ea4769b5603aca71b9",
+      "outputHash": "3e540deeb6afafda4e0895fcede97eb62394f204f17df1ca73b5bb9357667928",
+      "displayWidth": 13,
+      "interiorPaint": "original"
+    },
+    "traveller-back-staff.svg": {
+      "bands": 4,
+      "cacheKey": "8d7368b487eb32ec272c0166084f46ff93698ca8f54dd689948b5f38c015a8f3",
+      "outputHash": "180200ca5152b7caa3d05ec6592b3d8ad90ccc697382529b26f968c345692ad5",
+      "displayWidth": 30,
+      "interiorPaint": "original"
+    },
+    "traveller-back-leg-left.svg": {
+      "bands": 3,
+      "cacheKey": "aab103b8c20c7d4c9f017ca5196cd40ca8975bca2e9d0056cd61a4fc1ee31700",
+      "outputHash": "63861ef1c60a745cbf56c1d473b71e1e9deaa2ff7e332d6bf66b3fc28fb8e112",
+      "displayWidth": 18,
+      "interiorPaint": "original"
+    },
+    "traveller-back-leg-right.svg": {
+      "bands": 3,
+      "cacheKey": "ea8a037915031739d12303fdf2b3ef3ea5ba9b18d498194bf2af832a7304f1e9",
+      "outputHash": "f5d20259ac3119a598a1d202a93168703a93482b4f5877588830778db57a1340",
+      "displayWidth": 18,
+      "interiorPaint": "original"
+    },
+    "traveller-back-cape.svg": {
+      "bands": 3,
+      "cacheKey": "af03f111126b5c4552b2c243624b3a22aa345d4b9c4a453398cfcc53d36c4cb0",
+      "outputHash": "7581f03979fdfdff778cdbebcc9baf3e27f0752c14eded698315254ce7a0afbc",
+      "displayWidth": 32,
+      "interiorPaint": "original"
+    }
+  }
+}

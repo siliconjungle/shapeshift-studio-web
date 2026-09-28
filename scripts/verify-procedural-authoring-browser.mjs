@@ -1,0 +1,25 @@
+// Build and serve first. Authors a new rig through controls, independently of the studies.
+import {chromium} from 'playwright';import assert from 'node:assert/strict';import fs from 'node:fs/promises';
+const browser=await chromium.launch({headless:true});try{
+ const page=await browser.newPage({viewport:{width:1440,height:1000}}),errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.goto('http://127.0.0.1:4354/puppet-studio/index.html?procedural=reach');await page.waitForFunction(()=>window.shapeshiftStudio?.snapshot().project.procedural);
+ const panel=page.locator('#procedural-panel');await panel.locator('[data-json]').evaluate(el=>el.closest('details').open=true);
+ const empty={version:1,gravity:[0,0],damping:3,iterations:16,particles:[],distances:[],bends:[],areas:[],rigid:[],chains:[],drivers:[],colliders:[],surfaces:[],bindings:[],connections:[],gaits:[],supports:[],attachments:[]};
+ await panel.locator('[data-json]').fill(JSON.stringify(empty));await panel.locator('[data-apply]').click();await page.waitForFunction(()=>window.shapeshiftStudio.snapshot().project.procedural.particles.length===0);
+ await panel.locator('[data-kind]').selectOption('tentacle');await panel.locator('[data-count]').fill('11');await panel.locator('[data-spacing]').fill('18');await panel.locator('[data-add]').click();
+ await page.waitForFunction(()=>window.shapeshiftStudio.snapshot().project.procedural.chains.length===1);
+ await panel.locator('[data-curve]').fill('1');await panel.locator('[data-curve]').dispatchEvent('change');await page.waitForFunction(()=>window.shapeshiftStudio.snapshot().project.procedural.surfaces[0].shapes[0].curve===1);
+ await panel.locator('[data-shape]').selectOption('tube');await panel.locator('[data-new-surface]').click();await page.waitForFunction(()=>window.shapeshiftStudio.snapshot().project.procedural.surfaces.length===2);
+ await panel.locator('[data-name]').fill('Independent ink layer');await panel.locator('[data-name]').press('Tab');await panel.locator('[data-no-fill]').check();await panel.locator('[data-layer]').fill('-2');await panel.locator('[data-layer]').press('Tab');
+ await page.waitForFunction(()=>window.shapeshiftStudio.snapshot().project.procedural.surfaces[1].fill==='none'&&window.shapeshiftStudio.snapshot().project.procedural.surfaces[1].layer===-2);
+ const proof=await page.evaluate(async()=>{
+  const api=window.shapeshiftStudio,p=api.snapshot().project,c=p.procedural.chains[0],before=JSON.stringify(p.procedural),{loadImages,renderFrame,validateProject}=await import('./runtime.js');let maxLengthError=0,maxReachError=0,rootError=0;
+  for(const time of [.2,.7,1.4]){api.seek(time);const points=new Map(api.snapshot().procedural.points),root=p.procedural.particles.find(n=>n.id===c.particles[0]).position;rootError=Math.max(rootError,Math.hypot(...points.get(c.particles[0]).map((v,i)=>v-root[i])));maxReachError=Math.max(maxReachError,Math.hypot(...points.get(c.particles.at(-1)).map((v,i)=>v-points.get(c.target)[i])));for(let i=1;i<c.particles.length;i++)maxLengthError=Math.max(maxLengthError,Math.abs(Math.hypot(...points.get(c.particles[i]).map((v,k)=>v-points.get(c.particles[i-1])[k]))-18));}
+  api.seek(.7);const options={width:640,height:480,framing:{minX:-140,maxX:160,minY:-140,maxY:100},background:'#eef0e8'},actual=await api.render(.7,options),saved=validateProject(JSON.parse(JSON.stringify(p))),images=await loadImages(saved),portable=renderFrame(saved,images,saved.clips[0],.7,options),a=actual.getContext('2d').getImageData(0,0,640,480).data,b=portable.getContext('2d').getImageData(0,0,640,480).data;let differences=0;for(let i=0;i<a.length;i++)if(a[i]!==b[i])differences++;
+  const canvas=document.createElement('canvas');canvas.width=640;canvas.height=480;canvas.getContext('2d').drawImage(portable,0,0);return {count:c.particles.length,maxLengthError,maxReachError,rootError,differences,unchanged:JSON.stringify(api.snapshot().project.procedural)===before,baseFill:p.procedural.surfaces[0].fill,image:canvas.toDataURL()};
+ });
+ assert.equal(proof.count,11);assert.ok(proof.maxLengthError<.01);assert.ok(proof.maxReachError<.1);assert.equal(proof.rootError,0);assert.equal(proof.differences,0);assert.equal(proof.unchanged,true);assert.equal(proof.baseFill,'#98bd99');
+ const downloadPromise=page.waitForEvent('download');await panel.locator('[data-export]').click();const download=await downloadPromise;await fs.mkdir('work',{recursive:true});await download.saveAs('work/authored-tentacle.svg');
+ const svg=await fs.readFile('work/authored-tentacle.svg','utf8');assert.equal((svg.match(/<g /g)??[]).length,2);assert.ok(svg.includes('data-layer="-2"'));assert.ok(svg.includes('fill="none"'));assert.ok(!svg.includes('NaN'));
+ await fs.writeFile('work/authored-tentacle.png',Buffer.from(proof.image.split(',')[1],'base64'));await page.screenshot({path:'work/authored-tentacle-editor.png'});delete proof.image;assert.deepEqual(errors,[]);console.log(JSON.stringify({errors,...proof,svgLayers:2},null,2));
+}finally{await browser.close();}

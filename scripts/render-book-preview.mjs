@@ -1,0 +1,13 @@
+import fs from 'node:fs/promises';
+import sharp from 'sharp';
+import gifenc from 'gifenc';
+const {GIFEncoder,quantize,applyPalette}=gifenc;
+import {bookBindingExample} from '../puppet-studio/bone-binding/book.js';
+import {boundVector} from '../puppet-studio/bone-binding/model.js';
+import {poseAt} from '../puppet-studio/runtime.js';
+import {svgText} from '../puppet-studio/vector/model.js';
+const p=bookBindingExample(),gif=GIFEncoder(),dir='work/bone-binding';await fs.mkdir(dir,{recursive:true});
+for(let i=0;i<80;i++){const time=i/20,pose=poseAt(p,p.clips[0],time),v=boundVector(p.assets[1].vector,p.joints.find(j=>j.id==='page'),pose,time).vector;
+ const layers=await Promise.all([p.assets[0].vector,v].map(v=>sharp(Buffer.from(svgText(v,time))).resize(700,500).png().toBuffer()));
+ const frame=sharp({create:{width:700,height:500,channels:4,background:'#eee8df'}}).composite(layers.map(input=>({input})));const rgba=await frame.clone().raw().toBuffer(),palette=quantize(rgba,128),index=applyPalette(rgba,palette);gif.writeFrame(index,700,500,{palette,delay:50});if([0,15,22,30,38].includes(i))await frame.png().toFile(`${dir}/revised-${i}.png`);
+}gif.finish();await fs.writeFile(dir+'/book-turn.gif',gif.bytes());console.log('Rendered book preview');

@@ -1,0 +1,189 @@
+{
+  "generation_id": "85f814cf-b12e-4941-94d9-26a351b602f8",
+  "duration": 1.66,
+  "file_size": 159404,
+  "encoding": {
+    "format": "wav",
+    "sample_rate": 48000
+  },
+  "snippets": [
+    [
+      {
+        "id": "9e2873ee-898d-4856-afd7-9a7e5114ff4a",
+        "text": "Maba doo-len, vella boo.",
+        "generation_id": "9e2873ee-898d-4856-afd7-9a7e5114ff4a",
+        "utterance_index": 0,
+        "audio_format": "wav",
+        "timestamps": [
+          {
+            "type": "phoneme",
+            "text": "m",
+            "time": {
+              "begin": 80,
+              "end": 100
+            }
+          },
+          {
+            "type": "phoneme",
+            "text": "a",
+            "time": {
+              "begin": 120,
+              "end": 140
+            }
+          },
+          {
+            "type": "phoneme",
+            "text": "b",
+            "time": {
+              "begin": 220,
+              "end": 240
+            }
+          },
+          {
+            "type": "phoneme",
+            "text": "a",
+            "time": {
+              "begin": 260,
+              "end": 280
+            }
+          },
+          {
+            "type": "phoneme",
+            "text": "d",
+            "time": {
+              "begin": 360,
+              "end": 380
+            }
+          },
+          {
+            "type": "phoneme",
+            "text": "u",
+            "time": {
+              "begin": 400,
+              "end": 420
+            }
+          },
+          {
+            "type": "phoneme",
+            "text": "l",
+            "time": {
+              "begin": 480,
+              "end": 500
+            }
+          },
+          {
+            "type": "phoneme",
+            "text": "ɛ",
+            "time": {
+              "begin": 520,
+              "end": 540
+            }
+          },
+          {
+            "type": "phoneme",
+            "text": "n",
+            "time": {
+              "begin": 660,
+              "end": 680
+            }
+          },
+          {
+            "type": "phoneme",
+            "text": "v",
+            "time": {
+              "begin": 1100,
+              "end": 1120
+            }
+          },
+          {
+            "type": "phoneme",
+            "text": "ɛ",
+            "time": {
+              "begin": 1160,
+              "end": 1180
+            }
+          },
+          {
+            "type": "phoneme",
+            "text": "l",
+            "time": {
+              "begin": 1240,
+              "end": 1260
+            }
+          },
+          {
+            "type": "phoneme",
+            "text": "b",
+            "time": {
+              "begin": 1340,
+              "end": 1360
+            }
+          },
+          {
+            "type": "phoneme",
+            "text": "uː",
+            "time": {
+              "begin": 1400,
+              "end": 1420
+            }
+          },
+          {
+            "type": "word",
+            "text": "Maba",
+            "time": {
+              "begin": 80,
+              "end": 280
+            }
+          },
+          {
+            "type": "word",
+            "text": "doo-len,",
+            "time": {
+              "begin": 360,
+              "end": 680
+            }
+          },
+          {
+            "type": "word",
+            "text": "vella",
+            "time": {
+              "begin": 1100,
+              "end": 1260
+            }
+          },
+          {
+            "type": "word",
+            "text": "boo.",
+            "time": {
+              "begin": 1340,
+              "end": 1420
+            }
+          }
+        ],
+        "transcribed_text": null
+      }
+    ]
+  ],
+  "request": {
+    "version": "2",
+    "include_timestamp_types": [
+      "word",
+      "phoneme"
+    ],
+    "utterances": [
+      {
+        "text": "Maba doo-len, vella boo.",
+        "voice": {
+          "id": "5bf306e9-a002-4d69-8554-25d19bc21183"
+        },
+        "speed": 1.13,
+        "trailing_silence": 0.06
+      }
+    ],
+    "split_utterances": false,
+    "format": {
+      "type": "wav"
+    },
+    "num_generations": 1
+  }
+}

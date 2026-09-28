@@ -1,0 +1,12 @@
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import {cutoutPNG} from './map-art-grid.mjs';
+import {convert} from '@shapeshift-labs/studio-core/image-vectorizer/node';
+const root=path.resolve(import.meta.dirname,'../assets/bramble-map'),game=path.resolve(process.env.STUDIO_ART_SOURCE??(()=>{throw Error('Set STUDIO_ART_SOURCE to the source artwork project to regenerate these assets');})());
+const png=await cutoutPNG(await fs.readFile(path.join(root,'source/travel-backing.png')),640);
+await fs.writeFile(path.join(root,'cutouts/travel-backing.png'),png);
+const result=await convert(png,{preset:'cel',colors:4});await fs.writeFile(path.join(root,'travel-backing.svg'),result.svg);console.log('travel-backing',result.stats);
+for(const id of ['overheated','love'])await fs.copyFile(path.join(game,'assets/vector/reacts',id+'.svg'),path.join(root,'emote-'+id+'.svg'));
+for(const id of ['hurt','love'])await fs.copyFile(path.join(game,'assets/audio/villager-v3',id+'.mp3'),path.join(root,'audio',id+'.mp3'));
+await import('./prepare-map-bird.mjs');
+await import('./prepare-map-butterfly.mjs');

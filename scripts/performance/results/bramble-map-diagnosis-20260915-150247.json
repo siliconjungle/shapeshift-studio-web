@@ -1,0 +1,75 @@
+{
+  "capturedAt": "2026-09-15T05:02:47.119060+00:00",
+  "status": "interrupted after three completed phases because user reported system-wide slowdown",
+  "method": "Opt-in in-app browser profile; 60 warm-up frames then 90 measured frames per phase; 2160x1440 drawing buffer. Disabling effects is diagnostic, not a retained optimization. GPU queries across two contexts include contention and must not be added together.",
+  "counts": {
+    "outlineSegments": 178,
+    "artRecords": 50,
+    "routeMarks": 120,
+    "shadowCasters": 54
+  },
+  "phases": [
+    {
+      "mode": "all",
+      "frames": 90,
+      "frameMs": {
+        "mean": 113.7033,
+        "p95": 133.1,
+        "p99": 133.4,
+        "max": 134.4
+      },
+      "cpuMs": {
+        "mean": 110.5244,
+        "p95": 122.6,
+        "p99": 133.6,
+        "max": 134.4
+      },
+      "animationMeanMs": 0.7311,
+      "outlinePreparationMeanMs": 4.6867,
+      "mainSubmissionMeanMs": 103.15,
+      "framesOver50ms": 90
+    },
+    {
+      "mode": "no-outlines",
+      "frames": 90,
+      "frameMs": {
+        "mean": 20.1856,
+        "p95": 33.3,
+        "p99": 33.4,
+        "max": 33.4
+      },
+      "cpuMs": {
+        "mean": 17.6411,
+        "p95": 20.6,
+        "p99": 22.3,
+        "max": 23.4
+      },
+      "animationMeanMs": 0.4433,
+      "outlinePreparationMeanMs": 0.0189,
+      "mainSubmissionMeanMs": 15.98,
+      "framesOver50ms": 0
+    },
+    {
+      "mode": "no-shadows",
+      "frames": 90,
+      "frameMs": {
+        "mean": 111.2956,
+        "p95": 117.6,
+        "p99": 200.8,
+        "max": 216.8
+      },
+      "cpuMs": {
+        "mean": 107.2267,
+        "p95": 115.2,
+        "p99": 118.7,
+        "max": 192
+      },
+      "animationMeanMs": 0.53,
+      "outlinePreparationMeanMs": 4.6,
+      "mainSubmissionMeanMs": 100.6844,
+      "framesOver50ms": 88
+    }
+  ],
+  "finding": "Main bottleneck is the fragment-based Perfect Freehand outline renderer. It rebuilds stroke points, caps and winding coverage for each covered pixel across 178 quads. Shadows are not the primary bottleneck. General host contention was present; no final repeat or grading phase completed.",
+  "cleanup": "Navigated profiling tab to about:blank and stopped npm start session 32486."
+}

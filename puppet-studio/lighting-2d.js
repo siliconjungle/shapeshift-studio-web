@@ -10,7 +10,7 @@ function spriteLightMatrix(j,world,time){const v=j.visual;if(!v)return world;con
 export function lightingFrame(project,clip,time,pose,overrides=[]){
  if(!(project.lighting?.night>0)&&!clip?.lightingTracks?.length&&!project.joints.some(j=>j.light||j.coloring))return {active:false};
  const nodes=sampleLighting2D(project,clip,time,overrides),e=project.lighting??{night:0,lightColor:'#f0bf4b'},night=e.night??0,lights=[];
- const shown=j=>{for(let p=j;p;p=nodes.get(p.parent))if(p.hidden)return false;return true;};
+ const shown=j=>{if(pose.soloHidden?.has(j.id))return false;for(let p=j;p;p=nodes.get(p.parent))if(p.hidden)return false;return true;};
  for(const j of nodes.values()){const l=j.light;if(!l||!shown(j))continue;const power=lightPower(l,time,night);if(!power)continue;const m=spriteLightMatrix(j,pose.get(j.id).world,time),origin=point(m,{x:l.offset[0],y:l.offset[1]}),tip=point(m,{x:l.offset[0]+l.direction[0],y:l.offset[1]+l.direction[1]}),direction=[tip.x-origin.x,tip.y-origin.y,l.direction[2]],len=Math.hypot(...direction)||1;lights.push({position:[origin.x,origin.y,l.offset[2],l.range],color:[...(l.colorMode==='environment'?hex(e.lightColor):l.color).map(linear),power],direction:[...direction.map(v=>v/len),l.frontOnly?1:0],falloff:l.falloff});}
  return {nodes,lights,environment:e,night,time,active:lights.length>0||night>0||[...nodes.values()].some(j=>j.coloring&&(j.coloring.strength>0||j.coloring.emission>0))};
 }

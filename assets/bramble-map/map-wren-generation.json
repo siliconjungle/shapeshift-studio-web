@@ -1,0 +1,12 @@
+{
+  "tool": "built-in image_gen",
+  "prompt": "Production puppet asset sheet for a tiny parchment-map bird in a hand-inked fantasy SVG game. ONE square transparent sprite sheet divided into a clean 2 by 2 grid with very generous empty transparent gutters, exactly FOUR isolated separated pieces. TOP LEFT: plump squat oval headless bird torso, no wings, no legs, no neck stump detail. TOP RIGHT: oversized round bird head in right-facing profile, tiny triangular beak pointing right and one large simple black eye, little three-feather tousled tuft; no torso. BOTTOM LEFT: one short rounded leaf-shaped feather wing, narrow attachment at LEFT and three broad feather tips fanning to RIGHT, horizontal. BOTTOM RIGHT: small three-feather tail fan pointing UP from a narrow attachment at BOTTOM. All four belong to the SAME charming scruffy little brown wren, like a doodle that lives on a sepia storybook map. Thick slightly irregular dark charcoal brown contours (#211e1a), SIMPLE flat cream, muted tan and warm umber fills only, chunky organic shapes and minimal interior ink detail. NO blue, purple, bright colors, gradients, realistic feathers, textures, shadows, ground, labels or text. Shapes must be fully opaque inside and true transparent outside, visibly disjoint, each comfortably inside its own quadrant. Consistent outline width and style across pieces. Pieces will be separately cut out, reduced to 4 colors, vectorized into SVG and articulated at joints.",
+  "source": "source/map-wren-sheet.png",
+  "parts": [
+    "body",
+    "head",
+    "wing",
+    "tail"
+  ],
+  "pipeline": "Little Gods cel 4-colour reduction, VTracer SVG, palette mapping, cached edge ink"
+}

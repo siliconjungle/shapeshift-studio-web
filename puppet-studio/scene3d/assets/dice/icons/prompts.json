@@ -1,0 +1,13 @@
+{
+  "mode": "built-in image_gen",
+  "prompts": [
+    [
+      "skull",
+      "A single little friendly-but-dangerous skull game icon, front view, rounded ivory skull with two bold dark forest-green eye sockets, tiny inverted heart nose, three rounded teeth. Flat SVG-like vector illustration, thick uniform dark forest-green outline (#263c31), warm ivory fill (#fff4d9), extremely simple chunky silhouette readable at 24 pixels. No crossbones, no text, no shadows, no gradients, no border frame. Centered isolated icon with generous padding on a genuinely transparent background. Asset for a minimal cream-colored rhythm dice game."
+    ],
+    [
+      "sword",
+      "A single little sword game icon, upright vertical blade pointing upward, short chunky ivory blade with one simple central line, small rounded dark forest-green crossguard, warm gold grip and pommel. Flat SVG-like vector illustration, thick uniform dark forest-green outline (#263c31), warm ivory fill (#fff4d9), extremely simple chunky silhouette readable at 24 pixels. No text, no shadows, no gradients, no border frame, no other objects. Centered isolated icon with generous padding on a genuinely transparent background. Asset for a minimal cream-colored rhythm dice game."
+    ]
+  ]
+}

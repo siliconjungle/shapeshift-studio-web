@@ -1,0 +1,7 @@
+{
+  "tool": "built-in image_gen",
+  "prompt": "Use case: stylized-concept. Asset type: single game VFX dust puff for a polished SVG-style dice landing animation. Create one isolated asymmetric low, billowing cartoon dust cloud, like the rounded dust puffs in the provided reference, but without the reference's circular shockwave, sparks or debris. Direction: expands sideways and curls upward, wide base tapering to a small trailing point, three overlapping rounded lobes and one elegant inner curl. Flat clean vector-like cut-paper shapes, only three solid warm neutral colors: pale cream #f4e7c8 highlights, sandy beige #cdbb91 main body, muted tan #a48f69 underside. No gradients, no grain, no blur, no black outline. Broad smooth contours that will trace cleanly into SVG. Center the complete cloud with generous transparent padding; genuinely transparent background, no checkerboard, no floor, no shadow, no dice, no text, no border. One cloud only, no sprite sheet. This will be mirrored and animated as several separate puffs around the foot of a landing die. Use the reference only for the rounded flat-color cloud illustration style.",
+  "reference": "../../landing-sprite.svg",
+  "source": "source-puff.png",
+  "derived": "landing-puff.svg"
+}

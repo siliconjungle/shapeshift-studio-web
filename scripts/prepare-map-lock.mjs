@@ -1,0 +1,10 @@
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import {cutoutPNG} from './map-art-grid.mjs';
+import {convert} from '@shapeshift-labs/studio-core/image-vectorizer/node';
+const root=path.resolve(import.meta.dirname,'../assets/bramble-map');
+const png=await cutoutPNG(await fs.readFile(path.join(root,'source/location-lock.png')),320);
+await fs.writeFile(path.join(root,'cutouts/location-lock.png'),png);
+const result=await convert(png,{preset:'cel',colors:6});
+await fs.writeFile(path.join(root,'location-lock.svg'),result.svg);
+console.log(result.stats);

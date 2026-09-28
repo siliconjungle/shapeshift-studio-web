@@ -1,0 +1,172 @@
+@font-face{font-family:Inkwell;src:url('/assets/bramble-map/fonts/InkwellText-Variable.woff2') format('woff2');font-weight:300 900;font-display:swap}
+:root{font-family:Inkwell,serif;font-weight:500;color:#263c31;background:#f6f2e9;font-synthesis:none;--ink:#263c31;--muted:#818675;--line:#dcd8c9;--gold:#dfb748;--rust:#b95037}*{box-sizing:border-box}body{margin:0}button,a,canvas{touch-action:manipulation;-webkit-tap-highlight-color:transparent}a{color:inherit;text-decoration:none}button{font:inherit;color:inherit;background:transparent;border:1px solid var(--line);padding:8px 14px;border-radius:20px;cursor:pointer}button:focus-visible,a:focus-visible,canvas:focus-visible{outline:2px solid var(--rust);outline-offset:5px}header{height:90px;max-width:1100px;margin:auto;padding:0 28px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}.brand{font-size:19px;letter-spacing:.075em}.brand small{font-size:9px;letter-spacing:.18em;display:block;margin-top:6px;color:var(--muted)}nav{display:flex;align-items:center;gap:24px;font-size:12px}main{max-width:1000px;margin:auto;padding:20px 28px 0;transform:translate(var(--shake-x,0px),var(--shake-y,0px));will-change:transform}.run-stats{display:flex;align-items:center;justify-content:space-between;padding:0 40px;min-height:58px}.run-stats>div{min-width:95px}.run-stats>div:last-child{text-align:right}.run-stats span{font-size:10px;letter-spacing:.17em;color:var(--muted);display:block}.run-stats strong{font-size:27px;font-weight:500;font-variant-numeric:tabular-nums}.next-die{text-align:center;font-size:15px;letter-spacing:.14em;color:#6e785f}.stage{height:clamp(320px,48vh,540px);position:relative;border-radius:24px;overflow:hidden;cursor:pointer}.stage:after{position:absolute;inset:0;content:'';background:linear-gradient(#f6f2e9,transparent 16%,transparent 87%,#f6f2e9),linear-gradient(90deg,#f6f2e9,transparent 14%,transparent 86%,#f6f2e9);pointer-events:none}canvas{display:block;width:100%;height:100%;outline-offset:-5px;cursor:pointer}#loading{position:absolute;inset:0;display:grid;place-items:center;background:#f6f2e9b5;font-size:15px;z-index:4}#loading[hidden],#timing[hidden],#error[hidden]{display:none}#timing{position:absolute;bottom:15px;width:min(460px,85%);left:50%;transform:translateX(-50%);z-index:3;background:#fffcf2ed;border:1px solid #d8d6c5;border-radius:12px;padding:14px 20px 11px;box-shadow:0 5px 20px #273b3210}.timing-caption,.timing-legend{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:9px;letter-spacing:.06em}.timing-caption{font-size:11px}.timing-legend{color:#788167}#meter{height:20px;border-radius:4px;background:#e7e6d9;position:relative;margin:16px 0 13px}.good-zone,.perfect-zone{position:absolute;height:100%;border-radius:2px}.good-zone{left:58%;width:28%;background:#9daf76}.perfect-zone{left:67.5%;width:9%;background:var(--gold);box-shadow:inset 0 0 0 2px #f4d987}#needle{position:absolute;top:-5px;bottom:-5px;left:0;width:3px;background:var(--ink);border-radius:3px;will-change:left}#needle:before{content:'';position:absolute;top:-4px;left:-3px;border:4px solid transparent;border-top-color:var(--ink)}.readout{min-height:138px;text-align:center;position:relative;padding:10px 0 22px}#status{font-size:13px;letter-spacing:.12em;color:#637153}#result{display:flex;justify-content:center;align-items:center;gap:18px;min-height:65px}#total{font-size:50px;line-height:1;font-weight:500}#equation{font-size:14px;text-align:left;color:#767e68}#hint{font-size:9px;letter-spacing:.13em;color:#959780}.readout[data-grade=perfect] #status{color:#987322}.readout[data-grade=miss] #status{color:var(--rust)}#celebration{position:absolute;top:7%;left:50%;transform:translateX(-50%);pointer-events:none;z-index:2;text-align:center;opacity:0;width:90%;color:#38563e;text-shadow:0 2px #fff8e8}#celebration>span{display:block;font-size:16px;letter-spacing:.2em}#celebration>strong{display:block;font-size:clamp(35px,5vw,64px);font-weight:500;line-height:1.25}#celebration.pop{animation:combo-pop .85s both}@keyframes combo-pop{0%{opacity:0;transform:translateX(-50%) translateY(12px) scale(.65)}18%{opacity:1;transform:translateX(-50%) translateY(0) scale(1.08)}38%,75%{opacity:1;transform:translateX(-50%) scale(1)}100%{opacity:0;transform:translateX(-50%) translateY(-15px) scale(.96)}}#error{position:fixed;bottom:15px;left:15px;right:15px;padding:15px;background:#873b2c;color:white;border-radius:10px;z-index:20}@media(max-width:700px){header{height:78px;padding:0 20px}.brand{font-size:16px}.brand small{font-size:7px}nav{gap:12px;font-size:10px}nav>a{display:none}main{padding:12px 10px 0}.run-stats{padding:0 23px}.stage{height:clamp(300px,49vh,450px)}.readout{min-height:135px;padding-bottom:16px}#timing{width:90%;padding:12px 15px}#celebration{top:4%}#hint{font-size:8px}}@media(prefers-reduced-motion:reduce){main{transform:none!important}*,*:before,*:after{animation:none!important;transition:none!important}#celebration.pop{opacity:1}}
+/* An unboxed timing rail sits above the airborne die. */
+#timing{top:24px;bottom:auto;background:none;border:0;border-radius:0;box-shadow:none;padding:0;width:min(450px,80%)}#meter{height:12px;background:#dcdccd;border:1px solid #cbcdbb;box-shadow:0 2px 0 #fff9ed;border-radius:10px}.good-zone{border-radius:0}.perfect-zone{box-shadow:inset 0 0 0 1px #f6df9c}.timing-caption{font-size:10px;letter-spacing:.12em}.timing-legend{font-size:8px;opacity:.8}#celebration{top:auto;bottom:9%}@media(max-width:700px){#timing{top:22px;width:82%}#celebration{top:auto;bottom:6%}}
+
+/* Feedback lives in its own reserved row below the canvas, never over the die. */
+#celebration{position:relative;top:auto;bottom:auto;left:auto;width:100%;height:64px;display:flex;flex-direction:column;justify-content:center;transform:none;text-shadow:none}
+#celebration>span{font-size:10px;letter-spacing:.18em}
+#celebration>strong{font-size:clamp(26px,4vw,40px);line-height:1.15}
+#celebration.pop{animation:landing-pop .85s both}
+@keyframes landing-pop{0%{opacity:0;transform:translateY(8px) scale(.8)}18%{opacity:1;transform:scale(var(--combo-scale,1))}38%,75%{opacity:1;transform:scale(1)}100%{opacity:0;transform:translateY(-5px)}}
+
+@media(max-width:700px){#celebration{top:auto;bottom:auto;height:56px}}
+@media(prefers-reduced-motion:reduce){#celebration.pop{animation:none;opacity:1;transform:none}}
+
+#celebration[data-kind=failure]{color:var(--rust)}
+
+#dice-sparks{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1}
+
+/* Fit the play area and feedback into the available viewport. */
+body{height:100svh;min-height:560px;display:flex;flex-direction:column}
+header{height:64px;flex:0 0 64px;width:100%}
+main{width:100%;flex:1;min-height:0;display:grid;grid-template-rows:42px minmax(200px,1fr) 122px;padding-top:6px}
+.run-stats{min-height:0}.run-stats strong{font-size:24px}
+.stage{height:100%;min-height:0}
+.readout{min-height:0;padding:2px 0 8px}
+#celebration{height:43px}#celebration>strong{font-size:clamp(22px,3vw,30px)}#celebration>span{font-size:8px}
+#status{font-size:10px}#result{min-height:45px;gap:12px}#total{font-size:36px}#equation{font-size:12px}#hint{font-size:8px}
+
+
+
+
+@media(max-width:700px){header{height:58px;flex-basis:58px}main{padding-top:4px;grid-template-rows:38px minmax(190px,1fr) 116px}#celebration{height:40px}#timing{top:14px}#status{font-size:9px}#equation{font-size:11px}}
+
+.readout{display:grid;grid-template-rows:40px 14px 40px 12px;align-content:center;padding:2px 0 8px}
+#celebration{height:40px}#status{display:block;line-height:14px}#result{min-height:40px}#hint{display:block;line-height:12px}
+
+/* Keep the running score visible without taking room from the landing area. */
+.run-stats{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) minmax(0,.7fr) minmax(0,1fr);gap:12px}
+.run-stats>div{min-width:0}.run-stats .score-stat{color:var(--ink)}
+#score{display:block;font-variant-numeric:tabular-nums;white-space:nowrap}
+@media(max-width:560px){.run-stats{padding:0 12px;gap:8px}.run-stats span{font-size:8px;letter-spacing:.09em}.run-stats strong{font-size:21px}.next-die{font-size:13px}}
+
+.stage:after{display:none}
+
+/* Incoming timing windows pass one fixed strike line. */
+.target-window{position:absolute;inset:0;overflow:hidden;border-radius:inherit}
+#targets{position:absolute;inset:0;transform:translateX(22%);will-change:transform}
+#needle{left:22%;transform:translateX(-50%);will-change:auto;z-index:1}
+.next-die small{display:block;font-size:8px;letter-spacing:.1em;margin-top:4px;color:var(--muted)}
+
+
+/* A continuous beat lane: equal travel speed, rhythm encoded by note spacing. */
+#targets{transform:none;will-change:auto}
+.beat-note{position:absolute;top:0;height:100%;width:18.9%;transform:translateX(-50%);will-change:left}
+.beat-note .good-zone{left:0;width:100%;opacity:1}
+.beat-note .perfect-zone{left:33.92857%;width:32.14286%}
+.beat-note.current .good-zone{opacity:1}
+
+@media(max-width:560px){.run-stats #speed{font-size:16px}}
+
+/* A compact, unbranded rhythm arena. */
+main{grid-template-rows:46px 42px minmax(200px,1fr) 122px;padding-top:18px}
+#health{display:flex;align-items:center;justify-content:center;gap:10px}
+.heart{display:block;position:relative;width:30px;height:30px;transform-origin:center}
+.heart svg{width:100%;height:100%;overflow:visible}
+.heart-empty{display:none;position:absolute;inset:0;pointer-events:none}
+.heart.half .heart-empty{display:block;clip-path:inset(0 0 0 50%)}
+.heart-empty .ink{fill:#b8b9a8}.heart-empty .paint{fill:#f6f2e9}
+.heart path{fill:#ce765c;stroke:var(--ink);stroke-width:2.4;stroke-linejoin:round;transition:fill .12s}
+.heart.empty path{fill:transparent;stroke:#b8b9a8}
+#health[data-remaining="1"] .heart:not(.empty){animation:heart-throb 1.2s ease-in-out infinite}
+@keyframes heart-throb{0%,60%,100%{transform:scale(1)}72%{transform:scale(1.12,.94)}84%{transform:scale(.98,1.05)}}
+#meter{height:30px;border-radius:9px;margin:12px 0 13px}
+.timing-caption{justify-content:flex-end;min-height:12px}
+.beat-note{border-radius:6px;overflow:hidden;border:1.5px solid #71865a;box-shadow:inset 0 -3px 0 #526b3b22}
+.beat-note .good-zone,.tile-face .good-zone{left:0;width:100%;border-radius:0;background:#b7c794}
+.beat-note .perfect-zone,.tile-face .perfect-zone{left:33.92857%;width:32.14286%;background:#e4bf51;box-shadow:inset 0 0 0 1px #f8da82}
+.beat-note.skull,.tile-face.skull{border-color:#9d5040}
+.beat-note.skull .good-zone,.tile-face.skull .good-zone{background:#dc9980}
+.beat-note.skull .perfect-zone,.tile-face.skull .perfect-zone{background:#ca7660;box-shadow:none}
+.target-icon{position:absolute;left:50%;top:50%;width:44px;height:44px;transform:translate(-50%,-50%);object-fit:contain;pointer-events:none;z-index:1}
+#hit-effects{position:absolute;inset:0;pointer-events:none;z-index:3}
+.tile-feedback{position:absolute;top:0;width:18.9%;height:100%;transform:translateX(-50%)}
+.tile-face{display:block;position:absolute;inset:0;border:1.5px solid #a79541;border-radius:6px;box-shadow:0 0 15px #edc84ccc;transform-origin:center}
+.tile-feedback.positive .good-zone,.tile-feedback.positive .perfect-zone{background:#ffec9a}
+.tile-feedback.negative .tile-face{box-shadow:0 0 15px #bf4d3b99;border-color:#a83b2b}
+.tile-feedback.negative .good-zone,.tile-feedback.negative .perfect-zone{background:#df705b}
+.travel-spark{position:absolute;width:4px;height:4px;background:#d9b044;pointer-events:none}
+body[data-state=gameover] #health{filter:saturate(.5)}
+@media(max-width:700px){main{padding-top:10px;grid-template-rows:40px 38px minmax(190px,1fr) 116px}.timing-legend{font-size:7px;letter-spacing:0;gap:6px}.heart{width:27px;height:27px}}
+@media(prefers-reduced-motion:reduce){.heart{animation:none!important}}
+
+/* Chunkier, near-square tiles with large traced vector glyphs. */
+#timing{width:min(420px,84%)}
+#meter{height:64px;border-radius:12px}
+.beat-note,.tile-face{border-width:2px;border-radius:10px;box-shadow:inset 0 -4px 0 #526b3b22}
+.target-icon{width:52px;height:52px}
+.tile-feedback.good .good-zone,.tile-feedback.good .perfect-zone{background:#a2df87}
+.tile-feedback.good .tile-face{border-color:#518c48;box-shadow:0 0 20px #83d66cbb}
+.tile-feedback.good .travel-spark{background:#70ae59}
+.heart{width:36px;height:36px;transform-origin:50% 78%}
+.heart path{stroke:none;transition:fill .16s}
+.heart .ink{fill:#263c31}.heart .paint{fill:#cf765e}
+.heart.empty .ink{fill:#b8b9a8}.heart.empty .paint{fill:#f6f2e9}
+.heart .heart-empty .ink{fill:#b8b9a8}.heart .heart-empty .paint{fill:#f6f2e9}
+.heart.half>svg .ink,.heart.half>svg .paint{clip-path:inset(0 50% 0 0)}
+@media(max-width:560px){#timing{width:88%}#meter{height:54px}.target-icon{width:43px;height:43px}.heart{width:32px;height:32px}}
+
+/* One stationary reload track; only the marker travels left to right. */
+#needle{left:0;transition:none}
+.beat-note .perfect-zone,.tile-face .perfect-zone{left:34%;width:32%}
+.beat-note.skull .perfect-zone,.tile-face.skull .perfect-zone{display:none}
+#meter[data-outcome="empty"]{border-color:#b95037;box-shadow:0 0 12px #b950372b}
+#meter[data-phase="locked"] #needle,#meter[data-phase="complete"] #needle{background:#263c31;box-shadow:0 0 0 2px #fff6}
+
+/* Put timing feedback at the player's focus, directly above the reload bar. */
+#timing #celebration{height:46px;margin:0 0 5px;pointer-events:none}
+#timing #celebration-grade{font-size:23px;line-height:26px;letter-spacing:.09em}
+#timing #celebration-combo{font-size:11px;line-height:16px;letter-spacing:.08em}
+.timing-caption{justify-content:space-between}
+/* Keep roll announcements accessible without a visible bottom readout. */
+.readout{position:absolute;width:1px;height:1px;min-height:0;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+/* Give the landing area some of the space freed by the readout. */
+main{grid-template-rows:46px 42px minmax(200px,1fr);padding-bottom:48px}
+@media(max-width:700px){main{grid-template-rows:40px 38px minmax(190px,1fr);padding-bottom:44px}#timing #celebration-grade{font-size:21px}}
+
+/* Two illustrated fighters frame the same central dice table. */
+main{display:block;max-width:1280px;padding:24px 28px 16px}
+.stage{height:100%;border-radius:0;overflow:visible}
+#dice-canvas:focus-visible{outline:none}
+#dice-canvas:focus-visible~#timing #meter{box-shadow:0 0 0 2px #263c3120}
+#timing{top:48px;width:min(400px,38%)}
+.fighter{position:absolute;top:66px;bottom:17%;width:27%;z-index:2;pointer-events:none}
+.fighter-player{left:0}.fighter-enemy{right:0}
+.fighter-hud{position:relative;z-index:1;text-align:center}
+.health{display:flex;justify-content:center;align-items:center;gap:8px;height:42px}
+.fighter-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;align-items:start;margin:14px auto 0;max-width:260px}
+.fighter-stats span{display:block;font-size:9px;letter-spacing:.15em;color:var(--muted)}
+.fighter-stats strong{font-weight:500;display:block;font-size:23px;line-height:1.25;font-variant-numeric:tabular-nums}
+.fighter-stats .next-die{font-size:20px;color:var(--ink);padding-top:4px}
+.fighter-stats .next-die strong{font-size:20px}
+.fighter-stats .next-die small{font-size:8px;letter-spacing:.04em}
+.character{position:absolute;bottom:0;left:3%;right:3%;aspect-ratio:1;isolation:isolate}
+.character-shadow{position:absolute;left:20%;right:20%;bottom:4%;height:6%;background:#c9bda3;opacity:.32;border-radius:50%;z-index:-1}
+.character-breathe,.character-motion{width:100%;height:100%;transform-origin:50% 94%}
+.character-breathe{animation:character-breathe 2.7s ease-in-out infinite}
+.fighter-enemy .character-breathe{animation-delay:-1.2s}
+.character-sprite{display:block;width:100%;height:100%;object-fit:contain;user-select:none;transform-origin:50% 94%}
+.character-motion{position:relative}
+.character-emote{position:absolute;left:50%;top:12%;width:48px;height:48px;z-index:4;pointer-events:none;transform-origin:50% 100%;will-change:transform,opacity}
+.character-emote[hidden]{display:none}
+.character-emote img{display:block;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 2px 0 #f6f2e9)}
+@media(max-width:560px){.character-emote{width:34px;height:34px}}
+.character[data-pose="defeat"] .character-breathe,.character[data-pose="hurt"] .character-breathe{animation:none}
+@keyframes character-breathe{0%,100%{transform:scale(1,1)}50%{transform:scale(1.014,.982) rotate(.5deg)}}
+#celebration.duel-ended{animation:none!important;opacity:1;transform:none}
+@media(max-width:850px){
+ main{padding:16px 12px 8px}#timing{top:64px;width:min(400px,58%)}
+ .fighter{top:14px;bottom:19%;width:28%}
+ .fighter-stats{gap:4px}.fighter-stats span{font-size:8px;letter-spacing:.06em}.fighter-stats strong{font-size:19px}
+ .health{gap:4px}.health .heart{width:30px;height:30px}
+}
+@media(max-width:560px){
+ body{min-height:650px}main{padding:8px 8px 0}#timing{top:110px;width:88%}
+ .fighter{top:8px;bottom:46%;width:43%}.fighter-player{left:0}.fighter-enemy{right:0}
+ #dice-canvas,#dice-sparks{position:absolute;top:44%;left:0;width:100%;height:56%;bottom:0}
+ .fighter-stats{margin-top:8px;gap:4px}.fighter-stats strong{font-size:19px}.fighter-stats .next-die{font-size:18px}
+ .character{bottom:0}.health .heart{width:28px;height:28px}
+}
+@media(max-width:560px) and (max-height:700px){.fighter{top:8px;bottom:41%}.character{height:125px;aspect-ratio:auto}}
+@media(prefers-reduced-motion:reduce){.character-breathe{animation:none}}

@@ -1,0 +1,157 @@
+{
+  "generation_id": "4163d128-d39c-4bf4-a76f-073529f5d843",
+  "duration": 1.7,
+  "file_size": 163244,
+  "encoding": {
+    "format": "wav",
+    "sample_rate": 48000
+  },
+  "snippets": [
+    [
+      {
+        "id": "f4392090-28e8-4a79-be39-b06ce75f8448",
+        "text": "Boh-luma? Meh va-loo?",
+        "generation_id": "f4392090-28e8-4a79-be39-b06ce75f8448",
+        "utterance_index": 0,
+        "audio_format": "wav",
+        "timestamps": [
+          {
+            "type": "phoneme",
+            "text": "b",
+            "time": {
+              "begin": 40,
+              "end": 60
+            }
+          },
+          {
+            "type": "phoneme",
+            "text": "o",
+            "time": {
+              "begin": 100,
+              "end": 120
+            }
+          },
+          {
+            "type": "phoneme",
+            "text": "l",
+            "time": {
+              "begin": 260,
+              "end": 280
+            }
+          },
+          {
+            "type": "phoneme",
+            "text": "u",
+            "time": {
+              "begin": 320,
+              "end": 340
+            }
+          },
+          {
+            "type": "phoneme",
+            "text": "m",
+            "time": {
+              "begin": 420,
+              "end": 440
+            }
+          },
+          {
+            "type": "phoneme",
+            "text": "a",
+            "time": {
+              "begin": 460,
+              "end": 480
+            }
+          },
+          {
+            "type": "phoneme",
+            "text": "m",
+            "time": {
+              "begin": 1000,
+              "end": 1020
+            }
+          },
+          {
+            "type": "phoneme",
+            "text": "e",
+            "time": {
+              "begin": 1060,
+              "end": 1080
+            }
+          },
+          {
+            "type": "phoneme",
+            "text": "v",
+            "time": {
+              "begin": 1240,
+              "end": 1260
+            }
+          },
+          {
+            "type": "phoneme",
+            "text": "a",
+            "time": {
+              "begin": 1280,
+              "end": 1300
+            }
+          },
+          {
+            "type": "phoneme",
+            "text": "u",
+            "time": {
+              "begin": 1420,
+              "end": 1440
+            }
+          },
+          {
+            "type": "word",
+            "text": "Boh-luma?",
+            "time": {
+              "begin": 40,
+              "end": 480
+            }
+          },
+          {
+            "type": "word",
+            "text": "Meh",
+            "time": {
+              "begin": 1000,
+              "end": 1080
+            }
+          },
+          {
+            "type": "word",
+            "text": "va-loo?",
+            "time": {
+              "begin": 1240,
+              "end": 1440
+            }
+          }
+        ],
+        "transcribed_text": null
+      }
+    ]
+  ],
+  "request": {
+    "version": "2",
+    "include_timestamp_types": [
+      "word",
+      "phoneme"
+    ],
+    "utterances": [
+      {
+        "text": "Boh-luma? Meh va-loo?",
+        "voice": {
+          "id": "5bf306e9-a002-4d69-8554-25d19bc21183"
+        },
+        "speed": 1.13,
+        "trailing_silence": 0.06
+      }
+    ],
+    "split_utterances": false,
+    "format": {
+      "type": "wav"
+    },
+    "num_generations": 1
+  }
+}

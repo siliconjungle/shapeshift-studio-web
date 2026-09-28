@@ -1,0 +1,3 @@
+Built-in image generation; source heart.png traced to heart.svg by scripts/trace-dice-icons.mjs.
+
+Use case: logo-brand. Asset: one simple heart icon for a minimal warm cream rhythm game, to be traced into an SVG. A single plump, squishy heart with two rounded lobes and a soft rounded point, broad and slightly asymmetric like soft clay. Flat warm terracotta coral fill (#cf765e), very thick uniform dark forest green outline (#263c31). Absolutely flat color shapes, no gradient, no shadow, no texture, no shine, no other objects, no text. Large centered heart occupying 78 percent of a square canvas. Plain pure white background for clean vector tracing, isolated with generous margin.

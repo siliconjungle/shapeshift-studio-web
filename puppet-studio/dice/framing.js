@@ -1,0 +1,7 @@
+import * as T from '../scene3d/vendor.js';
+// Equal on-screen longest dimension, measured from the current die pose.
+// The camera shift preserves the die's screen position and the toss arc.
+export class DiceFraming {
+ constructor(){this.point=new T.Vector3();this.center=new T.Vector3();this.right=new T.Vector3();this.up=new T.Vector3();}
+ fit(host,solid,fraction=.36){const camera=host.camera,body=host.objects.get('die'),rig=host.objects.get('die-rig');if(!body||!rig||!camera.isOrthographicCamera)return;body.updateWorldMatrix(true,false);camera.zoom=1;camera.updateProjectionMatrix();camera.updateMatrixWorld();let minX=Infinity,minY=Infinity,maxX=-Infinity,maxY=-Infinity;for(const vertex of solid.vertices){this.point.fromArray(vertex).applyMatrix4(body.matrixWorld).project(camera);minX=Math.min(minX,this.point.x);maxX=Math.max(maxX,this.point.x);minY=Math.min(minY,this.point.y);maxY=Math.max(maxY,this.point.y);}const width=(maxX-minX)*host.width/2,height=(maxY-minY)*host.height/2,zoom=host.height*fraction/Math.max(width,height,1);rig.getWorldPosition(this.center).project(camera);this.right.setFromMatrixColumn(camera.matrixWorld,0);this.up.setFromMatrixColumn(camera.matrixWorld,1);camera.position.addScaledVector(this.right,this.center.x*(camera.right-camera.left)/2*(1-1/zoom)).addScaledVector(this.up,this.center.y*(camera.top-camera.bottom)/2*(1-1/zoom));camera.zoom=zoom;camera.updateProjectionMatrix();camera.updateMatrixWorld();return{width:width*zoom,height:height*zoom};}
+}

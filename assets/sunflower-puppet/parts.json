@@ -1,0 +1,679 @@
+{
+  "format": "inkwell-directional-art",
+  "version": 1,
+  "views": [
+    "front",
+    "back",
+    "side"
+  ],
+  "parts": {
+    "front-head": {
+      "id": "front-head",
+      "view": "front",
+      "part": "head",
+      "src": "front-head.svg",
+      "width": 482,
+      "height": 480,
+      "sourceCell": {
+        "left": 0,
+        "top": 0,
+        "width": 512,
+        "height": 512
+      },
+      "stats": {
+        "width": 482,
+        "height": 480,
+        "preset": "cel",
+        "settings": {
+          "colors": 12,
+          "speckle": 4,
+          "precision": 6,
+          "difference": 14,
+          "corner": 80,
+          "length": 4.5,
+          "median": 3,
+          "preserveDarkColors": true
+        },
+        "alphaThreshold": 128,
+        "paths": 99,
+        "colours": 10,
+        "curves": 994,
+        "bytes": 38515,
+        "silhouetteIoU": 0.9952411673707796,
+        "meanColorError": 0.02666589335585306,
+        "warnings": []
+      }
+    },
+    "front-body": {
+      "id": "front-body",
+      "view": "front",
+      "part": "body",
+      "src": "front-body.svg",
+      "width": 297,
+      "height": 399,
+      "sourceCell": {
+        "left": 512,
+        "top": 0,
+        "width": 512,
+        "height": 512
+      },
+      "stats": {
+        "width": 297,
+        "height": 399,
+        "preset": "cel",
+        "settings": {
+          "colors": 12,
+          "speckle": 4,
+          "precision": 6,
+          "difference": 14,
+          "corner": 80,
+          "length": 4.5,
+          "median": 3,
+          "preserveDarkColors": true
+        },
+        "alphaThreshold": 128,
+        "paths": 38,
+        "colours": 5,
+        "curves": 427,
+        "bytes": 16221,
+        "silhouetteIoU": 0.983819122854808,
+        "meanColorError": 0.018602222934160466,
+        "warnings": []
+      }
+    },
+    "front-hand-left": {
+      "id": "front-hand-left",
+      "view": "front",
+      "part": "hand-left",
+      "src": "front-hand-left.svg",
+      "width": 346,
+      "height": 307,
+      "sourceCell": {
+        "left": 1024,
+        "top": 0,
+        "width": 512,
+        "height": 512
+      },
+      "stats": {
+        "width": 346,
+        "height": 307,
+        "preset": "cel",
+        "settings": {
+          "colors": 12,
+          "speckle": 4,
+          "precision": 6,
+          "difference": 14,
+          "corner": 80,
+          "length": 4.5,
+          "median": 3,
+          "preserveDarkColors": true
+        },
+        "alphaThreshold": 128,
+        "paths": 40,
+        "colours": 6,
+        "curves": 445,
+        "bytes": 17340,
+        "silhouetteIoU": 0.9872000876456195,
+        "meanColorError": 0.015679560591013438,
+        "warnings": []
+      }
+    },
+    "front-hand-right": {
+      "id": "front-hand-right",
+      "view": "front",
+      "part": "hand-right",
+      "src": "front-hand-right.svg",
+      "width": 349,
+      "height": 303,
+      "sourceCell": {
+        "left": 0,
+        "top": 512,
+        "width": 512,
+        "height": 512
+      },
+      "stats": {
+        "width": 349,
+        "height": 303,
+        "preset": "cel",
+        "settings": {
+          "colors": 12,
+          "speckle": 4,
+          "precision": 6,
+          "difference": 14,
+          "corner": 80,
+          "length": 4.5,
+          "median": 3,
+          "preserveDarkColors": true
+        },
+        "alphaThreshold": 128,
+        "paths": 50,
+        "colours": 7,
+        "curves": 480,
+        "bytes": 18955,
+        "silhouetteIoU": 0.9881456084038518,
+        "meanColorError": 0.014826984103478201,
+        "warnings": []
+      }
+    },
+    "front-foot-left": {
+      "id": "front-foot-left",
+      "view": "front",
+      "part": "foot-left",
+      "src": "front-foot-left.svg",
+      "width": 381,
+      "height": 297,
+      "sourceCell": {
+        "left": 512,
+        "top": 512,
+        "width": 512,
+        "height": 512
+      },
+      "stats": {
+        "width": 381,
+        "height": 297,
+        "preset": "cel",
+        "settings": {
+          "colors": 12,
+          "speckle": 4,
+          "precision": 6,
+          "difference": 14,
+          "corner": 80,
+          "length": 4.5,
+          "median": 3,
+          "preserveDarkColors": true
+        },
+        "alphaThreshold": 128,
+        "paths": 40,
+        "colours": 6,
+        "curves": 420,
+        "bytes": 16611,
+        "silhouetteIoU": 0.987082901717048,
+        "meanColorError": 0.01592061435986386,
+        "warnings": []
+      }
+    },
+    "front-foot-right": {
+      "id": "front-foot-right",
+      "view": "front",
+      "part": "foot-right",
+      "src": "front-foot-right.svg",
+      "width": 379,
+      "height": 296,
+      "sourceCell": {
+        "left": 1024,
+        "top": 512,
+        "width": 512,
+        "height": 512
+      },
+      "stats": {
+        "width": 379,
+        "height": 296,
+        "preset": "cel",
+        "settings": {
+          "colors": 12,
+          "speckle": 4,
+          "precision": 6,
+          "difference": 14,
+          "corner": 80,
+          "length": 4.5,
+          "median": 3,
+          "preserveDarkColors": true
+        },
+        "alphaThreshold": 128,
+        "paths": 46,
+        "colours": 7,
+        "curves": 475,
+        "bytes": 18186,
+        "silhouetteIoU": 0.9785527408312575,
+        "meanColorError": 0.015436204566784587,
+        "warnings": []
+      }
+    },
+    "back-head": {
+      "id": "back-head",
+      "view": "back",
+      "part": "head",
+      "src": "back-head.svg",
+      "width": 499,
+      "height": 499,
+      "sourceCell": {
+        "left": 0,
+        "top": 0,
+        "width": 512,
+        "height": 514
+      },
+      "stats": {
+        "width": 499,
+        "height": 499,
+        "preset": "cel",
+        "settings": {
+          "colors": 12,
+          "speckle": 4,
+          "precision": 6,
+          "difference": 14,
+          "corner": 80,
+          "length": 4.5,
+          "median": 3,
+          "preserveDarkColors": true
+        },
+        "alphaThreshold": 128,
+        "paths": 340,
+        "colours": 14,
+        "curves": 2897,
+        "bytes": 107078,
+        "silhouetteIoU": 0.9952752338112035,
+        "meanColorError": 0.022557209147825896,
+        "warnings": []
+      }
+    },
+    "back-body": {
+      "id": "back-body",
+      "view": "back",
+      "part": "body",
+      "src": "back-body.svg",
+      "width": 284,
+      "height": 390,
+      "sourceCell": {
+        "left": 512,
+        "top": 0,
+        "width": 512,
+        "height": 514
+      },
+      "stats": {
+        "width": 284,
+        "height": 390,
+        "preset": "cel",
+        "settings": {
+          "colors": 12,
+          "speckle": 4,
+          "precision": 6,
+          "difference": 14,
+          "corner": 80,
+          "length": 4.5,
+          "median": 3,
+          "preserveDarkColors": true
+        },
+        "alphaThreshold": 128,
+        "paths": 57,
+        "colours": 6,
+        "curves": 575,
+        "bytes": 22004,
+        "silhouetteIoU": 0.9822405163584362,
+        "meanColorError": 0.017767950490869263,
+        "warnings": []
+      }
+    },
+    "back-hand-left": {
+      "id": "back-hand-left",
+      "view": "back",
+      "part": "hand-left",
+      "src": "back-hand-left.svg",
+      "width": 346,
+      "height": 311,
+      "sourceCell": {
+        "left": 1024,
+        "top": 0,
+        "width": 512,
+        "height": 514
+      },
+      "stats": {
+        "width": 346,
+        "height": 311,
+        "preset": "cel",
+        "settings": {
+          "colors": 12,
+          "speckle": 4,
+          "precision": 6,
+          "difference": 14,
+          "corner": 80,
+          "length": 4.5,
+          "median": 3,
+          "preserveDarkColors": true
+        },
+        "alphaThreshold": 128,
+        "paths": 36,
+        "colours": 6,
+        "curves": 382,
+        "bytes": 15106,
+        "silhouetteIoU": 0.9881228376787816,
+        "meanColorError": 0.014243337963664083,
+        "warnings": []
+      }
+    },
+    "back-hand-right": {
+      "id": "back-hand-right",
+      "view": "back",
+      "part": "hand-right",
+      "src": "back-hand-right.svg",
+      "width": 341,
+      "height": 309,
+      "sourceCell": {
+        "left": 0,
+        "top": 514,
+        "width": 512,
+        "height": 510
+      },
+      "stats": {
+        "width": 341,
+        "height": 309,
+        "preset": "cel",
+        "settings": {
+          "colors": 12,
+          "speckle": 4,
+          "precision": 6,
+          "difference": 14,
+          "corner": 80,
+          "length": 4.5,
+          "median": 3,
+          "preserveDarkColors": true
+        },
+        "alphaThreshold": 128,
+        "paths": 53,
+        "colours": 9,
+        "curves": 524,
+        "bytes": 20612,
+        "silhouetteIoU": 0.9876227682646318,
+        "meanColorError": 0.014101843964061084,
+        "warnings": []
+      }
+    },
+    "back-foot-left": {
+      "id": "back-foot-left",
+      "view": "back",
+      "part": "foot-left",
+      "src": "back-foot-left.svg",
+      "width": 371,
+      "height": 295,
+      "sourceCell": {
+        "left": 512,
+        "top": 514,
+        "width": 512,
+        "height": 510
+      },
+      "stats": {
+        "width": 371,
+        "height": 295,
+        "preset": "cel",
+        "settings": {
+          "colors": 12,
+          "speckle": 4,
+          "precision": 6,
+          "difference": 14,
+          "corner": 80,
+          "length": 4.5,
+          "median": 3,
+          "preserveDarkColors": true
+        },
+        "alphaThreshold": 128,
+        "paths": 21,
+        "colours": 8,
+        "curves": 223,
+        "bytes": 9115,
+        "silhouetteIoU": 0.9868174777333161,
+        "meanColorError": 0.01580026761360718,
+        "warnings": []
+      }
+    },
+    "back-foot-right": {
+      "id": "back-foot-right",
+      "view": "back",
+      "part": "foot-right",
+      "src": "back-foot-right.svg",
+      "width": 373,
+      "height": 293,
+      "sourceCell": {
+        "left": 1024,
+        "top": 514,
+        "width": 512,
+        "height": 510
+      },
+      "stats": {
+        "width": 373,
+        "height": 293,
+        "preset": "cel",
+        "settings": {
+          "colors": 12,
+          "speckle": 4,
+          "precision": 6,
+          "difference": 14,
+          "corner": 80,
+          "length": 4.5,
+          "median": 3,
+          "preserveDarkColors": true
+        },
+        "alphaThreshold": 128,
+        "paths": 48,
+        "colours": 9,
+        "curves": 489,
+        "bytes": 18987,
+        "silhouetteIoU": 0.9854788894099384,
+        "meanColorError": 0.014435775766497334,
+        "warnings": []
+      }
+    },
+    "side-head": {
+      "id": "side-head",
+      "view": "side",
+      "part": "head",
+      "src": "side-head.svg",
+      "width": 250,
+      "height": 500,
+      "sourceCell": {
+        "left": 0,
+        "top": 0,
+        "width": 512,
+        "height": 515
+      },
+      "stats": {
+        "width": 250,
+        "height": 500,
+        "preset": "cel",
+        "settings": {
+          "colors": 12,
+          "speckle": 4,
+          "precision": 6,
+          "difference": 14,
+          "corner": 80,
+          "length": 4.5,
+          "median": 3,
+          "preserveDarkColors": true
+        },
+        "alphaThreshold": 128,
+        "paths": 130,
+        "colours": 12,
+        "curves": 1114,
+        "bytes": 41779,
+        "silhouetteIoU": 0.9911043905894533,
+        "meanColorError": 0.03440665389675413,
+        "warnings": []
+      }
+    },
+    "side-body": {
+      "id": "side-body",
+      "view": "side",
+      "part": "body",
+      "src": "side-body.svg",
+      "width": 196,
+      "height": 372,
+      "sourceCell": {
+        "left": 512,
+        "top": 0,
+        "width": 512,
+        "height": 515
+      },
+      "stats": {
+        "width": 196,
+        "height": 372,
+        "preset": "cel",
+        "settings": {
+          "colors": 12,
+          "speckle": 4,
+          "precision": 6,
+          "difference": 14,
+          "corner": 80,
+          "length": 4.5,
+          "median": 3,
+          "preserveDarkColors": true
+        },
+        "alphaThreshold": 128,
+        "paths": 12,
+        "colours": 7,
+        "curves": 173,
+        "bytes": 7165,
+        "silhouetteIoU": 0.9847252326915721,
+        "meanColorError": 0.02239574735041539,
+        "warnings": []
+      }
+    },
+    "side-hand-left": {
+      "id": "side-hand-left",
+      "view": "side",
+      "part": "hand-left",
+      "src": "side-hand-left.svg",
+      "width": 323,
+      "height": 304,
+      "sourceCell": {
+        "left": 1024,
+        "top": 0,
+        "width": 512,
+        "height": 515
+      },
+      "stats": {
+        "width": 323,
+        "height": 304,
+        "preset": "cel",
+        "settings": {
+          "colors": 12,
+          "speckle": 4,
+          "precision": 6,
+          "difference": 14,
+          "corner": 80,
+          "length": 4.5,
+          "median": 3,
+          "preserveDarkColors": true
+        },
+        "alphaThreshold": 128,
+        "paths": 11,
+        "colours": 6,
+        "curves": 198,
+        "bytes": 8364,
+        "silhouetteIoU": 0.989897379695128,
+        "meanColorError": 0.015026601548638913,
+        "warnings": []
+      }
+    },
+    "side-hand-right": {
+      "id": "side-hand-right",
+      "view": "side",
+      "part": "hand-right",
+      "src": "side-hand-right.svg",
+      "width": 327,
+      "height": 303,
+      "sourceCell": {
+        "left": 0,
+        "top": 515,
+        "width": 512,
+        "height": 509
+      },
+      "stats": {
+        "width": 327,
+        "height": 303,
+        "preset": "cel",
+        "settings": {
+          "colors": 12,
+          "speckle": 4,
+          "precision": 6,
+          "difference": 14,
+          "corner": 80,
+          "length": 4.5,
+          "median": 3,
+          "preserveDarkColors": true
+        },
+        "alphaThreshold": 128,
+        "paths": 10,
+        "colours": 7,
+        "curves": 200,
+        "bytes": 8324,
+        "silhouetteIoU": 0.9863936174414472,
+        "meanColorError": 0.014458105981238326,
+        "warnings": []
+      }
+    },
+    "side-foot-left": {
+      "id": "side-foot-left",
+      "view": "side",
+      "part": "foot-left",
+      "src": "side-foot-left.svg",
+      "width": 371,
+      "height": 270,
+      "sourceCell": {
+        "left": 512,
+        "top": 515,
+        "width": 512,
+        "height": 509
+      },
+      "stats": {
+        "width": 371,
+        "height": 270,
+        "preset": "cel",
+        "settings": {
+          "colors": 12,
+          "speckle": 4,
+          "precision": 6,
+          "difference": 14,
+          "corner": 80,
+          "length": 4.5,
+          "median": 3,
+          "preserveDarkColors": true
+        },
+        "alphaThreshold": 128,
+        "paths": 16,
+        "colours": 9,
+        "curves": 186,
+        "bytes": 7366,
+        "silhouetteIoU": 0.9801781978212251,
+        "meanColorError": 0.016486126518057635,
+        "warnings": []
+      }
+    },
+    "side-foot-right": {
+      "id": "side-foot-right",
+      "view": "side",
+      "part": "foot-right",
+      "src": "side-foot-right.svg",
+      "width": 378,
+      "height": 269,
+      "sourceCell": {
+        "left": 1024,
+        "top": 515,
+        "width": 512,
+        "height": 509
+      },
+      "stats": {
+        "width": 378,
+        "height": 269,
+        "preset": "cel",
+        "settings": {
+          "colors": 12,
+          "speckle": 4,
+          "precision": 6,
+          "difference": 14,
+          "corner": 80,
+          "length": 4.5,
+          "median": 3,
+          "preserveDarkColors": true
+        },
+        "alphaThreshold": 128,
+        "paths": 43,
+        "colours": 9,
+        "curves": 416,
+        "bytes": 15817,
+        "silhouetteIoU": 0.9586782387665346,
+        "meanColorError": 0.016951517988096684,
+        "warnings": [
+          "Silhouette changed noticeably; inspect small details or try the detail preset."
+        ]
+      }
+    }
+  }
+}

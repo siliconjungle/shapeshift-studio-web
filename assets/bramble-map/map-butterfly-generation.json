@@ -1,0 +1,6 @@
+{
+  "tool": "built-in image_gen",
+  "prompt": "One production sprite sheet for an articulated butterfly in a sepia hand-inked illustrated fantasy map. Transparent background, THREE isolated pieces in a single horizontal row with generous empty transparent gutters. LEFT: one broad rounded LEFT butterfly wing, two lobes with a tiny cream oval marking, narrow hinge at its RIGHT edge. CENTER: one slender small vertical dark brown butterfly body with tiny head and two short curved antennae, NO wings. RIGHT: matching RIGHT butterfly wing, hinge at its LEFT edge. Flat simple muted amber ochre and parchment cream fills, thick slightly wobbly charcoal brown #211e1a outlines. Chunky organic SVG style, same restrained warm brown palette as a parchment storybook village map, NO blue, purple or bright saturated colors. All pieces fully opaque inside, true transparent outside, no gradients, no texture, no shadows, no text or labels. Enough separation to cut each column independently; whole pieces contained in frame. Designed to reduce to four colors and vectorize, then flap separate wings at their inner hinges.",
+  "source": "source/map-butterfly-sheet.png",
+  "pipeline": "Little Gods cel 4-colour reduction, SVG, palette mapping, cached edge ink"
+}

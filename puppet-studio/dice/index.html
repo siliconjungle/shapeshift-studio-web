@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Fable & Fortune</title><link rel="stylesheet" href="./style.css"></head>
+<body>
+
+<main id="experience">
+ <section id="stage" class="stage" aria-label="Dice table">
+  <canvas id="dice-canvas" tabindex="0" role="button" aria-label="Toss the die"></canvas>
+  <canvas id="dice-sparks" aria-hidden="true"></canvas>
+  <aside class="fighter fighter-player" aria-label="Your character">
+   <div class="fighter-hud"><div id="health" class="health" role="img" aria-label="3 hearts remaining"></div><div class="fighter-stats"><div><span>COMBO</span><strong id="combo">0</strong></div><div class="next-die" id="die-label">D6</div><div><span>SPEED</span><strong id="speed">1.00×</strong></div></div></div>
+   <div id="hero-character" class="character" data-pose="idle"><span class="character-shadow"></span><div class="character-breathe"><div class="character-motion"><img class="character-sprite" alt="Your orange-hooded adventurer" draggable="false"></div></div></div>
+  </aside>
+  <aside class="fighter fighter-enemy" aria-label="Skeleton opponent">
+   <div class="fighter-hud"><div id="enemy-health" class="health" role="img" aria-label="3 enemy hearts remaining"></div><div class="fighter-stats"><div><span>COMBO</span><strong id="enemy-combo">0</strong></div><div class="next-die"><strong id="enemy-die">D6</strong><small id="enemy-roll"></small></div><div><span>SPEED</span><strong id="enemy-speed">1.00×</strong></div></div></div>
+   <div id="enemy-character" class="character" data-pose="idle"><span class="character-shadow"></span><div class="character-breathe"><div class="character-motion"><img class="character-sprite" alt="A grinning, amber-eyed skeleton opponent" draggable="false"></div></div></div>
+  </aside>
+  <div id="loading" hidden>Loading dice…</div>
+  <div id="timing" hidden><div id="celebration" aria-hidden="true"><span id="celebration-grade"></span><strong id="celebration-combo"></strong></div><div class="timing-caption"><span>GOOD · PERFECT +2</span><span id="timing-bonus"></span></div><div id="meter" role="img" aria-label="Reload bar: stop the moving marker on a sword, shield or heart"><span class="target-window"><span id="targets"></span></span><span id="needle"></span><span id="hit-effects" aria-hidden="true"></span></div><div class="timing-legend"><span>SWORDS ATTACK · SHIELDS BLOCK · SKULLS THREATEN · HEARTS +½</span></div></div>
+ </section>
+ <div id="announcement" class="readout" aria-live="polite" aria-atomic="true">Click or press Space to start.</div>
+</main>
+<div id="error" role="alert" hidden></div><script type="module" src="./app.js"></script>
+</body></html>

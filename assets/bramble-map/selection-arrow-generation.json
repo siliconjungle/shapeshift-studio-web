@@ -1,0 +1,9 @@
+{
+  "tool": "Built-in GPT Image",
+  "prompt": "Generate one isolated downward-pointing arrow sprite for an illustrated Little Gods fantasy map game UI. A short chunky curved shaft and broad soft triangular arrowhead pointing straight DOWN. Charming squishy hand-drawn imperfect silhouette, rounded wonky corners, thick consistent near-black warm ink contour, parchment ivory main fill, just one muted ochre shadow shape and a tiny cream highlight. Flat SVG-like cel artwork, four flat colors maximum, no gradients, no grain, no drop shadow, no extra symbols or text or face. Front view, centered, generous transparent margin, genuinely transparent background. Legible at 48 pixels tall. Organic ink style consistent with a sepia storybook map, not a modern geometric UI icon, not a realistic object. One arrow only.",
+  "source": "source/selection-arrow.png",
+  "output": "selection-arrow.svg",
+  "pipeline": "Little Gods cel preset, 6-colour reduction, SVG vectorization, palette mapping, persisted edge ink",
+  "voices": "Copied unchanged from Little Gods assets/audio/villager-v3",
+  "reactions": "Copied from Little Gods assets/vector/reacts; rendered through its palette tooling"
+}

@@ -1,0 +1,53 @@
+{
+  "pipeline": "Generated transparent trees → Little Gods cel 16-colour reduction → SVG → Little Gods regional palette mappings and edge ink",
+  "assets": [
+    {
+      "name": "cryos-pine",
+      "source": "source/cryos-pine.png",
+      "width": 652,
+      "height": 974,
+      "preset": "cel",
+      "settings": {
+        "colors": 16,
+        "speckle": 4,
+        "precision": 6,
+        "difference": 14,
+        "corner": 80,
+        "length": 4.5,
+        "median": 3
+      },
+      "alphaThreshold": 128,
+      "paths": 334,
+      "colours": 13,
+      "curves": 5244,
+      "bytes": 197872,
+      "silhouetteIoU": 0.991437544629034,
+      "meanColorError": 0.016806208912518307,
+      "warnings": []
+    },
+    {
+      "name": "solis-tree",
+      "source": "source/solis-tree.png",
+      "width": 652,
+      "height": 473,
+      "preset": "cel",
+      "settings": {
+        "colors": 16,
+        "speckle": 4,
+        "precision": 6,
+        "difference": 14,
+        "corner": 80,
+        "length": 4.5,
+        "median": 3
+      },
+      "alphaThreshold": 128,
+      "paths": 174,
+      "colours": 15,
+      "curves": 3113,
+      "bytes": 114228,
+      "silhouetteIoU": 0.9881885081394485,
+      "meanColorError": 0.01614678277835113,
+      "warnings": []
+    }
+  ]
+}

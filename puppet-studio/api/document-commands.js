@@ -1,3 +1,8 @@
+import {remapSolos} from '@shapeshift-labs/studio-core/solos';
+import {remapJoysticks,pruneJoysticks} from '@shapeshift-labs/studio-core/joysticks';
+import {remapDrawOrder} from '@shapeshift-labs/studio-core/draw-order';
+import {remapBoneBindings} from '@shapeshift-labs/studio-core/bone-binding';
+import {remapMeshes} from '@shapeshift-labs/studio-core/mesh';
 import { identity, removeJoint, moveOrigin, enableIK, bakeMotion } from '../runtime.js';
 
 export const DOCUMENT_COMMANDS = ['project.patch', 'project.replace', 'project.rename', 'joint.add', 'joint.update', 'joint.remove', 'joint.rename', 'joint.origin', 'joint.ik', 'clip.add', 'clip.update', 'clip.remove', 'clip.duplicate', 'clip.bake', 'asset.update', 'asset.remove'];
@@ -37,6 +42,18 @@ function renameJoint(project, from, to) {
   const item = requireItem(project.joints, from, 'joint');
   if (project.joints.some(joint => joint.id === to)) throw Error('Duplicate joint ID');
   item.id = to;
+  const ids={[from]:to};
+  remapSolos(project.joints,project.clips,ids);
+  remapJoysticks(project.joints,project.clips,ids);
+  remapBoneBindings(project.joints,ids);
+  remapMeshes(project.joints,ids);
+  if(project.drawOrder)project.drawOrder=remapDrawOrder(project.drawOrder,ids);
+  for(const c of project.constraints??[])for(const key of ['node','target'])if(c[key]===from)c[key]=to;
+  for(const record of [...(project.procedural?.particles??[]),...(project.procedural?.bindings??[]),...(project.procedural?.connections??[]),...(project.illustrationBindings??[])])if(record.joint===from)record.joint=to;
+  for(const rig of Object.values(project.speech?.rigs??{})){
+    if(rig.envelope?.joint===from)rig.envelope.joint=to;
+    for(const pose of Object.values(rig.poses))for(const key of ['values','artwork'])if(pose[key]&&Object.hasOwn(pose[key],from)){pose[key][to]=pose[key][from];delete pose[key][from];}
+  }
   for(const source of project.puppetSources??[])source.roots=source.roots.map(id=>id===from?to:id);
   for(const binding of project.appearance?.bindings??[])if(binding.target?.joint===from)binding.target.joint=to;
   for (const joint of project.joints) {
@@ -52,14 +69,18 @@ function renameJoint(project, from, to) {
       if (layer.joints) layer.joints = layer.joints.map(id => id === from ? to : id);
       if (layer.values?.[from]) { layer.values[to] = layer.values[from]; delete layer.values[from]; }
     }
-    for (const track of [...(clip.lightingTracks ?? []), ...(clip.resolvedTracks ?? [])]) if (track.node === from) track.node = to;
+    for (const track of [...(clip.lightingTracks ?? []), ...(clip.resolvedTracks ?? []), ...(clip.drawOrderTracks??[]), ...(clip.noodleTracks??[])]) if (track.node === from) track.node = to;
+    for(const track of [...(clip.meshTracks??[]),...(clip.illustrationTracks??[])])if(track.joint===from)track.joint=to;
     for (const key of ['tracks', 'ik']) if (clip[key]?.[from]) { clip[key][to] = clip[key][from]; delete clip[key][from]; }
     for (const effect of clip.effects ?? []) if (effect.joint === from) effect.joint = to;
     for (const chain of Object.values(clip.ik ?? {})) for (const key of ['root', 'mid']) if (chain[key] === from) chain[key] = to;
   }
 }
 function stretchClip(clip, duration) {
+  if(!Number.isFinite(duration)||duration<=0)throw Error('Clip duration must be positive');
   const ratio = duration / clip.duration;
+  for(const event of clip.dialogue??[]){event.time*=ratio;event.rate=(event.rate??1)/ratio;}
+  for(const kind of ['joystickTracks','soloTracks','drawOrderTracks','constraintTracks','constraintWeights','meshTracks','noodleTracks','illustrationTracks'])for(const track of clip[kind]??[])for(const key of track.keys)key.time*=ratio;
   for (const keys of Object.values(clip.tracks)) for (const key of keys) key.time *= ratio;
   for (const track of [...(clip.lightingTracks ?? []), ...(clip.resolvedTracks ?? [])]) for (const key of track.keys) key.time *= ratio;
   for (const cue of clip.cues ?? []) { cue.time *= ratio; cue.duration *= ratio; }
@@ -110,6 +131,7 @@ export function applyDocumentCommand(project, command) {
     if (op === 'clip.remove') {
       if (project.clips.length === 1) throw Error('Keep at least one animation');
       project.clips = project.clips.filter(item => item !== clip);
+      pruneJoysticks(project);
       for (const other of project.clips) if (other.tools?.layers) other.tools.layers = other.tools.layers.filter(layer => layer.sourceClip !== id);
     }
     if (op === 'clip.bake') bakeMotion(project, clip);

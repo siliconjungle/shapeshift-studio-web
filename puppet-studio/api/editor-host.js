@@ -9,8 +9,8 @@ import {createUIControls} from './ui-controls.js';
 export function createEditorHost({studio,store,project,ui,dispatch,select,setMode,setTool,setTime,fit,pause,togglePlay,renderUI,importJSON,importArt,exportPlayer,timelineContext}){
  const controls=createUIControls(),{workspace,artwork,scene3d,arena}=studio;
  const view=()=>workspace.snapshot().view;
- const panels={speech:'speech-panel',illustration:'illustration-panel',entities:'entities-panel',library:'library-panel',styles:'styles-panel',environment:'backdrop-panel',ownership:'ownership-panel',actions:'actions-panel',sound:'sound-panel',bodyJoins:'body-joins-panel',timeline:'shared-timeline',resolved:'resolved-panel',references:'references-panel',fx:'fx-panel',motion:'motion-tool-panel',grading:'grading-panel'};
- const modules={speech:['show','hide','snapshot'],illustration:['show','hide','snapshot'],
+ const panels={noodle:'noodle-panel',shapeLab:'shape-lab',procedural:'procedural-panel',joysticks:'joysticks-panel',solos:'solos-panel',drawOrder:'draw-order-panel',meshes:'mesh-panel',boneBindings:'bone-binding-panel',constraints:'constraints-panel',stateMachines:'state-machines-panel',speech:'speech-panel',illustration:'illustration-panel',entities:'entities-panel',library:'library-panel',styles:'styles-panel',environment:'backdrop-panel',ownership:'ownership-panel',actions:'actions-panel',sound:'sound-panel',bodyJoins:'body-joins-panel',timeline:'shared-timeline',resolved:'resolved-panel',references:'references-panel',fx:'fx-panel',motion:'motion-tool-panel',grading:'grading-panel'};
+ const modules={noodle:['show'],shapeLab:['show','snapshot'],procedural:['show','hide','selection'],joysticks:['show','hide','snapshot'],solos:['show','hide'],drawOrder:['show','hide'],meshes:['show','hide','example'],boneBindings:['show','hide','example'],constraints:['show'],stateMachines:['show','snapshot','preview'],speech:['show','hide','snapshot'],illustration:['show','hide','snapshot'],
   workspace:['capture','restore','editPuppet','editArtwork','back','snapshot'],
   bodyJoins:['show','hide','focus'],references:['show','open','label','refresh'],referenceNavigation:['open','back','snapshot','clear'],
   entities:['show','hide','context','restore','snapshot'],behaviours:['show'],library:['show','hide','context','restore','snapshot','audition'],
@@ -71,9 +71,9 @@ export function createEditorHost({studio,store,project,ui,dispatch,select,setMod
    if(op==='panel.set'){
     const id=panels[args.panel],element=id&&document.getElementById(id);if(!element)throw Error('Unknown panel');
     if(args.panel==='fx'){if(args.open)await workspace.show('puppet');studio.fx.show(!!args.open);return;}
-    if(args.open){if(!element.hidden)return;if(studio[args.panel]?.show)return studio[args.panel].show();return controls.activate({id:{motion:'motion-tools',grading:'grading-open'}[args.panel]});}
-    if(element.hidden)return;if(studio[args.panel]?.hide)return studio[args.panel].hide();
-    const close=element.querySelector('[data-close],button[id$="-close"]');if(close)return controls.activate({selector:'#'+id+' '+(close.id?'#'+CSS.escape(close.id):'[data-close]')});
+    if(args.open){if(element.tagName==='DIALOG'?element.open:!element.hidden)return;if(studio[args.panel]?.show)return studio[args.panel].show();return controls.activate({id:{motion:'motion-tools',grading:'grading-open'}[args.panel]});}
+    if(element.tagName==='DIALOG'){element.close();return;}if(element.hidden)return;if(studio[args.panel]?.hide)return studio[args.panel].hide();
+    const close=element.querySelector('[data-close],[data-action="close"],button[id$="-close"]');if(close)return controls.activate({selector:'#'+id+' '+(close.id?'#'+CSS.escape(close.id):close.hasAttribute('data-close')?'[data-close]':'[data-action="close"]')});
     element.hidden=true;return;
    }
    if(op==='selection.set')return selection(args);

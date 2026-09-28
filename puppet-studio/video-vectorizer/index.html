@@ -1,0 +1,22 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Video to SVG · Shapeshift Studio</title><link rel="stylesheet" href="style.css"></head><body>
+<header><a href="../index.html">✳ Shapeshift Studio</a><span>VIDEO TO SVG</span></header>
+<h1>Keep the motion. Keep the drawing.</h1><p class="intro">Convert a clip into vector shapes that stay connected across frames.</p>
+<div class="settings">
+ <label class="wide">Source video <input id="file" type="file" accept="video/*"></label>
+ <label>Colours <input id="colors" type="number" min="2" max="64" value="16"></label>
+ <label>Tracing size <select id="size"><option>512</option><option>768</option><option selected>1024</option></select></label>
+ <label>Frames per second <input id="fps" type="number" min="1" max="60" value="24"></label>
+ <label class="check"><input id="trim" type="checkbox" checked> Shorten a still ending</label>
+ <label class="check"><input id="outline" type="checkbox"> Consistent outer outline</label>
+ <label class="check"><input id="contain" type="checkbox" checked> Keep fills inside source boundary</label>
+ <label>Outline width <input id="width" type="number" min="0.5" max="24" step="0.1" value="4.4"></label>
+ <label>Background colour <input id="background" type="color" value="#fcf7ee"></label>
+ <button id="convert" disabled>Convert video</button><button id="cancel" hidden>Cancel</button>
+</div>
+<p id="status" role="status">Choose a short video to begin. Processing stays on this device.</p>
+<main><section><h2 id="source-heading">Original video</h2><img id="prepared-source" alt="Video after grading and cel colour reduction" hidden><video id="source" muted playsinline preload="auto"></video></section><section><h2>Tracked SVG animation</h2><div id="preview"></div></section></main>
+<div class="transport"><label>Compare <select id="source-mode"><option value="prepared">Prepared cel video</option><option value="raw">Original video</option></select></label><button id="play" disabled>Play both</button><input id="scrub" type="range" min="0" max="0" value="0" aria-label="Animation frame" disabled><output id="counter">No clip loaded</output><label>Source colour grade <select id="grade"></select></label></div>
+<div class="exports"><button id="save-animation" disabled>Save animated SVG</button><button id="save-clip" disabled>Save vector clip</button><button id="save-frame" disabled>Save SVG frame</button><label class="import">Open vector clip <input id="open-clip" type="file" accept=".json,application/json"></label></div>
+<p class="note">Outer outline width is measured at a 640-pixel display width. Interior painted lines retain their original shapes. For opaque artwork on a flat background, set its colour for source-boundary containment and outer ink. Turn containment off for other scenes.</p>
+<p class="note">This converter is experimental. Fine textures and occlusions can still change shape. Playback uses the existing Little Gods SVG renderer, anti-aliasing and colour grading. Exported SVGs contain vector geometry; the selected grade and shared cel palette are applied before tracing.</p>
+<script type="module" src="app.js"></script></body></html>

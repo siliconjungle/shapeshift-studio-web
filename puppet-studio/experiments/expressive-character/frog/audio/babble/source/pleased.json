@@ -1,0 +1,149 @@
+{
+  "generation_id": "6adae345-09a8-4cc9-863f-cb5c4e2e9573",
+  "duration": 1.66,
+  "file_size": 159404,
+  "encoding": {
+    "format": "wav",
+    "sample_rate": 48000
+  },
+  "snippets": [
+    [
+      {
+        "id": "576acfbe-ab6f-4a37-9787-27e89935eab3",
+        "text": "Heh! Daba-loo, mhm.",
+        "generation_id": "576acfbe-ab6f-4a37-9787-27e89935eab3",
+        "utterance_index": 0,
+        "audio_format": "wav",
+        "timestamps": [
+          {
+            "type": "phoneme",
+            "text": "h",
+            "time": {
+              "begin": 20,
+              "end": 40
+            }
+          },
+          {
+            "type": "phoneme",
+            "text": "ɛ",
+            "time": {
+              "begin": 60,
+              "end": 80
+            }
+          },
+          {
+            "type": "phoneme",
+            "text": "d",
+            "time": {
+              "begin": 640,
+              "end": 660
+            }
+          },
+          {
+            "type": "phoneme",
+            "text": "a",
+            "time": {
+              "begin": 680,
+              "end": 700
+            }
+          },
+          {
+            "type": "phoneme",
+            "text": "b",
+            "time": {
+              "begin": 760,
+              "end": 780
+            }
+          },
+          {
+            "type": "phoneme",
+            "text": "l",
+            "time": {
+              "begin": 840,
+              "end": 860
+            }
+          },
+          {
+            "type": "phoneme",
+            "text": "uː",
+            "time": {
+              "begin": 900,
+              "end": 920
+            }
+          },
+          {
+            "type": "phoneme",
+            "text": "u",
+            "time": {
+              "begin": 1260,
+              "end": 1280
+            }
+          },
+          {
+            "type": "phoneme",
+            "text": "h",
+            "time": {
+              "begin": 1360,
+              "end": 1380
+            }
+          },
+          {
+            "type": "phoneme",
+            "text": "u",
+            "time": {
+              "begin": 1420,
+              "end": 1440
+            }
+          },
+          {
+            "type": "word",
+            "text": "Heh!",
+            "time": {
+              "begin": 20,
+              "end": 80
+            }
+          },
+          {
+            "type": "word",
+            "text": "Daba-loo,",
+            "time": {
+              "begin": 640,
+              "end": 920
+            }
+          },
+          {
+            "type": "word",
+            "text": "mhm.",
+            "time": {
+              "begin": 1260,
+              "end": 1440
+            }
+          }
+        ],
+        "transcribed_text": null
+      }
+    ]
+  ],
+  "request": {
+    "version": "2",
+    "include_timestamp_types": [
+      "word",
+      "phoneme"
+    ],
+    "utterances": [
+      {
+        "text": "Heh! Daba-loo, mhm.",
+        "voice": {
+          "id": "5bf306e9-a002-4d69-8554-25d19bc21183"
+        },
+        "speed": 1.13,
+        "trailing_silence": 0.06
+      }
+    ],
+    "split_utterances": false,
+    "format": {
+      "type": "wav"
+    },
+    "num_generations": 1
+  }
+}

@@ -1,0 +1,2 @@
+import fs from 'node:fs/promises';import {build} from 'esbuild';
+const src='puppet-studio/experiments/expressive-character/frog/layered',dest='dist/'+src;await fs.mkdir(dest,{recursive:true});for(const file of ['assets','index.html','README.md','frog-layered.puppet.json'])await fs.cp(src+'/'+file,dest+'/'+file,{recursive:true});await build({entryPoints:[src+'/app.js'],outfile:dest+'/app.js',bundle:true,format:'esm',target:'es2022'});console.log('Built layered frog study');

@@ -1,59 +1,717 @@
-import {SPEECH_COMMANDS,applySpeechCommand} from '@shapeshift-labs/studio-core/speech';
-import {ILLUSTRATION_COMMANDS,applyIllustrationCommand} from '../illustration/commands.js';
-import {DOCUMENT_COMMANDS,applyDocumentCommand} from '../api/document-commands.js';
-import {applyBodyJoinCommand} from '../body-joins.js';
-import {REFERENCE_KINDS} from '../references/catalog.js';
-import {applyEntityCommand,ENTITY_COMMANDS} from '../entities/commands.js';
-import {applyLibraryCommand,LIBRARY_CATEGORIES} from '../authoring/library.js';
-import {applyResolvedCommand} from '../authoring/resolved-channels.js';
-import {applyRecordingCommand} from '../authoring/recording.js';
-import {applyTimingCommand} from '../authoring/timing.js';
-import {applySoundCommand} from '../authoring/sound.js';
-import {applyPreviewCommand} from '../authoring/preview.js';
-import {applyActionCommand} from '../authoring/actions.js';
-import {applyOwnershipCommand} from '../authoring/ownership.js';
-import {applyBackdropCommand} from '../authoring/backdrop.js';
-import {applyTimelineCommand} from '../authoring/timeline.js';
-import {applyAppearanceCommand} from '../authoring/appearance.js';
-import {applyVectorCommand} from '../vector/commands.js';
-import {validateGrading,GRADING_CONTROLS,GRADING_PRESETS} from '../../rendering/color-grading.js';
-import {applyMotionCommand} from '../motion-tools/commands.js';
-import {applyLightingCommand} from '../lighting-state.js';
-import {ProjectStore} from '../store.js';
-import {applySceneCommand,sceneCapabilities} from '../scene3d/schema.js';
-import {ensureFX,defaultEmitter,defaultFluid,defaultVisual,NODE_TYPES,PARTICLE_SHAPES} from './schema.js';
-import {cue,presentationPreset,CUE_TYPES} from './presentation.js';
-import {identity,setKey,validateProject} from '../runtime.js';
-import {easeNames} from './math.js';
-export const PRESETS=['heavy-impact','contact-impact','lightning','discovery','slow-reveal','embers','magic','rain','explosion','hearts','smoke','fire','smear-swipe','tree-break'];
-export const capabilities=()=>({speech:{version:1,chunks:"speech.chunks",rigs:"speech.rigs",timeline:"clip.dialogue",commands:SPEECH_COMMANDS},illustration:{containerLiquid:{field:"joint.liquid",model:"sealed 2D area-conserving spring free surface"},animation:"clip.illustrationTracks",bindings:"illustrationBindings",runtime:["effectData","effectStates","illustration"]},bodyJoins:{field:"joint.bodyJoin",optIn:true,commands:["bodyJoin.create","bodyJoin.update","bodyJoin.remove"],rendering:["editor","exported-player","3d-puppet"],coordinates:"body-local pixels"},entities:{version:1,field:'entityDefinitions',format:'shapeshift-entities',commands:ENTITY_COMMANDS,importModes:['merge','replace'],reference:{keyword:'reference',kinds:REFERENCE_KINDS,dimensions:[2,3],empty:''}},library:{version:1,field:'library',transfer:{format:'shapeshift-library',version:1,import:'library.import',export:'embedded source JSON'},categories:[...LIBRARY_CATEGORIES],expression:{'2d':'clip.tools.layers pose offsets with keyed influence','3d':'node.facial independent expression, blink and gaze; action ownership retains priority'},scope:'project-local sources, explicit source updates, undoable placement'},artwork:{version:1,assetField:'vector',channels:['fill','stroke','strokeWidth','opacity','points'],tools:['direct-selection','bezier-handles','swatches','eyedropper','same-fill','gradient','align','reflect'],animation:'asset-local, sampled on clip animation time',dimensions:['2d','3d-svg-plane','3d-puppet'],surfaceEditing:'static SVG face artwork; eye landmarks remain on the surface'},grading:{version:1,field:'grading',stage:'final scene after lighting, shadows and effects',dimensions:['2d','3d'],presets:['auto',...Object.keys(GRADING_PRESETS)],controls:GRADING_CONTROLS},graph:{queries:['graph','scene3d-graph'],dimensions:['2d','3d'],bounds:'authored rest pose',history:'reversible Frontier patches; sampled poses are runtime-only'},format:'inkwell-puppet',version:1,motionTools:{dimensions:['2d','3d'],clipField:'tools',constraints:['pin','ground','look'],layers:['pose','masked source clip'],keyableInfluence:true,secondaryMotion:['subtle','natural','loose'],review:['key-pose ghosts','motion arcs','loop/contact check'],contactSpace:'world or target local',sharedSupport:'optional bounded ancestor lean',trails:'2D artwork smear; 3D pooled geometry echoes'},scene3d:sceneCapabilities(),lighting:{dimensions:['2d','3d'],maxSources:16,jointBinding:'joint.light',coloring:'joint.coloring',animation:'clip.lightingTracks',units:'pixels in 2D; metres in 3D'},commands:[...SPEECH_COMMANDS,...ILLUSTRATION_COMMANDS,...DOCUMENT_COMMANDS,"bodyJoin.create","bodyJoin.update","bodyJoin.remove",...ENTITY_COMMANDS,'library.import','library.soundVolume','library.capture','library.place','library.rename','library.detach','library.updateSource','library.remove','recording.apply','recording.simplify','timing.marker','timing.remove','audio.library','preview.scenario','preview.reference','preview.removeReference','action.capture','action.parameter','action.instantiate','action.values','action.rename','action.remove','ownership.bake','ownership.key','ownership.removeBake','ownership.bakeSettings','ownership.handover','asset.add','backdrop.settings','backdrop.add','backdrop.update','backdrop.remove','backdrop.order','backdrop.key','timeline.edit','appearance.init','appearance.select','appearance.role','appearance.variant','appearance.removeVariant','appearance.bind','appearance.unbind','appearance.grade','vector.create','vector.init','vector.update','vector.key','vector.settings','vector.swatch','vector.add','vector.delete','vector.duplicate','vector.order','vector.boolean','grading.set','grading.reset','motion.targetKey','motion.clip','motion.contact','motion.look','motion.follow','motion.pose','motion.layer','motion.weight','motion.update','motion.remove','motion.smear','motion.morph','lighting.settings','lighting.node','lighting.key','settings','cue.add','cue.update','cue.remove','emitter.add','emitter.update','emitter.remove','fluid.add','fluid.update','fluid.remove','node.add','node.update','node.remove','node.connect','node.output','visual','key','preset','shape','text','model.add','model.update','model.remove','parameter.key'],cues:CUE_TYPES,nodes:NODE_TYPES,particleShapes:PARTICLE_SHAPES,easing:easeNames,presets:PRESETS});
-const unique=(list,base)=>{let id=base,i=2;while(list.some(x=>x.id===id))id=base+'-'+i++;return id;};
-export function merge(target,patch){for(const [key,value]of Object.entries(patch??{})){if(['__proto__','constructor','prototype'].includes(key))throw Error('Reserved property');if(value&&typeof value==='object'&&!Array.isArray(value)){if(!target[key]||typeof target[key]!=='object'||Array.isArray(target[key]))target[key]={};merge(target[key],value);}else target[key]=structuredClone(value);}return target;}
-export function applyCommand(project,command){if(SPEECH_COMMANDS.includes(command.op))return applySpeechCommand(project,command);if(ILLUSTRATION_COMMANDS.includes(command.op))return applyIllustrationCommand(project,command);if(DOCUMENT_COMMANDS.includes(command.op))return applyDocumentCommand(project,command);if(command.op?.startsWith('bodyJoin.'))return applyBodyJoinCommand(project,command);if(ENTITY_COMMANDS.includes(command.op))return applyEntityCommand(project,command);if(command.op?.startsWith('library.'))return applyLibraryCommand(project,command);if(['ownership.bake','ownership.key','ownership.removeBake','ownership.bakeSettings'].includes(command.op))return applyResolvedCommand(project,command);if(command.op?.startsWith('recording.'))return applyRecordingCommand(project,command,applyCommand);if(command.op?.startsWith('timing.'))return applyTimingCommand(project,command);if(command.op?.startsWith('audio.'))return applySoundCommand(project,command);if(command.op?.startsWith('preview.'))return applyPreviewCommand(project,command);if(command.op?.startsWith('action.'))return applyActionCommand(project,command);if(command.op?.startsWith('ownership.'))return applyOwnershipCommand(project,command);if(command.op==='asset.add'){if(project.assets.some(a=>a.id===command.id))throw Error('Duplicate asset');project.assets.push({id:command.id,name:command.name??command.id,src:command.src});return command.id;}if(command.op?.startsWith('backdrop.'))return applyBackdropCommand(project,command);if(command.op?.startsWith('timeline.'))return applyTimelineCommand(project,command);if(command.op?.startsWith('appearance.'))return applyAppearanceCommand(project,command);if(command.op?.startsWith('vector.'))return applyVectorCommand(project,command);if(command.op==='grading.set'||command.op==='grading.reset'){const next=command.op==='grading.reset'?{version:1,preset:command.preset??'neutral'}:{version:1,...(project.grading),...command.values};validateGrading(next);project.grading=next;return 'grading';}if(command.op?.startsWith('motion.'))return applyMotionCommand(project,command);if(command.op?.startsWith('lighting.'))return applyLightingCommand(project,command,merge);if(command.op?.startsWith('scene3d.'))return applySceneCommand(project,command);if(command.clip&&!project.clips.some(c=>c.id===command.clip))throw Error('Missing clip '+command.clip);if(command.joint&&!project.joints.some(j=>j.id===command.joint))throw Error('Missing joint '+command.joint);const c=project.clips.find(c=>c.id===command.clip)??project.clips[0],f=ensureFX(c.fx?c:project),j=project.joints.find(j=>j.id===command.joint)??project.joints.find(j=>j.sprite)??project.joints[0],{op}=command;let result;
- if(op==='settings')merge(f.settings,command.values);
- else if(op==='visual'){j.visual??=defaultVisual();merge(j.visual,command.values);result=j.id;}
- else if(op==='key'){setKey(c,j.id,command.time,{...identity(),...command.value},command.easing??'smooth');result=j.id;}
- else if(op==='cue.add'){c.cues??=[];const id=command.id??unique(c.cues,command.type);c.cues.push(merge({...cue(id,command.type,command.time??0),...(command.type==='sprite-flash'?{joint:j.id}:{})},command.values));result=id;}
- else if(op==='cue.update'||op==='cue.remove'){const item=c.cues?.find(x=>x.id===command.id);if(!item)throw Error('Missing cue '+command.id);if(op==='cue.update')merge(item,command.values);else c.cues=c.cues.filter(x=>x!==item);}
- else if(op==='node.connect'){const node=f.nodes.find(n=>n.id===command.id);if(!node)throw Error('Missing node');node.inputs[command.port??0]=command.input;}
- else if(op==='node.output'){if(!f.nodes.some(n=>n.id===command.id))throw Error('Missing node');f.output=command.id;}
- else if(op==='parameter.key'){const collection=command.collection??'nodes',target=collection==='visual'?j.visual:f[collection]?.find(x=>x.id===command.id);if(!target)throw Error('Missing parameter target');const parts=command.path.split('.');if(parts.some(p=>['__proto__','constructor','prototype'].includes(p)))throw Error('Reserved property');let owner=target;for(const part of parts.slice(0,-1)){if(!owner[part])throw Error('Missing parameter path');owner=owner[part];}const key=parts.at(-1),current=owner[key];if(!Number.isFinite(current)&&!Array.isArray(current))throw Error('Only numeric parameters can be keyed');const points=Array.isArray(current)?current:[{time:0,value:current,easing:'smooth'}],old=points.find(p=>p.time===command.time);if(old){old.value=command.value;old.easing=command.easing??'smooth';}else points.push({time:command.time,value:command.value,easing:command.easing??'smooth',...(command.bezier?{bezier:command.bezier}:{})});points.sort((a,b)=>a.time-b.time);owner[key]=points;}
- else if(/^(emitter|fluid|node|model)\.(add|update|remove)$/.test(op)){const [kind,action]=op.split('.'),list=f[{emitter:'emitters',fluid:'fluids',node:'nodes',model:'models'}[kind]];
-  if(action==='add'){const id=command.id??unique(list,kind);if(list.some(x=>x.id===id))throw Error('Duplicate '+kind+' ID');const defaults=kind==='emitter'?defaultEmitter(id):kind==='fluid'?defaultFluid(id):kind==='model'?{id,name:'3D model',enabled:true,layer:0,x:0,y:0,width:256,height:256,src:'',format:'obj',rotationX:0,rotationY:0,rotationZ:0,spin:30,scale:1,camera:'orthographic',distance:5,fov:40,ambient:.8,lightColor:'#ffffff',lightIntensity:3,lightX:3,lightY:5,lightZ:5,color:'#d2eab0',wireframe:false}:NODE_TYPES[command.type]?{id,type:command.type,inputs:command.inputs??[f.output],params:structuredClone(NODE_TYPES[command.type].params),x:30+(list.length%2)*170,y:40+list.length*55}:null;if(!defaults)throw Error('Unknown node type');const item=merge(defaults,command.values);list.push(item);if(kind==='node')f.output=id;result=id;
-  }else{const item=list.find(x=>x.id===command.id);if(!item)throw Error('Missing '+kind+' '+command.id);if(action==='update')merge(item,command.values);else{list.splice(list.indexOf(item),1);if(kind==='node'){for(const n of list)n.inputs=n.inputs.map(id=>id===item.id?(item.inputs[0]??'scene'):id);if(f.output===item.id)f.output=item.inputs[0]??'scene';}if(kind==='emitter')for(const e of list)for(const k of ['stepEmit','deathEmit'])if(e[k]===item.id)e[k]=null;}}
- }
- else if(op==='shape'||op==='text'){const id=command.id??unique(project.joints,op),color=command.color??'#f5b67b',safe=s=>String(s).replace(/[<>&"']/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;',"'":'&apos;'}[c])),size=command.size??120;let art;
-  if(op==='text')art=`<text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" font-family="sans-serif" font-size="${command.fontSize??32}" font-weight="bold" fill="${safe(color)}">${safe(command.text??'LEVEL UP')}</text>`;
-  else art=command.shape==='circle'?`<circle cx="128" cy="128" r="110" fill="${safe(color)}"/>`:command.shape==='star'?`<path d="M128 8 155 89 243 89 172 140 200 224 128 174 56 224 84 140 13 89 101 89Z" fill="${safe(color)}"/>`:`<rect x="20" y="20" width="216" height="216" rx="${command.radius??20}" fill="${safe(color)}"/>`;
-  const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">${art}</svg>`;project.assets.push({id,src:'data:image/svg+xml,'+encodeURIComponent(svg)});project.joints.push({id,name:command.text??command.shape??op,parent:null,rest:{...identity(),x:command.x??0,y:command.y??0},layer:command.layer??50,sprite:{asset:id,width:size,height:size,pivotX:.5,pivotY:.5}});result=id;
- }
- else if(op==='preset'){const name=command.name,time=command.time??.5;if(!PRESETS.includes(name))throw Error('Unknown preset');
-  if(['heavy-impact','contact-impact','lightning','discovery','slow-reveal'].includes(name)){c.cues??=[];for(const event of presentationPreset(name,time)){event.id=unique(c.cues,event.id);if(event.type==='sprite-flash')event.joint=j.id;c.cues.push(event);}if(name==='discovery')applyCommand(project,{op:'emitter.add',values:{name:'Discovery sparks',burst:10,rate:0,delay:time,duration:.8,life:[.8,.8],speed:[100,100],direction:[0,360],gravityY:-30,loop:false}});}
-  else if(name==='smoke'||name==='fire'){result=applyCommand(project,{op:'fluid.add',values:{name:name==='fire'?'Fire':'Smoke',...(name==='fire'?{colors:['#3f152b','#e53d26','#ffad37','#fff2a8'],buoyancy:2,vorticity:18,temperature:2,dissipation:1}:{} )}});}
-  else if(name==='smear-swipe'||name==='tree-break'){applyCommand(project,{op:'visual',joint:j.id,values:name==='smear-swipe'?{smear:{enabled:true,seconds:.25,samples:20,tint:.4},skewX:0}:{break:{enabled:true,delay:time}}});if(name==='smear-swipe'){setKey(c,j.id,0,{...identity(),rotation:-55,x:-60});setKey(c,j.id,Math.min(c.duration,.6),{...identity(),rotation:55,x:60});}}
-  else{const values={name,delay:0,...({embers:{colors:['#fffcc4','#ff9b48','#ae303e'],speed:[20,60],gravityY:-10,turbulence:15,particleShape:'soft'},magic:{particleShape:'star',colors:['#f3edff','#bb92ff','#544ac7'],orbit:55,orbitSpeed:.4,gravityY:-20},rain:{shape:'line',width:450,y:-230,rate:120,direction:[80,85],speed:[230,280],size:[3,6],colors:['#b9dbff','#4c89be'],gravityY:140},explosion:{burst:140,rate:0,delay:time,loop:false,direction:[0,360],speed:[60,220],gravityY:40,life:[.3,1],colors:['#fff6ae','#ff8842','#952743']},hearts:{particleShape:'heart',colors:['#ffadc2','#f16a9e'],rate:12,speed:[30,60],gravityY:-10,size:[8,16],spin:[-15,15]}}[name])};result=applyCommand(project,{op:'emitter.add',values});}
- }
- else throw Error('Unknown command '+op);return result;
+import { DOCUMENT_COMMANDS, applyDocumentCommand } from '../api/document-commands.js';
+import { noodleCommand } from '../noodle/commands.js';
+import { NOODLE_COMMANDS } from '../noodle/model.js';
+import { SHAPE_COMMANDS } from '../shape-lab/model.js';
+import { applyShapeLabCommand } from '../shape-lab/commands.js';
+import { JOYSTICK_COMMANDS, applyJoystickCommand } from '../joysticks/model.js';
+import { SOLO_COMMANDS, applySoloCommand } from '../solos/model.js';
+import { applyDrawOrderCommand, DRAW_ORDER_COMMANDS } from '../draw-order/model.js';
+import { applyMeshCommand } from '../mesh/commands.js';
+import { MESH_COMMANDS } from '../mesh/model.js';
+import { applyBoneBindingCommand } from '../bone-binding/commands.js';
+import { BONE_BINDING_COMMANDS } from '../bone-binding/model.js';
+import { applyConstraintCommand, CONSTRAINT_TYPES, CONSTRAINT_COMMANDS } from '../constraints/model.js';
+import { applyStateMachineCommand, MACHINE_COMMANDS } from '../state-machine/model.js';
+import { applySpeechCommand, SPEECH_COMMANDS, VISEMES } from '@shapeshift-labs/studio-core/speech';
+import { applyIllustrationCommand } from '../illustration/commands.js';
+import { applyProceduralCommand, PROCEDURAL_COMMANDS } from '@shapeshift-labs/studio-core/procedural/commands';
+import { applyBodyJoinCommand } from '../body-joins.js';
+import { REFERENCE_KINDS } from '../references/catalog.js';
+import { applyEntityCommand, ENTITY_COMMANDS } from '../entities/commands.js';
+import { applyLibraryCommand, LIBRARY_CATEGORIES } from '../authoring/library.js';
+import { applyResolvedCommand } from '../authoring/resolved-channels.js';
+import { applyRecordingCommand } from '../authoring/recording.js';
+import { applyTimingCommand } from '../authoring/timing.js';
+import { applySoundCommand } from '../authoring/sound.js';
+import { applyPreviewCommand } from '../authoring/preview.js';
+import { applyActionCommand } from '../authoring/actions.js';
+import { applyOwnershipCommand } from '../authoring/ownership.js';
+import { applyBackdropCommand } from '../authoring/backdrop.js';
+import { applyTimelineCommand } from '../authoring/timeline.js';
+import { applyAppearanceCommand } from '../authoring/appearance.js';
+import { applyVectorCommand } from '../vector/commands.js';
+import { validateGrading, GRADING_CONTROLS, GRADING_PRESETS } from '../../rendering/color-grading.js';
+import { applyMotionCommand } from '../motion-tools/commands.js';
+import { applyLightingCommand } from '../lighting-state.js';
+import { ProjectStore } from '../store.js';
+import { applySceneCommand, sceneCapabilities } from '../scene3d/schema.js';
+import { ensureFX, defaultEmitter, defaultFluid, defaultVisual, NODE_TYPES, PARTICLE_SHAPES } from './schema.js';
+import { cue, presentationPreset, CUE_TYPES } from './presentation.js';
+import { identity, setKey, validateProject } from '../runtime.js';
+import { easeNames } from './math.js';
+export const PRESETS = [
+  'heavy-impact',
+  'contact-impact',
+  'lightning',
+  'discovery',
+  'slow-reveal',
+  'embers',
+  'magic',
+  'rain',
+  'explosion',
+  'hearts',
+  'smoke',
+  'fire',
+  'smear-swipe',
+  'tree-break',
+];
+export const capabilities = () => ({
+  noodle: { dimensions: [2, 3], commands: NOODLE_COMMANDS, tracks: 'clip.noodleTracks', skeletons: true },
+  shapeLab: {
+    dimensions: [2, 3],
+    field: 'shapeLab',
+    commands: SHAPE_COMMANDS,
+    bakes: ['editable-svg', 'vector-frame-animation', 'mesh', 'mesh-frame-animation'],
+  },
+  joysticks: {
+    dimension: 2,
+    field: 'joint.joystick',
+    commands: JOYSTICK_COMMANDS,
+    animation: 'clip.joystickTracks',
+    axes: ['x', 'y'],
+    nested: true,
+  },
+  solos: {
+    dimension: 2,
+    field: 'joint.solo.activeChild',
+    commands: SOLO_COMMANDS,
+    animation: 'clip.soloTracks',
+    interpolation: 'hold',
+    nested: true,
+  },
+  drawOrder: {
+    dimension: 2,
+    commands: DRAW_ORDER_COMMANDS,
+    rules: 'project.drawOrder',
+    animation: 'clip.drawOrderTracks',
+    interpolation: 'hold',
+    groups: true,
+  },
+  mesh: { dimension: 2, field: 'sprite.mesh', commands: MESH_COMMANDS, animation: 'clip.meshTracks', sources: ['svg', 'raster'] },
+  boneBinding: {
+    dimension: 2,
+    field: 'sprite.boneBinding',
+    commands: BONE_BINDING_COMMANDS,
+    geometry: 'vector vertices and independent Bezier handles',
+    weights: 'normalized per control point',
+  },
+  constraints: {
+    dimensions: [2, 3],
+    types: CONSTRAINT_TYPES,
+    followPath: {
+      dimension: 2,
+      target: 'editable SVG',
+      animation: 'clip.constraintTracks',
+      channels: ['distance', 'orient', 'ownerOffset'],
+    },
+    ik: { dimension: 2, boneCount: [1, 32], owner: 'chain endpoint', invertDirection: true },
+    ownerOffset: true,
+    commands: CONSTRAINT_COMMANDS,
+    strength: 'clip.constraintWeights',
+    spaces: ['local', 'world'],
+  },
+  stateMachines: {
+    version: 1,
+    dimensions: [2, 3],
+    field: 'stateMachines',
+    commands: MACHINE_COMMANDS,
+    inputs: ['boolean', 'number', 'trigger'],
+    states: ['animation', 'blank', 'entry', 'any', 'exit'],
+  },
+  speech: {
+    version: 1,
+    dimensions: [2],
+    commands: SPEECH_COMMANDS,
+    visemes: VISEMES,
+    library: 'speech',
+    timeline: 'clip.dialogue',
+    artwork: 'registered replacements',
+    motion: 'weighted joint offsets',
+    audio: 'recorded chunks',
+  },
+  procedural: {
+    version: 1,
+    field: 'procedural',
+    dimensions: ['2d', '3d-puppet-plane'],
+    commands: PROCEDURAL_COMMANDS,
+    structures: ['rope', 'spine', 'tentacle', 'limb', 'soft', 'rigid'],
+    locomotion: ['alternating gait groups', 'step overshoot', 'body height and tilt', 'contact diagnostics'],
+  },
+  bodyJoins: {
+    field: 'joint.bodyJoin',
+    optIn: true,
+    commands: ['bodyJoin.create', 'bodyJoin.update', 'bodyJoin.remove'],
+    rendering: ['editor', 'exported-player', '3d-puppet'],
+    coordinates: 'body-local pixels',
+  },
+  entities: {
+    version: 1,
+    field: 'entityDefinitions',
+    format: 'shapeshift-entities',
+    commands: ENTITY_COMMANDS,
+    importModes: ['merge', 'replace'],
+    reference: { keyword: 'reference', kinds: REFERENCE_KINDS, dimensions: [2, 3], empty: '' },
+  },
+  library: {
+    version: 1,
+    field: 'library',
+    transfer: { format: 'shapeshift-library', version: 1, import: 'library.import', export: 'embedded source JSON' },
+    categories: [...LIBRARY_CATEGORIES],
+    expression: {
+      '2d': 'clip.tools.layers pose offsets with keyed influence',
+      '3d': 'node.facial independent expression, blink and gaze; action ownership retains priority',
+    },
+    scope: 'project-local sources, explicit source updates, undoable placement',
+  },
+  artwork: {
+    version: 1,
+    assetField: 'vector',
+    channels: ['fill', 'stroke', 'strokeWidth', 'opacity', 'points'],
+    tools: ['direct-selection', 'bezier-handles', 'swatches', 'eyedropper', 'same-fill', 'gradient', 'align', 'reflect'],
+    animation: 'asset-local, sampled on clip animation time',
+    dimensions: ['2d', '3d-svg-plane', '3d-puppet'],
+    surfaceEditing: 'static SVG face artwork; eye landmarks remain on the surface',
+  },
+  grading: {
+    version: 1,
+    field: 'grading',
+    stage: 'final scene after lighting, shadows and effects',
+    dimensions: ['2d', '3d'],
+    presets: ['auto', ...Object.keys(GRADING_PRESETS)],
+    controls: GRADING_CONTROLS,
+  },
+  graph: {
+    queries: ['graph', 'scene3d-graph'],
+    dimensions: ['2d', '3d'],
+    bounds: 'authored rest pose',
+    history: 'reversible Frontier patches; sampled poses are runtime-only',
+  },
+  format: 'inkwell-puppet',
+  version: 1,
+  motionTools: {
+    dimensions: ['2d', '3d'],
+    clipField: 'tools',
+    constraints: ['pin', 'ground', 'look'],
+    layers: ['pose', 'masked source clip'],
+    keyableInfluence: true,
+    secondaryMotion: ['subtle', 'natural', 'loose'],
+    review: ['key-pose ghosts', 'motion arcs', 'loop/contact check'],
+    contactSpace: 'world or target local',
+    sharedSupport: 'optional bounded ancestor lean',
+    trails: '2D artwork smear; 3D pooled geometry echoes',
+  },
+  scene3d: sceneCapabilities(),
+  lighting: {
+    dimensions: ['2d', '3d'],
+    maxSources: 16,
+    jointBinding: 'joint.light',
+    coloring: 'joint.coloring',
+    animation: 'clip.lightingTracks',
+    units: 'pixels in 2D; metres in 3D',
+  },
+  illustration: {
+    version: 1,
+    dimensions: [2, 3],
+    poseDriver: 'clip.tools.layers[].driver',
+    drawingCorrections: 'clip.tools.layers[].artwork',
+    lineBoil: 'asset.vector.boil',
+    edgeBake: 'joint.visual.edge',
+    motionFields: 'motionFields',
+    receiver: 'fieldReceiver',
+    foldRegion: 'node.deform.foldAngle / foldAxis / foldOffset / foldWidth',
+    fluids: 'surfaceTension + vectorContours',
+    colorShift: {
+      field: 'joint.visual.colorShift',
+      bindings: 'illustrationBindings',
+      runtime: ['effectData', 'effectStates', 'illustration'],
+      animation: 'clip.illustrationTracks',
+      ink: 'optional luminance protection',
+    },
+    containerLiquid: {
+      field: 'joint.liquid',
+      command: 'illustration.liquid',
+      model: 'sealed 2D area-conserving spring free surface',
+      controls: [
+        'boundary',
+        'fill',
+        'frequency',
+        'damping',
+        'agitation',
+        'color',
+        'shadow',
+        'highlight',
+        'ink',
+        'lineWidth',
+        'bubbles',
+      ],
+    },
+  },
+  commands: [
+    ...NOODLE_COMMANDS, ...CONSTRAINT_COMMANDS, ...MACHINE_COMMANDS, ...SPEECH_COMMANDS, ...DOCUMENT_COMMANDS,
+    ...SHAPE_COMMANDS,
+    ...JOYSTICK_COMMANDS,
+    ...SOLO_COMMANDS,
+    ...DRAW_ORDER_COMMANDS,
+    ...MESH_COMMANDS,
+    ...BONE_BINDING_COMMANDS,
+    'illustration.liquid',
+    'illustration.colorShift',
+    'illustration.key',
+    'illustration.removeKeys',
+    'illustration.soundPreset',
+    'illustration.binding',
+    'illustration.bindings',
+    'illustration.corrective',
+    'illustration.edge',
+    'illustration.boil',
+    'illustration.fold',
+    'illustration.field',
+    'illustration.receiver',
+    ...PROCEDURAL_COMMANDS,
+    'bodyJoin.create',
+    'bodyJoin.update',
+    'bodyJoin.remove',
+    ...ENTITY_COMMANDS,
+    'library.import',
+    'library.soundVolume',
+    'library.capture',
+    'library.place',
+    'library.rename',
+    'library.detach',
+    'library.updateSource',
+    'library.remove',
+    'recording.apply',
+    'recording.simplify',
+    'timing.marker',
+    'timing.remove',
+    'audio.library',
+    'preview.scenario',
+    'preview.reference',
+    'preview.removeReference',
+    'action.capture',
+    'action.parameter',
+    'action.instantiate',
+    'action.values',
+    'action.rename',
+    'action.remove',
+    'ownership.bake',
+    'ownership.key',
+    'ownership.removeBake',
+    'ownership.bakeSettings',
+    'ownership.handover',
+    'asset.add',
+    'backdrop.settings',
+    'backdrop.add',
+    'backdrop.update',
+    'backdrop.remove',
+    'backdrop.order',
+    'backdrop.key',
+    'timeline.edit',
+    'appearance.init',
+    'appearance.select',
+    'appearance.role',
+    'appearance.variant',
+    'appearance.removeVariant',
+    'appearance.bind',
+    'appearance.unbind',
+    'appearance.grade',
+    'vector.create',
+    'vector.init',
+    'vector.update',
+    'vector.key',
+    'vector.settings',
+    'vector.swatch',
+    'vector.add',
+    'vector.delete',
+    'vector.duplicate',
+    'vector.order',
+    'vector.boolean',
+    'grading.set',
+    'grading.reset',
+    'motion.targetKey',
+    'motion.clip',
+    'motion.contact',
+    'motion.look',
+    'motion.follow',
+    'motion.pose',
+    'motion.layer',
+    'motion.weight',
+    'motion.update',
+    'motion.remove',
+    'motion.smear',
+    'motion.morph',
+    'lighting.settings',
+    'lighting.node',
+    'lighting.key',
+    'settings',
+    'cue.add',
+    'cue.update',
+    'cue.remove',
+    'emitter.add',
+    'emitter.update',
+    'emitter.remove',
+    'fluid.add',
+    'fluid.update',
+    'fluid.remove',
+    'node.add',
+    'node.update',
+    'node.remove',
+    'node.connect',
+    'node.output',
+    'visual',
+    'key',
+    'preset',
+    'shape',
+    'text',
+    'model.add',
+    'model.update',
+    'model.remove',
+    'parameter.key',
+  ],
+  cues: CUE_TYPES,
+  nodes: NODE_TYPES,
+  particleShapes: PARTICLE_SHAPES,
+  easing: easeNames,
+  presets: PRESETS,
+});
+const unique = (list, base) => {
+  let id = base,
+    i = 2;
+  while (list.some((x) => x.id === id)) id = base + '-' + i++;
+  return id;
+};
+export function merge(target, patch) {
+  for (const [key, value] of Object.entries(patch ?? {})) {
+    if (['__proto__', 'constructor', 'prototype'].includes(key)) throw Error('Reserved property');
+    if (value && typeof value === 'object' && !Array.isArray(value)) {
+      if (!target[key] || typeof target[key] !== 'object' || Array.isArray(target[key])) target[key] = {};
+      merge(target[key], value);
+    } else target[key] = structuredClone(value);
+  }
+  return target;
 }
-export function execute(project,commands){const store=new ProjectStore(project),results=store.edit(copy=>(Array.isArray(commands)?commands:[commands]).map(command=>applyCommand(copy,command)));return{project:store.project,results,change:store.lastChange,graph:store.graph.inspect()};}
-export function emptyProject(name='New effect'){return{format:'inkwell-puppet',version:1,name,assets:[],joints:[{id:'root',name:'Origin',parent:null,rest:identity(),layer:0}],clips:[{id:'effect',name:'Effect',duration:2.4,fps:30,loop:true,tracks:{}}]};}
+export function applyCommand(project, command) {
+  if (DOCUMENT_COMMANDS.includes(command.op)) return applyDocumentCommand(project, command);
+  if (command.op?.startsWith('noodle.')) return noodleCommand(project, command);
+  if (command.op?.startsWith('shapeLab.')) return applyShapeLabCommand(project, command);
+  if (command.op?.startsWith('joystick.')) return applyJoystickCommand(project, command);
+  if (command.op?.startsWith('solo.')) return applySoloCommand(project, command);
+  if (command.op?.startsWith('drawOrder.')) return applyDrawOrderCommand(project, command);
+  if (command.op?.startsWith('mesh.')) return applyMeshCommand(project, command);
+  if (command.op?.startsWith('boneBinding.')) return applyBoneBindingCommand(project, command);
+  if (command.op?.startsWith('constraint.')) return applyConstraintCommand(project, command);
+  if (command.op?.startsWith('stateMachine.')) return applyStateMachineCommand(project, command);
+  if (command.op?.startsWith('speech.')) return applySpeechCommand(project, command);
+  if (command.op?.startsWith('illustration.')) return applyIllustrationCommand(project, command);
+  if (command.op?.startsWith('procedural.')) return applyProceduralCommand(project, command);
+  if (command.op?.startsWith('bodyJoin.')) return applyBodyJoinCommand(project, command);
+  if (ENTITY_COMMANDS.includes(command.op)) return applyEntityCommand(project, command);
+  if (command.op?.startsWith('library.')) return applyLibraryCommand(project, command);
+  if (['ownership.bake', 'ownership.key', 'ownership.removeBake', 'ownership.bakeSettings'].includes(command.op))
+    return applyResolvedCommand(project, command);
+  if (command.op?.startsWith('recording.')) return applyRecordingCommand(project, command, applyCommand);
+  if (command.op?.startsWith('timing.')) return applyTimingCommand(project, command);
+  if (command.op?.startsWith('audio.')) return applySoundCommand(project, command);
+  if (command.op?.startsWith('preview.')) return applyPreviewCommand(project, command);
+  if (command.op?.startsWith('action.')) return applyActionCommand(project, command);
+  if (command.op?.startsWith('ownership.')) return applyOwnershipCommand(project, command);
+  if (command.op === 'asset.add') {
+    if (project.assets.some((a) => a.id === command.id)) throw Error('Duplicate asset');
+    project.assets.push({ id: command.id, name: command.name ?? command.id, src: command.src });
+    return command.id;
+  }
+  if (command.op?.startsWith('backdrop.')) return applyBackdropCommand(project, command);
+  if (command.op?.startsWith('timeline.')) return applyTimelineCommand(project, command);
+  if (command.op?.startsWith('appearance.')) return applyAppearanceCommand(project, command);
+  if (command.op?.startsWith('vector.')) return applyVectorCommand(project, command);
+  if (command.op === 'grading.set' || command.op === 'grading.reset') {
+    const next =
+      command.op === 'grading.reset'
+        ? { version: 1, preset: command.preset ?? 'neutral' }
+        : { version: 1, ...project.grading, ...command.values };
+    validateGrading(next);
+    project.grading = next;
+    return 'grading';
+  }
+  if (command.op?.startsWith('motion.')) return applyMotionCommand(project, command);
+  if (command.op?.startsWith('lighting.')) return applyLightingCommand(project, command, merge);
+  if (command.op?.startsWith('scene3d.')) return applySceneCommand(project, command);
+  if (command.clip && !project.clips.some((c) => c.id === command.clip)) throw Error('Missing clip ' + command.clip);
+  if (command.joint && !project.joints.some((j) => j.id === command.joint)) throw Error('Missing joint ' + command.joint);
+  const c = project.clips.find((c) => c.id === command.clip) ?? project.clips[0],
+    f = ensureFX(c.fx ? c : project),
+    j = project.joints.find((j) => j.id === command.joint) ?? project.joints.find((j) => j.sprite) ?? project.joints[0],
+    { op } = command;
+  let result;
+  if (op === 'settings') merge(f.settings, command.values);
+  else if (op === 'visual') {
+    j.visual ??= defaultVisual();
+    merge(j.visual, command.values);
+    result = j.id;
+  } else if (op === 'key') {
+    setKey(c, j.id, command.time, { ...identity(), ...command.value }, command.easing ?? 'smooth');
+    result = j.id;
+  } else if (op === 'cue.add') {
+    c.cues ??= [];
+    const id = command.id ?? unique(c.cues, command.type);
+    c.cues.push(
+      merge(
+        { ...cue(id, command.type, command.time ?? 0), ...(command.type === 'sprite-flash' ? { joint: j.id } : {}) },
+        command.values,
+      ),
+    );
+    result = id;
+  } else if (op === 'cue.update' || op === 'cue.remove') {
+    const item = c.cues?.find((x) => x.id === command.id);
+    if (!item) throw Error('Missing cue ' + command.id);
+    if (op === 'cue.update') merge(item, command.values);
+    else c.cues = c.cues.filter((x) => x !== item);
+  } else if (op === 'node.connect') {
+    const node = f.nodes.find((n) => n.id === command.id);
+    if (!node) throw Error('Missing node');
+    node.inputs[command.port ?? 0] = command.input;
+  } else if (op === 'node.output') {
+    if (!f.nodes.some((n) => n.id === command.id)) throw Error('Missing node');
+    f.output = command.id;
+  } else if (op === 'parameter.key') {
+    const collection = command.collection ?? 'nodes',
+      target = collection === 'visual' ? j.visual : f[collection]?.find((x) => x.id === command.id);
+    if (!target) throw Error('Missing parameter target');
+    const parts = command.path.split('.');
+    if (parts.some((p) => ['__proto__', 'constructor', 'prototype'].includes(p))) throw Error('Reserved property');
+    let owner = target;
+    for (const part of parts.slice(0, -1)) {
+      if (!owner[part]) throw Error('Missing parameter path');
+      owner = owner[part];
+    }
+    const key = parts.at(-1),
+      current = owner[key];
+    if (!Number.isFinite(current) && !Array.isArray(current)) throw Error('Only numeric parameters can be keyed');
+    const points = Array.isArray(current) ? current : [{ time: 0, value: current, easing: 'smooth' }],
+      old = points.find((p) => p.time === command.time);
+    if (old) {
+      old.value = command.value;
+      old.easing = command.easing ?? 'smooth';
+    } else
+      points.push({
+        time: command.time,
+        value: command.value,
+        easing: command.easing ?? 'smooth',
+        ...(command.bezier ? { bezier: command.bezier } : {}),
+      });
+    points.sort((a, b) => a.time - b.time);
+    owner[key] = points;
+  } else if (/^(emitter|fluid|node|model)\.(add|update|remove)$/.test(op)) {
+    const [kind, action] = op.split('.'),
+      list = f[{ emitter: 'emitters', fluid: 'fluids', node: 'nodes', model: 'models' }[kind]];
+    if (action === 'add') {
+      const id = command.id ?? unique(list, kind);
+      if (list.some((x) => x.id === id)) throw Error('Duplicate ' + kind + ' ID');
+      const defaults =
+        kind === 'emitter'
+          ? defaultEmitter(id)
+          : kind === 'fluid'
+            ? defaultFluid(id)
+            : kind === 'model'
+              ? {
+                  id,
+                  name: '3D model',
+                  enabled: true,
+                  layer: 0,
+                  x: 0,
+                  y: 0,
+                  width: 256,
+                  height: 256,
+                  src: '',
+                  format: 'obj',
+                  rotationX: 0,
+                  rotationY: 0,
+                  rotationZ: 0,
+                  spin: 30,
+                  scale: 1,
+                  camera: 'orthographic',
+                  distance: 5,
+                  fov: 40,
+                  ambient: 0.8,
+                  lightColor: '#ffffff',
+                  lightIntensity: 3,
+                  lightX: 3,
+                  lightY: 5,
+                  lightZ: 5,
+                  color: '#d2eab0',
+                  wireframe: false,
+                }
+              : NODE_TYPES[command.type]
+                ? {
+                    id,
+                    type: command.type,
+                    inputs: command.inputs ?? [f.output],
+                    params: structuredClone(NODE_TYPES[command.type].params),
+                    x: 30 + (list.length % 2) * 170,
+                    y: 40 + list.length * 55,
+                  }
+                : null;
+      if (!defaults) throw Error('Unknown node type');
+      const item = merge(defaults, command.values);
+      list.push(item);
+      if (kind === 'node') f.output = id;
+      result = id;
+    } else {
+      const item = list.find((x) => x.id === command.id);
+      if (!item) throw Error('Missing ' + kind + ' ' + command.id);
+      if (action === 'update') merge(item, command.values);
+      else {
+        list.splice(list.indexOf(item), 1);
+        if (kind === 'node') {
+          for (const n of list) n.inputs = n.inputs.map((id) => (id === item.id ? (item.inputs[0] ?? 'scene') : id));
+          if (f.output === item.id) f.output = item.inputs[0] ?? 'scene';
+        }
+        if (kind === 'emitter')
+          for (const e of list) for (const k of ['stepEmit', 'deathEmit']) if (e[k] === item.id) e[k] = null;
+      }
+    }
+  } else if (op === 'shape' || op === 'text') {
+    const id = command.id ?? unique(project.joints, op),
+      color = command.color ?? '#f5b67b',
+      safe = (s) =>
+        String(s).replace(/[<>&"']/g, (c) => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;', "'": '&apos;' })[c]),
+      size = command.size ?? 120;
+    let art;
+    if (op === 'text')
+      art = `<text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" font-family="sans-serif" font-size="${command.fontSize ?? 32}" font-weight="bold" fill="${safe(color)}">${safe(command.text ?? 'LEVEL UP')}</text>`;
+    else
+      art =
+        command.shape === 'circle'
+          ? `<circle cx="128" cy="128" r="110" fill="${safe(color)}"/>`
+          : command.shape === 'star'
+            ? `<path d="M128 8 155 89 243 89 172 140 200 224 128 174 56 224 84 140 13 89 101 89Z" fill="${safe(color)}"/>`
+            : `<rect x="20" y="20" width="216" height="216" rx="${command.radius ?? 20}" fill="${safe(color)}"/>`;
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">${art}</svg>`;
+    project.assets.push({ id, src: 'data:image/svg+xml,' + encodeURIComponent(svg) });
+    project.joints.push({
+      id,
+      name: command.text ?? command.shape ?? op,
+      parent: null,
+      rest: { ...identity(), x: command.x ?? 0, y: command.y ?? 0 },
+      layer: command.layer ?? 50,
+      sprite: { asset: id, width: size, height: size, pivotX: 0.5, pivotY: 0.5 },
+    });
+    result = id;
+  } else if (op === 'preset') {
+    const name = command.name,
+      time = command.time ?? 0.5;
+    if (!PRESETS.includes(name)) throw Error('Unknown preset');
+    if (['heavy-impact', 'contact-impact', 'lightning', 'discovery', 'slow-reveal'].includes(name)) {
+      c.cues ??= [];
+      for (const event of presentationPreset(name, time)) {
+        event.id = unique(c.cues, event.id);
+        if (event.type === 'sprite-flash') event.joint = j.id;
+        c.cues.push(event);
+      }
+      if (name === 'discovery')
+        applyCommand(project, {
+          op: 'emitter.add',
+          values: {
+            name: 'Discovery sparks',
+            burst: 10,
+            rate: 0,
+            delay: time,
+            duration: 0.8,
+            life: [0.8, 0.8],
+            speed: [100, 100],
+            direction: [0, 360],
+            gravityY: -30,
+            loop: false,
+          },
+        });
+    } else if (name === 'smoke' || name === 'fire') {
+      result = applyCommand(project, {
+        op: 'fluid.add',
+        values: {
+          name: name === 'fire' ? 'Fire' : 'Smoke',
+          ...(name === 'fire'
+            ? { colors: ['#3f152b', '#e53d26', '#ffad37', '#fff2a8'], buoyancy: 2, vorticity: 18, temperature: 2, dissipation: 1 }
+            : {}),
+        },
+      });
+    } else if (name === 'smear-swipe' || name === 'tree-break') {
+      applyCommand(project, {
+        op: 'visual',
+        joint: j.id,
+        values:
+          name === 'smear-swipe'
+            ? { smear: { enabled: true, seconds: 0.25, samples: 20, tint: 0.4 }, skewX: 0 }
+            : { break: { enabled: true, delay: time } },
+      });
+      if (name === 'smear-swipe') {
+        setKey(c, j.id, 0, { ...identity(), rotation: -55, x: -60 });
+        setKey(c, j.id, Math.min(c.duration, 0.6), { ...identity(), rotation: 55, x: 60 });
+      }
+    } else {
+      const values = {
+        name,
+        delay: 0,
+        ...{
+          embers: {
+            colors: ['#fffcc4', '#ff9b48', '#ae303e'],
+            speed: [20, 60],
+            gravityY: -10,
+            turbulence: 15,
+            particleShape: 'soft',
+          },
+          magic: { particleShape: 'star', colors: ['#f3edff', '#bb92ff', '#544ac7'], orbit: 55, orbitSpeed: 0.4, gravityY: -20 },
+          rain: {
+            shape: 'line',
+            width: 450,
+            y: -230,
+            rate: 120,
+            direction: [80, 85],
+            speed: [230, 280],
+            size: [3, 6],
+            colors: ['#b9dbff', '#4c89be'],
+            gravityY: 140,
+          },
+          explosion: {
+            burst: 140,
+            rate: 0,
+            delay: time,
+            loop: false,
+            direction: [0, 360],
+            speed: [60, 220],
+            gravityY: 40,
+            life: [0.3, 1],
+            colors: ['#fff6ae', '#ff8842', '#952743'],
+          },
+          hearts: {
+            particleShape: 'heart',
+            colors: ['#ffadc2', '#f16a9e'],
+            rate: 12,
+            speed: [30, 60],
+            gravityY: -10,
+            size: [8, 16],
+            spin: [-15, 15],
+          },
+        }[name],
+      };
+      result = applyCommand(project, { op: 'emitter.add', values });
+    }
+  } else throw Error('Unknown command ' + op);
+  return result;
+}
+export function execute(project, commands) {
+  const store = new ProjectStore(project),
+    results = store.edit((copy) =>
+      (Array.isArray(commands) ? commands : [commands]).map((command) => applyCommand(copy, command)),
+    );
+  return { project: store.project, results, change: store.lastChange, graph: store.graph.inspect() };
+}
+export function emptyProject(name = 'New effect') {
+  return {
+    format: 'inkwell-puppet',
+    version: 1,
+    name,
+    assets: [],
+    joints: [{ id: 'root', name: 'Origin', parent: null, rest: identity(), layer: 0 }],
+    clips: [{ id: 'effect', name: 'Effect', duration: 2.4, fps: 30, loop: true, tracks: {} }],
+  };
+}

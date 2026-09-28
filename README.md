@@ -62,3 +62,36 @@ GIF, PNG and sprite-sheet exports are visual formats and contain no audio.
 
 Run `npm test` for liquid conservation/scrubbing, speech timing/audio scheduling,
 portable recordings, undo/redo, example compatibility and the existing suites.
+
+## Complete tool set (0.3)
+
+This release brings the local animation and illustration tools into the public editor and Core dependency:
+
+- Procedural 2D rigs: particles, soft bodies, constraints, collisions, stepping limbs, body support, dynamic ink surfaces and sprite attachments.
+- Procedural 3D movement and terrain-aware locomotion.
+- Noodle deformation in 2D/3D, including stretch, twist, lag, overshoot and skeleton binding.
+- Artwork meshes, SVG bone binding and weight editing.
+- Transform/distance constraints, IK and Follow Path, with animated strength and path properties.
+- Pose joysticks, Solo drawing swaps, animated draw-order rules and animation state machines.
+- Shape Lab field modelling, contour generation and mesh export.
+- N-slicing, outline recognition, SVG path trimming and clipping.
+- Illustration folds, fluid fields, colour shifts and animated container liquids, including sound effects.
+- Recorded dialogue, viseme timing, facial poses, drawing swaps and envelope-driven motion.
+- Dice/regular solid authoring, illustrated materials and attachment blending.
+- Image/video vectorization, portrait tooling, example source and prepared artwork/audio.
+
+All tools edit project data, which can be saved and driven through the live API. `api.describe` lists commands, panels and supported module methods. Newly added panel names include `noodle`, `shapeLab`, `procedural`, `joysticks`, `solos`, `drawOrder`, `meshes`, `boneBindings`, `constraints` and `stateMachines`.
+
+### Examples
+
+Open the editor with `?example=noodle-2d`, `?example=noodle-3d`, `?example=mesh`, `?example=joysticks`, `?example=solos`, `?example=draw-order`, `?example=constraints`, `?example=follow-path`, `?example=shape-lab`, `?example=book`, `?example=potion` or `?example=speech`.
+
+The build also includes `puppet-studio/dice/`, `puppet-studio/experiments/bramble-map/`, `puppet-studio/experiments/sunflower-puppet/` and the expressive portrait studies. These are examples of the tools; their helper code and prepared assets are included in this repository.
+
+### Vectorization and asset preparation
+
+Use `npm run serve:video` after building for the local video conversion service (default port 8791); open `/studio/puppet-studio/video-vectorizer/`. It needs `ffmpeg` and `ffprobe` on PATH. The normal editor server can open existing vector clips, while conversion uses that dedicated service.
+
+Asset preparation scripts are optional; a normal build uses committed assets. Scripts that import source artwork accept `STUDIO_ART_SOURCE` explicitly. `STUDIO_VIDEO_EXAMPLES` optionally mounts a directory of your own videos. Voice generation requires `HUME_API_KEY` and `HUME_VOICE_FILE`; no credentials are bundled. Music transcription takes audio paths as command-line arguments and requires the Python libraries imported by that script.
+
+Run `npm test` for editor/runtime tests and `npm run test:examples` for portrait and standalone example tests.

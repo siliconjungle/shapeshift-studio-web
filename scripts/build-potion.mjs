@@ -1,0 +1,5 @@
+import fs from 'node:fs/promises';import {build} from 'esbuild';import path from 'node:path';import {potionProject} from '../puppet-studio/experiments/potion/potion.js';
+const dir='puppet-studio/experiments/potion',dest='dist/'+dir;await fs.mkdir(dest+'/assets',{recursive:true});
+const art=JSON.parse(await fs.readFile(dir+'/assets/puppet-art.json'));await fs.writeFile(dir+'/potion.puppet.json',JSON.stringify(potionProject(art)));
+for(const file of ['index.html','style.css','potion.puppet.json'])await fs.copyFile(dir+'/'+file,dest+'/'+file);for(const file of ['puppet-art.json','front.svg','back.svg','cork.svg','lip.svg'])await fs.copyFile(dir+'/assets/'+file,dest+'/assets/'+file);
+await build({entryPoints:[dir+'/app.js'],outfile:dest+'/app.js',bundle:true,format:'esm',target:'es2022',plugins:[{name:'three',setup(b){b.onResolve({filter:/^three(?:\/addons\/(?:loaders\/SVGLoader|shaders\/FXAAShader)\.js)?$/},()=>({path:path.resolve('puppet-studio/scene3d/vendor.js')}));}}]});console.log('Built potion puppet and demo');

@@ -1,0 +1,157 @@
+<!doctype html><meta charset="utf-8"><title>Map light AA comparison</title><h1>Map light AA comparison</h1><p>Diagnostic only: severe host-load drift prevents a stable speedup claim. Retained as user-requested visual quality setting, not a verified algorithm optimization. No default-canvas AA in this matched post-pass comparison. Intro/idle animations remained active.</p><pre>{
+  "status": "complete",
+  "interpretation": "Diagnostic only: severe host-load drift prevents a stable speedup claim. Retained as user-requested visual quality setting, not a verified algorithm optimization. No default-canvas AA in this matched post-pass comparison. Intro/idle animations remained active.",
+  "buffer": [
+    1584,
+    1056
+  ],
+  "records": 63,
+  "routes": 120,
+  "shadowCasters": 54,
+  "warmupFramesPerPhase": 60,
+  "samplesPerPhase": 90,
+  "fields": [
+    "mean",
+    "p95",
+    "p99",
+    "max"
+  ],
+  "phases": [
+    {
+      "mode": "high",
+      "frameMs": [
+        33.3222,
+        34.3,
+        34.4,
+        34.4
+      ],
+      "cpuMs": [
+        6.0133,
+        7.2,
+        8.2,
+        9
+      ],
+      "gpuShadowMs": [
+        0.788,
+        1.020874,
+        1.11425,
+        1.114708
+      ],
+      "gpuMainMs": [
+        13.45267,
+        22.056708,
+        23.98425,
+        24.224958
+      ],
+      "gpuForegroundMs": [
+        18.69577,
+        28.200041,
+        30.107333,
+        31.908
+      ],
+      "hitchesOver50ms": 0
+    },
+    {
+      "mode": "light",
+      "frameMs": [
+        33.3322,
+        34.4,
+        34.4,
+        34.4
+      ],
+      "cpuMs": [
+        5.85333,
+        7.6,
+        8.3,
+        8.5
+      ],
+      "gpuShadowMs": [
+        0.82615,
+        1.01825,
+        1.279375,
+        6.713041
+      ],
+      "gpuMainMs": [
+        6.87126,
+        15.111083,
+        17.0925,
+        19.267333
+      ],
+      "gpuForegroundMs": [
+        11.15701,
+        19.771916,
+        23.234333,
+        23.654083
+      ],
+      "hitchesOver50ms": 0
+    },
+    {
+      "mode": "light",
+      "frameMs": [
+        33.3344,
+        34.3,
+        34.4,
+        34.4
+      ],
+      "cpuMs": [
+        7.06222,
+        9.1,
+        21.6,
+        21.9
+      ],
+      "gpuShadowMs": [
+        8.35306,
+        35.514874,
+        48.976791,
+        74.187
+      ],
+      "gpuMainMs": [
+        23.45423,
+        59.234208,
+        92.367041,
+        106.186458
+      ],
+      "gpuForegroundMs": [
+        23.88985,
+        50.691458,
+        73.411708,
+        76.395041
+      ],
+      "hitchesOver50ms": 0
+    },
+    {
+      "mode": "high",
+      "frameMs": [
+        51.84444,
+        67.5,
+        100.3,
+        101.1
+      ],
+      "cpuMs": [
+        49.50778,
+        66.9,
+        76.3,
+        78.1
+      ],
+      "gpuShadowMs": [
+        10.92622,
+        19.736416,
+        23.285208,
+        24.162375
+      ],
+      "gpuMainMs": [
+        40.18059,
+        70.356875,
+        78.547999,
+        81.280666
+      ],
+      "gpuForegroundMs": [
+        47.9494,
+        78.880083,
+        95.614166,
+        122.258958
+      ],
+      "hitchesOver50ms": 46
+    }
+  ]
+}</pre>

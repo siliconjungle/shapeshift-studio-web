@@ -1,0 +1,35 @@
+{
+  "passed": true,
+  "projects": [
+    {
+      "view": "front",
+      "joints": 12,
+      "clips": 4,
+      "meshes": 5
+    },
+    {
+      "view": "back",
+      "joints": 12,
+      "clips": 4,
+      "meshes": 5
+    },
+    {
+      "view": "side",
+      "joints": 12,
+      "clips": 4,
+      "meshes": 5
+    }
+  ],
+  "checks": [
+    "four-way facing",
+    "walk controls",
+    "pause freezes clock",
+    "keyboard travel and stop",
+    "pointer travel and arrival",
+    "exploded parts",
+    "joint overlay",
+    "native Studio validation and rendering, all 3 views",
+    "mobile width",
+    "no page errors or failed requests"
+  ]
+}

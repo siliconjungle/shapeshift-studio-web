@@ -1,0 +1,311 @@
+{
+  "pipeline": "Fresh built-in GPT Image 2 artwork → alpha-separated assets → Little Gods cel vectorizer",
+  "palette": "Source colours reduced with Little Gods cel preset; run map-bramble-palette.mjs for the real DB32 Extended 128 shade-family mapping",
+  "atlas": "source/gods-locations.png",
+  "assets": [
+    {
+      "name": "camp",
+      "width": 423,
+      "height": 387,
+      "preset": "cel",
+      "settings": {
+        "colors": 16,
+        "speckle": 4,
+        "precision": 6,
+        "difference": 14,
+        "corner": 80,
+        "length": 4.5,
+        "median": 3
+      },
+      "alphaThreshold": 128,
+      "paths": 614,
+      "colours": 15,
+      "curves": 7784,
+      "bytes": 276551,
+      "silhouetteIoU": 0.988492280740173,
+      "meanColorError": 0.03387385466420798,
+      "warnings": []
+    },
+    {
+      "name": "shop",
+      "width": 406,
+      "height": 414,
+      "preset": "cel",
+      "settings": {
+        "colors": 16,
+        "speckle": 4,
+        "precision": 6,
+        "difference": 14,
+        "corner": 80,
+        "length": 4.5,
+        "median": 3
+      },
+      "alphaThreshold": 128,
+      "paths": 599,
+      "colours": 15,
+      "curves": 7963,
+      "bytes": 280048,
+      "silhouetteIoU": 0.9832679953578054,
+      "meanColorError": 0.029497495387851732,
+      "warnings": []
+    },
+    {
+      "name": "well",
+      "width": 419,
+      "height": 397,
+      "preset": "cel",
+      "settings": {
+        "colors": 16,
+        "speckle": 4,
+        "precision": 6,
+        "difference": 14,
+        "corner": 80,
+        "length": 4.5,
+        "median": 3
+      },
+      "alphaThreshold": 128,
+      "paths": 475,
+      "colours": 15,
+      "curves": 6680,
+      "bytes": 240820,
+      "silhouetteIoU": 0.9869808419927817,
+      "meanColorError": 0.0417284526806874,
+      "warnings": []
+    },
+    {
+      "name": "shrine",
+      "width": 398,
+      "height": 354,
+      "preset": "cel",
+      "settings": {
+        "colors": 16,
+        "speckle": 4,
+        "precision": 6,
+        "difference": 14,
+        "corner": 80,
+        "length": 4.5,
+        "median": 3
+      },
+      "alphaThreshold": 128,
+      "paths": 427,
+      "colours": 15,
+      "curves": 6643,
+      "bytes": 235029,
+      "silhouetteIoU": 0.984700021896212,
+      "meanColorError": 0.03553933249132699,
+      "warnings": []
+    },
+    {
+      "name": "gate",
+      "width": 402,
+      "height": 402,
+      "preset": "cel",
+      "settings": {
+        "colors": 16,
+        "speckle": 4,
+        "precision": 6,
+        "difference": 14,
+        "corner": 80,
+        "length": 4.5,
+        "median": 3
+      },
+      "alphaThreshold": 128,
+      "paths": 426,
+      "colours": 15,
+      "curves": 6298,
+      "bytes": 225032,
+      "silhouetteIoU": 0.9892844521961173,
+      "meanColorError": 0.03821333140971741,
+      "warnings": []
+    },
+    {
+      "name": "keep",
+      "width": 412,
+      "height": 400,
+      "preset": "cel",
+      "settings": {
+        "colors": 16,
+        "speckle": 4,
+        "precision": 6,
+        "difference": 14,
+        "corner": 80,
+        "length": 4.5,
+        "median": 3
+      },
+      "alphaThreshold": 128,
+      "paths": 510,
+      "colours": 15,
+      "curves": 6510,
+      "bytes": 235790,
+      "silhouetteIoU": 0.9842016154252623,
+      "meanColorError": 0.04295738790555481,
+      "warnings": []
+    },
+    {
+      "name": "pine",
+      "width": 348,
+      "height": 284,
+      "preset": "cel",
+      "settings": {
+        "colors": 16,
+        "speckle": 4,
+        "precision": 6,
+        "difference": 14,
+        "corner": 80,
+        "length": 4.5,
+        "median": 3
+      },
+      "alphaThreshold": 128,
+      "paths": 211,
+      "colours": 15,
+      "curves": 2814,
+      "bytes": 104745,
+      "silhouetteIoU": 0.9760782259472673,
+      "meanColorError": 0.029540286191431234,
+      "warnings": []
+    },
+    {
+      "name": "oak",
+      "width": 403,
+      "height": 356,
+      "preset": "cel",
+      "settings": {
+        "colors": 16,
+        "speckle": 4,
+        "precision": 6,
+        "difference": 14,
+        "corner": 80,
+        "length": 4.5,
+        "median": 3
+      },
+      "alphaThreshold": 128,
+      "paths": 267,
+      "colours": 14,
+      "curves": 4052,
+      "bytes": 144102,
+      "silhouetteIoU": 0.9876844624580562,
+      "meanColorError": 0.025261403036212684,
+      "warnings": []
+    },
+    {
+      "name": "rocks",
+      "width": 368,
+      "height": 206,
+      "preset": "cel",
+      "settings": {
+        "colors": 16,
+        "speckle": 4,
+        "precision": 6,
+        "difference": 14,
+        "corner": 80,
+        "length": 4.5,
+        "median": 3
+      },
+      "alphaThreshold": 128,
+      "paths": 49,
+      "colours": 13,
+      "curves": 874,
+      "bytes": 32617,
+      "silhouetteIoU": 0.9857641276389844,
+      "meanColorError": 0.029040181053810142,
+      "warnings": []
+    },
+    {
+      "name": "background",
+      "width": 1152,
+      "height": 768,
+      "preset": "cel",
+      "settings": {
+        "colors": 16,
+        "speckle": 4,
+        "precision": 6,
+        "difference": 14,
+        "corner": 80,
+        "length": 4.5,
+        "median": 3
+      },
+      "alphaThreshold": 128,
+      "paths": 85,
+      "colours": 5,
+      "curves": 702,
+      "bytes": 26911,
+      "silhouetteIoU": 1,
+      "meanColorError": 0.004750543066619008,
+      "warnings": []
+    },
+    {
+      "name": "marker",
+      "width": 167,
+      "height": 235,
+      "preset": "cel",
+      "settings": {
+        "colors": 16,
+        "speckle": 4,
+        "precision": 6,
+        "difference": 14,
+        "corner": 80,
+        "length": 4.5,
+        "median": 3
+      },
+      "alphaThreshold": 128,
+      "paths": 45,
+      "colours": 13,
+      "curves": 494,
+      "bytes": 18770,
+      "silhouetteIoU": 0.9875015727886591,
+      "meanColorError": 0.038528116096987544,
+      "warnings": []
+    },
+    {
+      "name": "banner",
+      "width": 900,
+      "height": 269,
+      "preset": "cel",
+      "settings": {
+        "colors": 16,
+        "speckle": 4,
+        "precision": 6,
+        "difference": 14,
+        "corner": 80,
+        "length": 4.5,
+        "median": 3
+      },
+      "alphaThreshold": 128,
+      "paths": 415,
+      "colours": 14,
+      "curves": 4526,
+      "bytes": 163872,
+      "silhouetteIoU": 0.9839534900792049,
+      "meanColorError": 0.026868091831188618,
+      "warnings": []
+    }
+  ],
+  "compass": {
+    "source": "source/compass.png",
+    "stats": {
+      "width": 322,
+      "height": 348,
+      "preset": "cel",
+      "settings": {
+        "colors": 6,
+        "speckle": 4,
+        "precision": 6,
+        "difference": 14,
+        "corner": 80,
+        "length": 4.5,
+        "median": 3,
+        "preserveDarkColors": true
+      },
+      "alphaThreshold": 128,
+      "paths": 223,
+      "colours": 14,
+      "curves": 2610,
+      "bytes": 92744,
+      "silhouetteIoU": 0.9679715302491103,
+      "meanColorError": 0.07471835681450062,
+      "warnings": [
+        "Silhouette changed noticeably; inspect small details or try the detail preset."
+      ]
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "tool": "Built-in GPT Image",
+  "prompt": "One tiny game animation sprite: compact rounded cartoony poof of smoke, a near-circular cloud burst with 5 big round organically uneven lobes, no horizontal cloud base. Single unified plump silhouette, NO detached particles. Flat ivory parchment fill, ONE very small muted taupe flat shadow lobe, consistent near-black charcoal ink outer outline with rounded hand-drawn curves. No internal swirl lines, no texture, no gradient, no shading realism, no text or symbols. Genuine transparent background. Centered isolated sprite with generous padding. This will be scaled to 28 pixels for a quick squashy selection puff on a sepia storybook map, so make the shape extremely simple and chunky. SVG-style flat vector art.",
+  "source": "source/selection-puff.png",
+  "output": "selection-puff.svg",
+  "pipeline": "Little Gods cel 4-colour reduction → palette mapping → baked SVG edge ink"
+}

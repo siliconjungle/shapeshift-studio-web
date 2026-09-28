@@ -1,0 +1,141 @@
+{
+  "generation_id": "1f1b5e75-8559-4317-a309-ba1817346dcb",
+  "duration": 1.82,
+  "file_size": 174764,
+  "encoding": {
+    "format": "wav",
+    "sample_rate": 48000
+  },
+  "snippets": [
+    [
+      {
+        "id": "2fc5aaf8-e3e0-402a-867d-123e27c341f1",
+        "text": "Mmm-bah. Noh vella.",
+        "generation_id": "2fc5aaf8-e3e0-402a-867d-123e27c341f1",
+        "utterance_index": 0,
+        "audio_format": "wav",
+        "timestamps": [
+          {
+            "type": "phoneme",
+            "text": "m",
+            "time": {
+              "begin": 260,
+              "end": 280
+            }
+          },
+          {
+            "type": "phoneme",
+            "text": "a",
+            "time": {
+              "begin": 380,
+              "end": 400
+            }
+          },
+          {
+            "type": "phoneme",
+            "text": "n",
+            "time": {
+              "begin": 1120,
+              "end": 1140
+            }
+          },
+          {
+            "type": "phoneme",
+            "text": "n",
+            "time": {
+              "begin": 1140,
+              "end": 1160
+            }
+          },
+          {
+            "type": "phoneme",
+            "text": "o",
+            "time": {
+              "begin": 1180,
+              "end": 1200
+            }
+          },
+          {
+            "type": "phoneme",
+            "text": "v",
+            "time": {
+              "begin": 1320,
+              "end": 1340
+            }
+          },
+          {
+            "type": "phoneme",
+            "text": "ɛ",
+            "time": {
+              "begin": 1380,
+              "end": 1400
+            }
+          },
+          {
+            "type": "phoneme",
+            "text": "l",
+            "time": {
+              "begin": 1500,
+              "end": 1520
+            }
+          },
+          {
+            "type": "phoneme",
+            "text": "a",
+            "time": {
+              "begin": 1560,
+              "end": 1580
+            }
+          },
+          {
+            "type": "word",
+            "text": "Mmm-bah.",
+            "time": {
+              "begin": 260,
+              "end": 1140
+            }
+          },
+          {
+            "type": "word",
+            "text": "Noh",
+            "time": {
+              "begin": 1140,
+              "end": 1200
+            }
+          },
+          {
+            "type": "word",
+            "text": "vella.",
+            "time": {
+              "begin": 1320,
+              "end": 1580
+            }
+          }
+        ],
+        "transcribed_text": null
+      }
+    ]
+  ],
+  "request": {
+    "version": "2",
+    "include_timestamp_types": [
+      "word",
+      "phoneme"
+    ],
+    "utterances": [
+      {
+        "text": "Mmm-bah. Noh vella.",
+        "voice": {
+          "id": "5bf306e9-a002-4d69-8554-25d19bc21183"
+        },
+        "speed": 1.13,
+        "trailing_silence": 0.06
+      }
+    ],
+    "split_utterances": false,
+    "format": {
+      "type": "wav"
+    },
+    "num_generations": 1
+  }
+}

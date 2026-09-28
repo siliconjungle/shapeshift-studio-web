@@ -1,59 +1,1112 @@
-import {downloadFile} from '../api/artifacts.js';
-import {trackTask,revisionGuard} from '../api/activity.js';
-import {artworkGuideSource,artworkGhosts,artworkMotionPaths} from './guides.js';
-import {studioTransport} from '../authoring/transport.js';
-import {mountColourPicker} from './colour-picker.js';
-import {importVector} from './import.js';
-import {sampleVector,pathData,anchors,movePoint,transformShape,shapeBounds,paintColor,svgText} from './model.js';
-import {renderVector} from './render.js';
-const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const uid=()=> 'path-'+crypto.randomUUID().slice(0,8);
-const solid=c=>/^#[\da-f]{6}$/i.test(c)?c:'#808080';
-export function mountArtwork({project,dispatch,revision,toast,workspace,preferredAsset,attachAsset}){
- const panel=document.createElement('section');panel.id='artwork-editor';panel.hidden=true;panel.setAttribute('aria-label','Vector artwork editor');document.body.append(panel);
- panel.innerHTML=`<header class="av-bar"><strong>Artwork</strong><select id="av-asset" aria-label="Artwork asset"></select><button id="av-new">New SVG</button><button id="av-export">Export SVG</button><button id="av-use">Add to puppet</button><span class="av-spacer"></span><label><input id="av-outline" type="checkbox"> Outline</label><button id="av-fit">Fit</button><output id="av-zoom">100%</output></header><div class="av-layout"><nav class="av-tools" aria-label="Artwork tools">${[['select','↖','Selection · V'],['direct','⇱','Direct selection · A'],['pen','⌁','Pen · P — click points, Enter to finish'],['rect','▭','Rectangle · M'],['ellipse','◯','Ellipse · L'],['hand','✥','Hand · H']].map(([id,icon,title])=>`<button data-av-tool="${id}" title="${title}" aria-label="${title}">${icon}</button>`).join('')}</nav><aside class="av-layers"><h3>Layers <span id="av-count"></span></h3><input id="av-search" placeholder="Find a path…" aria-label="Find a path"><div id="av-layers"></div><footer><button data-av-action="duplicate" title="Duplicate selected">⧉</button><button data-av-action="front" title="Bring to front">↑</button><button data-av-action="back" title="Send to back">↓</button><button data-av-action="delete" title="Delete selected">⌫</button></footer></aside><div class="av-stage"><canvas id="av-canvas" aria-label="SVG artboard — select paths and drag anchors"></canvas><div id="av-status" role="status"></div></div><aside class="av-properties"><nav class="av-tabs"><button data-av-tab="properties" class="active">Properties</button><button data-av-tab="colour">Colour</button></nav><div id="av-properties"></div></aside></div><section class="av-timeline"><header><button id="av-play" title="Play artwork animation · Space">▶</button><output id="av-time">0.00 s</output><label>Duration <input id="av-duration" type="number" min="0.1" max="600" step=".1" value="5"> s</label><label><input id="av-loop" type="checkbox"> Loop</label><span class="av-spacer"></span><label><input id="av-record" type="checkbox"> Auto-key</label><select id="av-easing" aria-label="Keyframe easing"><option value="smooth">Smooth</option><option value="linear">Linear</option><option value="step">Hold</option><option value="in-quad">Ease in</option><option value="out-quad">Ease out</option><option value="out-back">Overshoot</option><option value="out-elastic">Elastic</option></select><button id="av-key">◆ Key appearance & shape</button></header><input id="av-scrub" aria-label="Artwork playhead" type="range" min="0" max="5" step=".01" value="0"><div id="av-tracks"></div></section>`;
- const $=id=>panel.querySelector('#av-'+id);let assetId=null,selection=new Set(),tool='select',tab='properties',time=0,playing=false,zoom=1,pan={x:0,y:0},drag=null,scratch=null,pen=[],lastRevision=-1,dirty=true,activePoint=null,space=false,spacePanned=false,opening=0;const touches=new Map();let gesture=null;
- const guides={onion:false,arc:false};let guideCache=null;
- const canvas=$('canvas'),ctx=canvas.getContext('2d'),asset=()=>project().assets.find(a=>a.id===assetId),vector=()=>asset()?.vector,selected=()=>sampleVector(vector(),time).filter(s=>selection.has(s.id)),run=c=>{try{dispatch(c);lastRevision=-1;refresh();}catch(e){toast(e.message,true);}};
- const command=(op,rest={})=>({op:'vector.'+op,asset:assetId,ids:[...selection].filter(id=>!vector()?.shapes.find(s=>s.id===id)?.locked),...rest});
- function commitChanges(changes){if(!changes.length)return;const animated=$('record').checked;const commands=[];for(const [id,values]of changes){const keys={},base={};for(const [k,val]of Object.entries(values)){if(animated&&['fill','stroke','points','opacity','strokeWidth'].includes(k))keys[k]=val;else base[k]=val;}if(Object.keys(base).length)commands.push(command('update',{ids:[id],values:base}));for(const [channel,value]of Object.entries(keys))commands.push(command('key',{ids:[id],channel,time,value,easing:$('easing').value}));}run(commands);}
- function update(values){commitChanges(selected().filter(s=>!s.locked).map(s=>[s.id,values]));}
- function openAsset(...args){return trackTask(loadAsset(...args));}
- async function loadAsset(id){const ticket=++opening;playing=false;selection.clear();scratch=null;pen=[];time=0;assetId=id;dirty=true;const a=asset();if(!a)return refresh();try{if(!a.vector){$('status').textContent='Preparing editable paths…';const check=revisionGuard(revision),value=await importVector(a);if(ticket!==opening)return;check();dispatch(command('init',{value}));}lastRevision=-1;refresh();fit();}catch(e){$('status').textContent=e.message;toast(e.message,true);refresh();}}
- function assetList(){const opts=project().assets.filter(a=>a.vector||/\.svg(?:[?#]|$)|^data:image\/svg\+xml/i.test(a.src));$('asset').innerHTML=opts.map(a=>`<option value="${esc(a.id)}" ${a.id===assetId?'selected':''}>${esc(a.name??a.id)}</option>`).join('');return opts;}
- function fit(){const v=vector();if(!v)return;const r=canvas.getBoundingClientRect();zoom=Math.max(.01,Math.min((r.width-100)/v.viewBox[2],(r.height-100)/v.viewBox[3]));pan={x:(r.width-v.viewBox[2]*zoom)/2-v.viewBox[0]*zoom,y:(r.height-v.viewBox[3]*zoom)/2-v.viewBox[1]*zoom};dirty=true;}
- function position(e){const r=canvas.getBoundingClientRect();return{x:(e.clientX-r.left-pan.x)/zoom,y:(e.clientY-r.top-pan.y)/zoom};}
- function choose(id,extend=false){if(!extend)selection.clear();if(id){if(extend&&selection.has(id))selection.delete(id);else selection.add(id);}activePoint=null;dirty=true;refreshProperties();refreshLayers();refreshTracks();}
- function refreshLayers(){const v=vector();if(!v){$('layers').innerHTML='';return;}const q=$('search').value.toLowerCase();$('count').textContent=v.shapes.length;$('layers').innerHTML=[...v.shapes].reverse().filter(s=>s.name.toLowerCase().includes(q)).map(s=>`<div class="av-layer ${selection.has(s.id)?'active':''}" data-shape="${s.id}"><button data-visible="${s.id}" title="${s.hidden?'Show':'Hide'} path">${s.hidden?'−':'◉'}</button><button data-locked="${s.id}" title="${s.locked?'Unlock':'Lock'} path">${s.locked?'▣':'·'}</button><i style="background:${solid(paintColor(s.fill,v))}"></i><span>${esc(s.name)}</span></div>`).join('');}
- function refreshProperties(){const v=vector();if(!v){$('properties').innerHTML='<p>Select an SVG asset, or create a new one.</p>';return;}const shapes=selected(),s=shapes[0];if(!s){$('properties').innerHTML=`<section><h3>Document</h3><p>${v.viewBox[2]} × ${v.viewBox[3]} units</p><p>Select a path on the artboard or in Layers. Direct selection exposes its anchors and Bézier handles.</p><p>Shift adds to selection. Two fingers pan; pinch zooms.</p></section>`;return;}
- const b=shapeBounds(s),paint=(k)=>{const p=s[k],c=solid(paintColor(p,v));return`<div class="av-paint"><label>${k==='fill'?'Fill':'Stroke'}<input data-colour="${k}" aria-label="${k} colour" type="color" value="${c}"></label><input data-hex="${k}" aria-label="${k} hex" value="${typeof p==='string'?p:p?.swatch?c:'Gradient'}"><button data-none="${k}" title="No ${k}">∅</button><button data-eyedrop="${k}" title="Sample screen colour" ${!window.EyeDropper?'disabled':''}>⌾</button></div>`;};
- $('properties').innerHTML=`<section><h3>${shapes.length>1?shapes.length+' paths':esc(s.name)}</h3>${shapes.length===1?`<label class="field">Name<input data-property="name" value="${esc(s.name)}"></label>`:''}${tab==='properties'?`<h3>Transform</h3><div class="field-grid">${[['x',b.x],['y',b.y],['width',b.width],['height',b.height]].map(([k,n])=>`<label class="field">${k}<input data-transform="${k}" type="number" step="1" value="${n.toFixed(2)}"></label>`).join('')}</div><div class="button-row"><button data-transform-action="flipX">Flip H</button><button data-transform-action="flipY">Flip V</button><button data-transform-action="rotate">Rotate 90°</button></div><div class="button-row"><button data-align="x">Align left</button><button data-align="y">Align top</button></div>`:''}</section><section><h3>Appearance</h3>${tab==='colour'?'<div id="av-picker"></div>':''}${paint('fill')}${paint('stroke')}<div class="field-grid"><label class="field">Stroke width<input data-property="strokeWidth" type="number" min="0" max="10000" step=".5" value="${s.strokeWidth}"></label><label class="field">Opacity<input data-property="opacity" type="number" min="0" max="1" step=".05" value="${s.opacity}"></label></div><div class="button-row"><button id="av-swap">Swap fill / stroke</button><button id="av-same">Select same fill</button></div><label class="field">Fill type<select id="av-fill-type"><option value="solid">Solid</option><option value="linear" ${s.fill?.type==='linear'?'selected':''}>Linear gradient</option><option value="radial" ${s.fill?.type==='radial'?'selected':''}>Radial gradient</option></select></label>${s.fill?.type?`<div class="av-gradient">${s.fill.stops.map((stop,i)=>`<label>Stop ${i+1}<input type="color" data-stop="${i}" value="${stop.color}"></label>`).join('')}</div>`:''}</section><section><h3>Swatches</h3><div class="av-swatches">${v.swatches.map(w=>`<button data-swatch="${esc(w.id)}" title="${esc(w.name)} — linked fill" style="background:${w.color}" aria-label="${esc(w.name)}"></button>`).join('')}${[...new Set(v.shapes.flatMap(s=>[paintColor(s.fill,v),paintColor(s.stroke,v)]).filter(c=>c!=='none'))].slice(0,36).map(c=>`<button data-palette="${c}" title="${c}" style="background:${c}" aria-label="Fill ${c}"></button>`).join('')}</div><div class="button-row"><button id="av-add-swatch">＋ Save fill swatch</button>${s.fill?.swatch?'<label class="field">Linked swatch colour<input type="color" id="av-swatch-colour" value="'+solid(paintColor(s.fill,v))+'"></label>':''}</div></section><section><h3>Animation</h3><p>${$('record').checked?'Auto-key is on: edits key at '+time.toFixed(2)+' s.':'Edit the base artwork, or enable Auto-key to animate at the playhead.'}</p><p>Paths keep their anchors between shape keys. Appearance and shape play with the puppet’s clip time.</p>${activePoint!==null?`<p>Anchor / handle ${activePoint/2+1}</p>`:''}</section>`;
- if(tab==='colour')mountColourPicker($('picker'),{color:solid(paintColor(s.fill,v)),onPreview:c=>{scratch=c?{...v,shapes:sampleVector(v,time).map(s=>selection.has(s.id)&&!s.locked?{...s,fill:c}:s),tracks:[]}:null;dirty=true;},onCommit:c=>{scratch=null;update({fill:c});}});
- }
- function refreshTracks(){const v=vector();if(!v)return;$('tracks').innerHTML=v.tracks.filter(t=>!selection.size||selection.has(t.shape)).map(t=>`<div class="av-track"><span>${esc(v.shapes.find(s=>s.id===t.shape)?.name)} · ${t.channel}</span><div>${t.keys.map(k=>`<button data-key-shape="${t.shape}" data-channel="${t.channel}" data-time="${k.time}" style="left:${100*k.time/v.duration}%" title="${k.time.toFixed(2)} s · ${k.easing} — Alt-click to remove" aria-label="${t.channel} key at ${k.time}">◆</button>`).join('')}</div></div>`).join('')||'<p class="av-empty">No keys yet. Enable Auto-key, move the playhead, then change a colour or drag a point.</p>';}
- function refresh(){if(panel.hidden)return;assetList();const v=vector();if(v){$('duration').value=v.duration;$('scrub').max=v.duration;$('loop').checked=v.loop;selection=new Set([...selection].filter(id=>v.shapes.some(s=>s.id===id)));}refreshLayers();refreshProperties();refreshTracks();lastRevision=revision();dirty=true;}
- function drawGuides(v,phase){
-  if(!guides.onion&&!guides.arc)return;const key=[revision(),assetId,[...selection].join(',')].join(':');if(guideCache?.key!==key){const source=artworkGuideSource(v,[...selection]);guideCache={key,source,paths:null};}
-  ctx.save();if(guides.onion&&phase==='before')for(const ghost of artworkGhosts(guideCache.source,time)){ctx.fillStyle=ctx.strokeStyle=ghost.direction<0?'#609ce8':'#e49e58';ctx.lineWidth=1/zoom;for(const shape of ghost.shapes){ctx.globalAlpha=.2*shape.opacity;const path=new Path2D(pathData(shape));if(shape.fill!=='none')ctx.fill(path,shape.fillRule);ctx.globalAlpha=.6*shape.opacity;ctx.stroke(path);}}
-  if(guides.arc&&phase==='after'){guideCache.paths??=artworkMotionPaths(guideCache.source);ctx.globalAlpha=.8;ctx.strokeStyle=ctx.fillStyle='#438a87';ctx.lineWidth=1.2/zoom;for(const path of guideCache.paths){ctx.beginPath();path.points.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.stroke();path.points.forEach((p,i)=>{if(i%4)return;ctx.beginPath();ctx.arc(p.x,p.y,2/zoom,0,Math.PI*2);ctx.fill();});}}ctx.restore();
- }
- function draw(){const v=vector(),r=canvas.getBoundingClientRect(),dpr=Math.min(devicePixelRatio,2),w=Math.round(r.width*dpr),h=Math.round(r.height*dpr);if(canvas.width!==w)canvas.width=w;if(canvas.height!==h)canvas.height=h;ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);if(!v)return;ctx.save();ctx.translate(pan.x,pan.y);ctx.scale(zoom,zoom);ctx.shadowColor='#0005';ctx.shadowBlur=10/zoom;ctx.fillStyle='#fafafa';ctx.fillRect(...v.viewBox);ctx.shadowBlur=0;drawGuides(v,'before');renderVector(ctx,scratch??v,time,{outline:$('outline').checked});drawGuides(v,'after');ctx.lineWidth=1/zoom;ctx.strokeStyle='#64a0ff';const shapes=sampleVector(scratch??v,time);for(const s of shapes.filter(s=>selection.has(s.id)&&!s.hidden)){ctx.stroke(new Path2D(pathData(s)));if(tool==='direct'){for(const a of anchors(s)){for(const i of [a.incoming,a.outgoing])if(i!==null){ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(s.points[i],s.points[i+1]);ctx.stroke();ctx.fillStyle='#fafafa';ctx.beginPath();ctx.arc(s.points[i],s.points[i+1],3/zoom,0,Math.PI*2);ctx.fill();ctx.stroke();}ctx.fillStyle=activePoint===a.index?'#64a0ff':'#ffffff';ctx.fillRect(a.x-3/zoom,a.y-3/zoom,6/zoom,6/zoom);ctx.strokeRect(a.x-3/zoom,a.y-3/zoom,6/zoom,6/zoom);}}else{const b=shapeBounds(s);ctx.strokeRect(b.x,b.y,b.width,b.height);}}
- if(pen.length){ctx.beginPath();pen.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.stroke();}ctx.restore();$('zoom').textContent=Math.round(zoom*100)+'%';$('time').textContent=time.toFixed(2)+' s';$('scrub').value=time;$('play').textContent=playing?'Ⅱ':'▶';$('status').textContent=`${selection.size?selection.size+' selected · ':''}${tool==='direct'?'Drag anchors or handles · Shift mirrors handles':tool==='pen'?'Click to add points · Enter finishes · Escape cancels':'Shift to multi-select · two fingers pan · pinch zoom'}`;dirty=false;}
- function setTool(next){tool=next;pen=[];for(const b of panel.querySelectorAll('[data-av-tool]'))b.classList.toggle('active',b.dataset.avTool===next);dirty=true;}
- function hit(p){const v=vector(),ss=sampleVector(v,time);ctx.save();ctx.resetTransform();try{for(const s of [...ss].reverse()){if(s.locked||s.hidden)continue;const path=new Path2D(pathData(s));ctx.lineWidth=Math.max(s.strokeWidth,6/zoom);if(s.fill!=='none'&&ctx.isPointInPath(path,p.x,p.y,s.fillRule)||s.stroke!=='none'&&ctx.isPointInStroke(path,p.x,p.y))return s;}}finally{ctx.restore();}}
- function pointerHit(p){for(const s of selected().filter(s=>!s.locked)){for(const a of anchors(s)){for(const i of [a.incoming,a.outgoing,a.index])if(i!==null&&Math.hypot(s.points[i]-p.x,s.points[i+1]-p.y)<7/zoom)return{s,index:i,handle:i!==a.index};}}return null;}
- function scratchShapes(shapes){const v=vector(),map=new Map(shapes.map(s=>[s.id,s]));scratch={...v,shapes:sampleVector(v,time).map(s=>map.get(s.id)??s),tracks:[]};dirty=true;}
- function addShape(points,kind){const v=vector(),id=uid();let commands,p=points;const [a,b]=points;if(kind==='rect'){commands=['M','L','L','L','Z'];p=[a.x,a.y,b.x,a.y,b.x,b.y,a.x,b.y];}else if(kind==='ellipse'){const cx=(a.x+b.x)/2,cy=(a.y+b.y)/2,rx=Math.abs(a.x-b.x)/2,ry=Math.abs(a.y-b.y)/2,k=.55228475;commands=['M','C','C','C','C','Z'];p=[cx+rx,cy,cx+rx,cy+k*ry,cx+k*rx,cy+ry,cx,cy+ry,cx-k*rx,cy+ry,cx-rx,cy+k*ry,cx-rx,cy,cx-rx,cy-k*ry,cx-k*rx,cy-ry,cx,cy-ry,cx+k*rx,cy-ry,cx+rx,cy-k*ry,cx+rx,cy];}else{commands=points.map((_,i)=>i?'L':'M');commands.push('Z');p=points.flatMap(p=>[p.x,p.y]);}return{id,name:kind==='pen'?'Path':kind==='rect'?'Rectangle':'Ellipse',commands,points:p,fill:'#c9a96e',stroke:'#202020',strokeWidth:2,opacity:1,lineCap:'round',lineJoin:'round',fillRule:'nonzero',role:'literal',hidden:false,locked:false};}
- canvas.onpointerdown=e=>{if(!vector())return;canvas.setPointerCapture(e.pointerId);touches.set(e.pointerId,{x:e.clientX,y:e.clientY});if(touches.size===2){scratch=null;drag=null;const [a,b]=[...touches.values()];gesture={x:(a.x+b.x)/2,y:(a.y+b.y)/2,d:Math.hypot(a.x-b.x,a.y-b.y),zoom,pan:{...pan}};return;}playing=false;const p=position(e);if(tool==='hand'||space||e.button===1){drag={kind:'pan',x:e.clientX,y:e.clientY,pan:{...pan}};return;}if(tool==='pen'){pen.push(p);dirty=true;return;}if(['rect','ellipse'].includes(tool)){drag={kind:tool,p};return;}const point=tool==='direct'?pointerHit(p):null;if(point){activePoint=point.index;drag={kind:'point',...point,p};refreshProperties();return;}const found=hit(p);if(!found){choose(null,e.shiftKey);return;}if(!selection.has(found.id)||e.shiftKey)choose(found.id,e.shiftKey);drag={kind:'move',p,shapes:selected().filter(s=>!s.locked)};};
- canvas.onpointermove=e=>{if(touches.has(e.pointerId))touches.set(e.pointerId,{x:e.clientX,y:e.clientY});if(gesture&&touches.size===2){const [a,b]=[...touches.values()],r=canvas.getBoundingClientRect(),cx=(a.x+b.x)/2-r.left,cy=(a.y+b.y)/2-r.top,ratio=Math.hypot(a.x-b.x,a.y-b.y)/Math.max(1,gesture.d);zoom=Math.max(.02,Math.min(40,gesture.zoom*ratio));const scale=zoom/gesture.zoom;pan={x:cx-(gesture.x-r.left-gesture.pan.x)*scale,y:cy-(gesture.y-r.top-gesture.pan.y)*scale};dirty=true;return;}if(!drag)return;const p=position(e);if(drag.kind==='pan'){spacePanned=true;pan={x:drag.pan.x+e.clientX-drag.x,y:drag.pan.y+e.clientY-drag.y};dirty=true;}else if(drag.kind==='point'){scratchShapes([movePoint(drag.s,drag.index,p.x-drag.p.x,p.y-drag.p.y,{handle:drag.handle,mirror:e.shiftKey})]);}else if(drag.kind==='move'){scratchShapes(drag.shapes.map(s=>transformShape(s,{dx:p.x-drag.p.x,dy:p.y-drag.p.y})));}else{const s=addShape([drag.p,p],drag.kind);scratch={...vector(),shapes:[...sampleVector(vector(),time),s],tracks:[]};drag.newShape=s;dirty=true;}};
- function end(e,cancel=false){touches.delete(e.pointerId);if(gesture){if(!touches.size)gesture=null;return;}if(drag&&!cancel){if(drag.newShape){run(command('add',{value:drag.newShape}));choose(drag.newShape.id);}else if(scratch){const ids=drag.kind==='point'?[drag.s.id]:drag.shapes.map(s=>s.id);commitChanges(scratch.shapes.filter(s=>ids.includes(s.id)).map(s=>[s.id,{points:s.points}]));}}scratch=null;drag=null;dirty=true;}
- canvas.onpointerup=e=>end(e);canvas.onpointercancel=e=>end(e,true);
- canvas.addEventListener('wheel',e=>{e.preventDefault();const r=canvas.getBoundingClientRect();if(e.ctrlKey||e.metaKey){const next=Math.max(.02,Math.min(40,zoom*Math.exp(-e.deltaY*.012))),ratio=next/zoom,x=e.clientX-r.left,y=e.clientY-r.top;pan={x:x-(x-pan.x)*ratio,y:y-(y-pan.y)*ratio};zoom=next;}else{pan.x-=e.deltaX;pan.y-=e.deltaY;}dirty=true;},{passive:false});
- panel.onclick=async e=>{const el=e.target.closest('button');try{if(el?.dataset.avTool)setTool(el.dataset.avTool);if(el?.dataset.avTab){tab=el.dataset.avTab;panel.querySelectorAll('[data-av-tab]').forEach(b=>b.classList.toggle('active',b===el));refreshProperties();}if(el?.dataset.visible){run(command('update',{ids:[el.dataset.visible],values:{hidden:!vector().shapes.find(s=>s.id===el.dataset.visible).hidden}}));return;}if(el?.dataset.locked){run(command('update',{ids:[el.dataset.locked],values:{locked:!vector().shapes.find(s=>s.id===el.dataset.locked).locked}}));return;}const row=e.target.closest('[data-shape]');if(row)choose(row.dataset.shape,e.shiftKey);if(el?.dataset.avAction){const action=el.dataset.avAction;run(command(['front','back'].includes(action)?'order':action,{front:action==='front'}));}if(el?.dataset.none)update({[el.dataset.none]:'none'});if(el?.dataset.palette)update({fill:el.dataset.palette});if(el?.dataset.swatch)update({fill:$('record').checked?vector().swatches.find(w=>w.id===el.dataset.swatch).color:{swatch:el.dataset.swatch}});if(el?.dataset.eyedrop){try{const result=await new EyeDropper().open();update({[el.dataset.eyedrop]:result.sRGBHex});}catch(err){if(err.name!=='AbortError')throw err;}}if(el?.dataset.transformAction){const op=el.dataset.transformAction;commitChanges(selected().filter(s=>!s.locked).map(s=>{const b=shapeBounds(s),p=transformShape(s,{cx:b.x+b.width/2,cy:b.y+b.height/2,sx:op==='flipX'?-1:1,sy:op==='flipY'?-1:1,angle:op==='rotate'?Math.PI/2:0});return[s.id,{points:p.points}];}));}if(el?.dataset.align){const axis=el.dataset.align,shapes=selected(),min=Math.min(...shapes.map(s=>shapeBounds(s)[axis]));commitChanges(shapes.filter(s=>!s.locked).map(s=>[s.id,{points:transformShape(s,{[axis==='x'?'dx':'dy']:min-shapeBounds(s)[axis]}).points}]));}if(el?.dataset.keyShape){playing=false;time=+el.dataset.time;if(e.altKey)run(command('key',{ids:[el.dataset.keyShape],channel:el.dataset.channel,time,remove:true}));else{selection=new Set([el.dataset.keyShape]);refreshProperties();refreshLayers();dirty=true;}}if(el?.id==='av-swap')commitChanges(selected().map(s=>[s.id,{fill:s.stroke,stroke:s.fill}]));if(el?.id==='av-same'){const s=selected()[0];selection=new Set(sampleVector(vector(),time).filter(p=>!p.locked&&JSON.stringify(p.fill)===JSON.stringify(s.fill)).map(s=>s.id));refreshProperties();refreshLayers();refreshTracks();dirty=true;}if(el?.id==='av-add-swatch'){const color=paintColor(selected()[0].fill,vector()),id='swatch-'+crypto.randomUUID().slice(0,6);run(command('swatch',{id,values:{name:'Swatch '+(vector().swatches.length+1),color}}));}if(el?.id==='av-edit-swatch'){const s=selected()[0],id=s.fill.swatch;const c=panel.querySelector('[data-colour="fill"]');run(command('swatch',{id,values:{color:c.value}}));}if(el?.id==='av-fit')fit();if(el?.id==='av-play'){if(time>=vector().duration)time=0;playing=!playing;dirty=true;}if(el?.id==='av-key'){const commands=[];for(const s of selected().filter(s=>!s.locked))for(const channel of ['fill','stroke','opacity','strokeWidth','points']){if(['fill','stroke'].includes(channel)&&s[channel]?.type)continue;commands.push(command('key',{ids:[s.id],channel,time,value:['fill','stroke'].includes(channel)?paintColor(s[channel],vector()):s[channel],easing:$('easing').value}));}run(commands);}if(el?.id==='av-export'){downloadFile(svgText(vector(),time),(asset().name??assetId)+'.svg','image/svg+xml');}if(el?.id==='av-use'){attachAsset?.(assetId,vector().viewBox);toast('Artwork added to the puppet.');}if(el?.id==='av-new'){const id='artwork-'+crypto.randomUUID().slice(0,8);run({op:'vector.create',id,src:'data:image/svg+xml,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect x="128" y="128" width="256" height="256" rx="32" fill="#c9a96e" stroke="#202020" stroke-width="8"/></svg>')});await openAsset(id);}}catch(err){toast(err.message,true);}};
- panel.onchange=e=>{const el=e.target;try{if(el.id==='av-swatch-colour'){run(command('swatch',{id:selected()[0].fill.swatch,values:{color:el.value}}));}else if(el.id==='av-asset')openAsset(el.value);else if(el.id==='av-duration'||el.id==='av-loop'){run(command('settings',{values:{duration:+$('duration').value,loop:$('loop').checked}}));time=Math.min(time,vector().duration);}else if(el.id==='av-record')refreshProperties();else if(el.dataset.colour||el.dataset.hex){const k=el.dataset.colour??el.dataset.hex;update({[k]:el.value.toLowerCase()});}else if(el.dataset.property)update({[el.dataset.property]:el.dataset.property==='name'?el.value:+el.value});else if(el.dataset.transform){const k=el.dataset.transform,n=+el.value;commitChanges(selected().filter(s=>!s.locked).map(s=>{const b=shapeBounds(s),t=k==='x'?{dx:n-b.x}:k==='y'?{dy:n-b.y}:k==='width'?{sx:n/(b.width||1),cx:b.x}:{sy:n/(b.height||1),cy:b.y};return[s.id,{points:transformShape(s,t).points}];}));}else if(el.id==='av-fill-type'){if($('record').checked&&el.value!=='solid')throw Error('Gradient changes edit the base artwork. Turn off Auto-key first.');update({fill:el.value==='solid'?'#c9a96e':{type:el.value,units:'objectBoundingBox',x1:el.value==='radial'?.5:0,y1:.5,x2:el.value==='radial'?.5:1,y2:.5,stops:[{offset:0,color:'#ead7a9',opacity:1},{offset:1,color:'#94714a',opacity:1}]}});}else if(el.dataset.stop){const fill=structuredClone(selected()[0].fill);fill.stops[+el.dataset.stop].color=el.value;update({fill});}dirty=true;}catch(err){toast(err.message,true);refreshProperties();}};
- $('search').oninput=refreshLayers;$('scrub').oninput=()=>{playing=false;time=+$('scrub').value;dirty=true;refreshProperties();};$('outline').onchange=()=>dirty=true;
- document.addEventListener('keydown',e=>{if(panel.hidden||e.target.matches('input,select,textarea')||e.target.isContentEditable)return;if(e.metaKey||e.ctrlKey)return;const k=e.key.toLowerCase();if(['v','a','p','m','l','h'].includes(k)){e.preventDefault();setTool({v:'select',a:'direct',p:'pen',m:'rect',l:'ellipse',h:'hand'}[k]);}if(e.code==='Space'){e.preventDefault();if(!e.repeat)spacePanned=false;space=true;}if(k==='f')fit();if(k==='escape'){scratch=null;drag=null;pen=[];dirty=true;}if(k==='enter'&&pen.length>=3){const shape=addShape(pen,'pen');run(command('add',{value:shape}));pen=[];choose(shape.id);}if(k==='delete'||k==='backspace'){e.preventDefault();run(command('delete'));}if(k==='arrowleft'||k==='arrowright'){e.preventDefault();playing=false;time=Math.max(0,Math.min(vector().duration,time+(k==='arrowright'?1:-1)/24));dirty=true;refreshProperties();}},true);
- document.addEventListener('keyup',e=>{if(panel.hidden)return;if(e.code==='Space'){if(!space)return;space=false;if(!spacePanned)$('play').click();}});window.addEventListener('blur',()=>{space=false;drag=null;scratch=null;touches.clear();gesture=null;dirty=true;});
- new ResizeObserver(()=>dirty=true).observe(canvas);let last=performance.now();function frame(now){const dt=Math.min(.1,(now-last)/1000);last=now;if(!panel.hidden){if(lastRevision!==revision()&&!drag)refresh();if(playing&&vector()){const advance=studioTransport.advance('art:'+assetId,time,dt,vector());time=advance.time;if(advance.ended)playing=false;dirty=true;}if(dirty)draw();}requestAnimationFrame(frame);}requestAnimationFrame(frame);setTool('select');
- const api={async show(){panel.hidden=false;document.body.classList.add('artwork-open');const list=assetList(),preferred=preferredAsset?.(),id=list.some(a=>a.id===preferred)?preferred:assetId??list[0]?.id;if(id)await openAsset(id);else refresh();},hide(){panel.hidden=true;document.body.classList.remove('artwork-open');playing=false;drag=null;scratch=null;},openAsset,async restore(state){const id=project().assets.some(a=>a.id===state.asset)?state.asset:assetList()[0]?.id;if(!id)return;await openAsset(id);time=Math.max(0,Math.min(vector()?.duration??0,state.time??0));selection=new Set((state.selection??[]).filter(id=>vector()?.shapes.some(s=>s.id===id)));if(state.pan)pan={...state.pan};if(Number.isFinite(state.zoom))zoom=state.zoom;tool=state.tool??'select';Object.assign(guides,state.guides??{});dirty=true;refresh();},seek(t){time=Math.max(0,Math.min(vector().duration,t));playing=false;dirty=true;refreshProperties();},select(id){choose(id);},review(kind){if(kind==='ghosts')guides.onion=!guides.onion;else if(kind==='arc')guides.arc=!guides.arc;dirty=true;return {...guides};},playback({playing:next}){if(!vector())throw Error('Open artwork first');if(time>=vector().duration)time=0;playing=!!next;dirty=true;},snapshot:()=>({asset:assetId,selection:[...selection],time,tool,zoom,pan,playing,guides:{...guides}}),fit};workspace.register('artwork','Artwork',api);return api;
+import { downloadFile } from '../api/artifacts.js';
+import { trackTask, revisionGuard } from '../api/activity.js';
+import { artworkGuideSource, artworkGhosts, artworkMotionPaths } from './guides.js';
+import { studioTransport } from '../authoring/transport.js';
+import { mountColourPicker } from './colour-picker.js';
+import { importVector } from './import.js';
+import {
+  sampleVector,
+  pathData,
+  anchors,
+  movePoint,
+  transformShape,
+  shapeBounds,
+  paintColor,
+  svgText,
+  VECTOR_CHANNELS,
+  vectorValue,
+} from './model.js';
+import { renderVector, vectorClipContains, vectorStrokeContains } from './render.js';
+const esc = (x) =>
+  String(x ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+const uid = () => 'path-' + crypto.randomUUID().slice(0, 8);
+const solid = (c) => (/^#[\da-f]{6}$/i.test(c) ? c : '#808080');
+export function mountArtwork({ project, dispatch, revision, toast, workspace, preferredAsset, attachAsset }) {
+  const panel = document.createElement('section');
+  panel.id = 'artwork-editor';
+  panel.hidden = true;
+  panel.setAttribute('aria-label', 'Vector artwork editor');
+  document.body.append(panel);
+  panel.innerHTML = `<header class="av-bar"><strong>Artwork</strong><select id="av-asset" aria-label="Artwork asset"></select><button id="av-new">New SVG</button><button id="av-export">Export SVG</button><button id="av-use">Add to puppet</button><span class="av-spacer"></span><label><input id="av-outline" type="checkbox"> Outline</label><button id="av-fit">Fit</button><output id="av-zoom">100%</output></header><div class="av-layout"><nav class="av-tools" aria-label="Artwork tools">${[
+    ['select', '↖', 'Selection · V'],
+    ['direct', '⇱', 'Direct selection · A'],
+    ['pen', '⌁', 'Pen · P — click points, Enter to finish'],
+    ['rect', '▭', 'Rectangle · M'],
+    ['ellipse', '◯', 'Ellipse · L'],
+    ['hand', '✥', 'Hand · H'],
+  ]
+    .map(([id, icon, title]) => `<button data-av-tool="${id}" title="${title}" aria-label="${title}">${icon}</button>`)
+    .join(
+      '',
+    )}</nav><aside class="av-layers"><h3>Layers <span id="av-count"></span></h3><input id="av-search" placeholder="Find a path…" aria-label="Find a path"><div id="av-layers"></div><footer><button data-av-action="duplicate" title="Duplicate selected">⧉</button><button data-av-action="front" title="Bring to front">↑</button><button data-av-action="back" title="Send to back">↓</button><button data-av-action="delete" title="Delete selected">⌫</button></footer></aside><div class="av-stage"><canvas id="av-canvas" aria-label="SVG artboard — select paths and drag anchors"></canvas><div id="av-status" role="status"></div></div><aside class="av-properties"><nav class="av-tabs"><button data-av-tab="properties" class="active">Properties</button><button data-av-tab="colour">Colour</button></nav><div id="av-properties"></div></aside></div><section class="av-timeline"><header><button id="av-play" title="Play artwork animation · Space">▶</button><output id="av-time">0.00 s</output><label>Duration <input id="av-duration" type="number" min="0.1" max="600" step=".1" value="5"> s</label><label><input id="av-loop" type="checkbox"> Loop</label><span class="av-spacer"></span><label><input id="av-record" type="checkbox"> Auto-key</label><select id="av-easing" aria-label="Keyframe easing"><option value="smooth">Smooth</option><option value="linear">Linear</option><option value="step">Hold</option><option value="in-quad">Ease in</option><option value="out-quad">Ease out</option><option value="out-back">Overshoot</option><option value="out-elastic">Elastic</option></select><button id="av-key">◆ Key appearance & shape</button></header><input id="av-scrub" aria-label="Artwork playhead" type="range" min="0" max="5" step=".01" value="0"><div id="av-tracks"></div></section>`;
+  const $ = (id) => panel.querySelector('#av-' + id);
+  let assetId = null,
+    selection = new Set(),
+    tool = 'select',
+    tab = 'properties',
+    time = 0,
+    playing = false,
+    zoom = 1,
+    pan = { x: 0, y: 0 },
+    drag = null,
+    scratch = null,
+    pen = [],
+    lastRevision = -1,
+    dirty = true,
+    activePoint = null,
+    space = false,
+    spacePanned = false,
+    opening = 0,
+    clipPicking = null;
+  const touches = new Map();
+  let gesture = null;
+  const guides = { onion: false, arc: false };
+  let guideCache = null;
+  const canvas = $('canvas'),
+    ctx = canvas.getContext('2d'),
+    asset = () => project().assets.find((a) => a.id === assetId),
+    vector = () => asset()?.vector,
+    selected = () => sampleVector(vector(), time).filter((s) => selection.has(s.id)),
+    run = (c) => {
+      try {
+        dispatch(c);
+        lastRevision = -1;
+        refresh();
+      } catch (e) {
+        toast(e.message, true);
+      }
+    };
+  const command = (op, rest = {}) => ({
+    op: 'vector.' + op,
+    asset: assetId,
+    ids: [...selection].filter((id) => !vector()?.shapes.find((s) => s.id === id)?.locked),
+    ...rest,
+  });
+  function commitChanges(changes) {
+    if (!changes.length) return;
+    const animated = $('record').checked;
+    const commands = [];
+    for (const [id, values] of changes) {
+      const keys = {},
+        base = {};
+      for (const [k, val] of Object.entries(values)) {
+        if (animated && VECTOR_CHANNELS.includes(k)) keys[k] = val;
+        else base[k] = val;
+      }
+      if (Object.keys(base).length) commands.push(command('update', { ids: [id], values: base }));
+      for (const [channel, value] of Object.entries(keys))
+        commands.push(command('key', { ids: [id], channel, time, value, easing: $('easing').value }));
+    }
+    run(commands);
+  }
+  function update(values) {
+    commitChanges(
+      selected()
+        .filter((s) => !s.locked)
+        .map((s) => [s.id, values]),
+    );
+  }
+  function openAsset(...args) {
+    return trackTask(loadAsset(...args));
+  }
+  async function loadAsset(id) {
+    const ticket = ++opening;
+    playing = false;
+    clipPicking = null;
+    panel.classList.remove('av-picking-clip');
+    selection.clear();
+    scratch = null;
+    pen = [];
+    time = 0;
+    assetId = id;
+    dirty = true;
+    const a = asset();
+    if (!a) return refresh();
+    try {
+      if (!a.vector) {
+        $('status').textContent = 'Preparing editable paths…';
+        const check = revisionGuard(revision),
+          value = await importVector(a);
+        if (ticket !== opening) return;
+        check();
+        dispatch(command('init', { value }));
+      }
+      lastRevision = -1;
+      refresh();
+      fit();
+    } catch (e) {
+      $('status').textContent = e.message;
+      toast(e.message, true);
+      refresh();
+    }
+  }
+  function assetList() {
+    const opts = project().assets.filter((a) => a.vector || /\.svg(?:[?#]|$)|^data:image\/svg\+xml/i.test(a.src));
+    $('asset').innerHTML = opts
+      .map((a) => `<option value="${esc(a.id)}" ${a.id === assetId ? 'selected' : ''}>${esc(a.name ?? a.id)}</option>`)
+      .join('');
+    return opts;
+  }
+  function fit() {
+    const v = vector();
+    if (!v) return;
+    const r = canvas.getBoundingClientRect();
+    zoom = Math.max(0.01, Math.min((r.width - 100) / v.viewBox[2], (r.height - 100) / v.viewBox[3]));
+    pan = {
+      x: (r.width - v.viewBox[2] * zoom) / 2 - v.viewBox[0] * zoom,
+      y: (r.height - v.viewBox[3] * zoom) / 2 - v.viewBox[1] * zoom,
+    };
+    dirty = true;
+  }
+  function position(e) {
+    const r = canvas.getBoundingClientRect();
+    return { x: (e.clientX - r.left - pan.x) / zoom, y: (e.clientY - r.top - pan.y) / zoom };
+  }
+  function choose(id, extend = false) {
+    if (clipPicking && id) {
+      pickClip(id);
+      return;
+    }
+    if (!extend) selection.clear();
+    if (id) {
+      if (extend && selection.has(id)) selection.delete(id);
+      else selection.add(id);
+    }
+    activePoint = null;
+    dirty = true;
+    refreshProperties();
+    refreshLayers();
+    refreshTracks();
+  }
+  function refreshLayers() {
+    const v = vector();
+    if (!v) {
+      $('layers').innerHTML = '';
+      return;
+    }
+    const q = $('search').value.toLowerCase();
+    $('count').textContent = v.shapes.length;
+    $('layers').innerHTML = [...v.shapes]
+      .reverse()
+      .filter((s) => s.name.toLowerCase().includes(q))
+      .map(
+        (s) =>
+          `<div class="av-layer ${selection.has(s.id) ? 'active' : ''}" data-shape="${s.id}"><button data-visible="${s.id}" title="${s.hidden ? 'Show' : 'Hide'} path">${s.hidden ? '−' : '◉'}</button><button data-locked="${s.id}" title="${s.locked ? 'Unlock' : 'Lock'} path">${s.locked ? '▣' : '·'}</button><i style="background:${solid(paintColor(s.fill, v))}"></i><span>${esc(s.name)}</span></div>`,
+      )
+      .join('');
+  }
+  function pickClip(source) {
+    if (!clipPicking) return;
+    if (clipPicking.includes(source)) {
+      toast('Choose a different shape as the clipping source.', true);
+      return;
+    }
+    const ids = clipPicking;
+    clipPicking = null;
+    panel.classList.remove('av-picking-clip');
+    run(command('clip', { ids, source, hideSource: true }));
+  }
+  function clippingProperties(shapes) {
+    const v = vector(),
+      sources = [...new Set(shapes.flatMap((s) => (s.clips ?? []).map((c) => c.source)))];
+    return `<section><h3>Clipping <button id="av-clip-pick" aria-label="Pick clipping source" title="Pick a shape on the artboard or in Layers">＋</button></h3>
+   ${clipPicking ? '<p>Pick a source on the artboard or in Layers. Escape cancels.</p><button id="av-clip-cancel">Cancel picking</button>' : ''}
+   ${sources
+     .map((id) => {
+       const clips = shapes.flatMap((s) => (s.clips ?? []).filter((c) => c.source === id)),
+         c = clips[0],
+         mixed = clips.some((x) => x.rule !== c.rule || !!x.inverse !== !!c.inverse);
+       return `<div class="av-clip-row"><strong>${esc(v.shapes.find((s) => s.id === id)?.name)}</strong><button data-clip-select="${esc(id)}" title="Select clipping source">Edit</button><button data-clip-remove="${esc(id)}" aria-label="Remove clipping source ${esc(v.shapes.find((s) => s.id === id)?.name)}">×</button><label class="field">Operation<select data-clip-operation="${esc(id)}">${mixed ? '<option value="mixed">Mixed</option>' : ''}<option value="nonzero" ${!mixed && !c.inverse && c.rule === 'nonzero' ? 'selected' : ''}>Inside · Non-zero</option><option value="evenodd" ${!mixed && !c.inverse && c.rule === 'evenodd' ? 'selected' : ''}>Inside · Even-odd</option><option value="outside" ${!mixed && c.inverse ? 'selected' : ''}>Outside · Even-odd</option></select></label>${clips.length < shapes.length ? '<small>Applied to some selected paths</small>' : ''}</div>`;
+     })
+     .join('')}
+   <label class="field">Source shape<select id="av-clip-source" aria-label="Clipping source"><option value="">Choose a shape…</option>${v.shapes
+     .filter((s) => !selection.has(s.id))
+     .map((s) => `<option value="${esc(s.id)}">${esc(s.name)}${s.hidden ? ' (hidden)' : ''}</option>`)
+     .join('')}</select></label>
+   <button id="av-clip-add">Add clipping path</button><p>Applies to every selected unlocked path. New sources are hidden; their geometry stays editable and animatable. Multiple clips intersect.</p></section>`;
+  }
+  function trimProperties(shapes) {
+    const s = shapes[0],
+      mode = s.trimMode ?? 'off',
+      mixed = shapes.some((p) => (p.trimMode ?? 'off') !== mode);
+    return `<section><h3>Trim Path</h3><label class="field">Mode<select data-property="trimMode" aria-label="Trim path mode">${mixed ? '<option value="" selected disabled>Mixed</option>' : ''}${[
+      ['off', 'Off'],
+      ['sequential', 'Sequential'],
+      ['synced', 'Synced'],
+    ]
+      .map(([id, label]) => `<option value="${id}" ${!mixed && mode === id ? 'selected' : ''}>${label}</option>`)
+      .join('')}</select></label>
+   ${
+     mode !== 'off' || mixed
+       ? `<div class="field-grid">${[
+           ['trimStart', 'Start'],
+           ['trimEnd', 'End'],
+           ['trimOffset', 'Offset'],
+         ]
+           .map(([key, label]) => {
+             const value = vectorValue(s, key),
+               different = shapes.some((p) => vectorValue(p, key) !== value);
+             return `<label class="field">${label} %<input data-trim="${key}" aria-label="Trim ${label.toLowerCase()} percent" type="number" step="1" min="${key === 'trimOffset' ? -1000000 : 0}" max="${key === 'trimOffset' ? 1000000 : 100}" value="${different ? '' : Number((value * 100).toFixed(3))}" placeholder="Mixed"></label>`;
+           })
+           .join(
+             '',
+           )}</div><label class="field">Stroke cap<select data-property="lineCap" aria-label="Stroke cap">${['butt', 'round', 'square'].map((cap) => `<option value="${cap}" ${s.lineCap === cap ? 'selected' : ''}>${cap === 'butt' ? 'Butt' : cap === 'round' ? 'Round' : 'Square'}</option>`).join('')}</select></label><button id="av-trim-key">◆ Key trim</button><p>Sequential follows subpaths in order. Synced trims each subpath together. Offset wraps every 100%.</p>${shapes.every((p) => p.stroke === 'none' || p.strokeWidth === 0) ? '<p>Add a stroke to see trimming. The fill stays unchanged.</p>' : ''}`
+       : ''
+   }</section>`;
+  }
+  function refreshProperties() {
+    const v = vector();
+    if (!v) {
+      $('properties').innerHTML = '<p>Select an SVG asset, or create a new one.</p>';
+      return;
+    }
+    const shapes = selected(),
+      s = shapes[0];
+    if (!s) {
+      $('properties').innerHTML =
+        `<section><h3>Document</h3><p>${v.viewBox[2]} × ${v.viewBox[3]} units</p><p>Select a path on the artboard or in Layers. Direct selection exposes its anchors and Bézier handles.</p><p>Shift adds to selection. Two fingers pan; pinch zooms.</p></section>`;
+      return;
+    }
+    const b = shapeBounds(s),
+      paint = (k) => {
+        const p = s[k],
+          c = solid(paintColor(p, v));
+        return `<div class="av-paint"><label>${k === 'fill' ? 'Fill' : 'Stroke'}<input data-colour="${k}" aria-label="${k} colour" type="color" value="${c}"></label><input data-hex="${k}" aria-label="${k} hex" value="${typeof p === 'string' ? p : p?.swatch ? c : 'Gradient'}"><button data-none="${k}" title="No ${k}">∅</button><button data-eyedrop="${k}" title="Sample screen colour" ${!window.EyeDropper ? 'disabled' : ''}>⌾</button></div>`;
+      };
+    $('properties').innerHTML =
+      `<section><h3>${shapes.length > 1 ? shapes.length + ' paths' : esc(s.name)}</h3>${shapes.length === 1 ? `<label class="field">Name<input data-property="name" value="${esc(s.name)}"></label>` : ''}${
+        tab === 'properties'
+          ? `<h3>Transform</h3><div class="field-grid">${[
+              ['x', b.x],
+              ['y', b.y],
+              ['width', b.width],
+              ['height', b.height],
+            ]
+              .map(
+                ([k, n]) =>
+                  `<label class="field">${k}<input data-transform="${k}" type="number" step="1" value="${n.toFixed(2)}"></label>`,
+              )
+              .join(
+                '',
+              )}</div><div class="button-row"><button data-transform-action="flipX">Flip H</button><button data-transform-action="flipY">Flip V</button><button data-transform-action="rotate">Rotate 90°</button></div><div class="button-row"><button data-align="x">Align left</button><button data-align="y">Align top</button></div>`
+          : ''
+      }</section><section><h3>Appearance</h3>${tab === 'colour' ? '<div id="av-picker"></div>' : ''}${paint('fill')}${paint('stroke')}<div class="field-grid"><label class="field">Stroke width<input data-property="strokeWidth" type="number" min="0" max="10000" step=".5" value="${s.strokeWidth}"></label><label class="field">Opacity<input data-property="opacity" type="number" min="0" max="1" step=".05" value="${s.opacity}"></label></div><div class="button-row"><button id="av-swap">Swap fill / stroke</button><button id="av-same">Select same fill</button></div><label class="field">Fill type<select id="av-fill-type"><option value="solid">Solid</option><option value="linear" ${s.fill?.type === 'linear' ? 'selected' : ''}>Linear gradient</option><option value="radial" ${s.fill?.type === 'radial' ? 'selected' : ''}>Radial gradient</option></select></label>${s.fill?.type ? `<div class="av-gradient">${s.fill.stops.map((stop, i) => `<label>Stop ${i + 1}<input type="color" data-stop="${i}" value="${stop.color}"></label>`).join('')}</div>` : ''}</section>${trimProperties(shapes)}${clippingProperties(shapes)}<section><h3>Swatches</h3><div class="av-swatches">${v.swatches.map((w) => `<button data-swatch="${esc(w.id)}" title="${esc(w.name)} — linked fill" style="background:${w.color}" aria-label="${esc(w.name)}"></button>`).join('')}${[
+        ...new Set(v.shapes.flatMap((s) => [paintColor(s.fill, v), paintColor(s.stroke, v)]).filter((c) => c !== 'none')),
+      ]
+        .slice(0, 36)
+        .map((c) => `<button data-palette="${c}" title="${c}" style="background:${c}" aria-label="Fill ${c}"></button>`)
+        .join(
+          '',
+        )}</div><div class="button-row"><button id="av-add-swatch">＋ Save fill swatch</button>${s.fill?.swatch ? '<label class="field">Linked swatch colour<input type="color" id="av-swatch-colour" value="' + solid(paintColor(s.fill, v)) + '"></label>' : ''}</div></section><section><h3>Animation</h3><p>${$('record').checked ? 'Auto-key is on: edits key at ' + time.toFixed(2) + ' s.' : 'Edit the base artwork, or enable Auto-key to animate at the playhead.'}</p><p>Paths keep their anchors between shape keys. Appearance and shape play with the puppet’s clip time.</p>${activePoint !== null ? `<p>Anchor / handle ${activePoint / 2 + 1}</p>` : ''}</section>`;
+    if (tab === 'colour')
+      mountColourPicker($('picker'), {
+        color: solid(paintColor(s.fill, v)),
+        onPreview: (c) => {
+          scratch = c
+            ? {
+                ...v,
+                shapes: sampleVector(v, time).map((s) => (selection.has(s.id) && !s.locked ? { ...s, fill: c } : s)),
+                tracks: [],
+              }
+            : null;
+          dirty = true;
+        },
+        onCommit: (c) => {
+          scratch = null;
+          update({ fill: c });
+        },
+      });
+  }
+  function refreshTracks() {
+    const v = vector();
+    if (!v) return;
+    $('tracks').innerHTML =
+      v.tracks
+        .filter((t) => !selection.size || selection.has(t.shape))
+        .map(
+          (t) =>
+            `<div class="av-track"><span>${esc(v.shapes.find((s) => s.id === t.shape)?.name)} · ${t.channel}</span><div>${t.keys.map((k) => `<button data-key-shape="${t.shape}" data-channel="${t.channel}" data-time="${k.time}" style="left:${(100 * k.time) / v.duration}%" title="${k.time.toFixed(2)} s · ${k.easing} — Alt-click to remove" aria-label="${t.channel} key at ${k.time}">◆</button>`).join('')}</div></div>`,
+        )
+        .join('') ||
+      '<p class="av-empty">No keys yet. Enable Auto-key, move the playhead, then change a colour or drag a point.</p>';
+  }
+  function refresh() {
+    if (panel.hidden) return;
+    assetList();
+    const v = vector();
+    if (v) {
+      $('duration').value = v.duration;
+      $('scrub').max = v.duration;
+      $('loop').checked = v.loop;
+      selection = new Set([...selection].filter((id) => v.shapes.some((s) => s.id === id)));
+    }
+    refreshLayers();
+    refreshProperties();
+    refreshTracks();
+    lastRevision = revision();
+    dirty = true;
+  }
+  function drawGuides(v, phase) {
+    if (!guides.onion && !guides.arc) return;
+    const key = [revision(), assetId, [...selection].join(',')].join(':');
+    if (guideCache?.key !== key) {
+      const source = artworkGuideSource(v, [...selection]);
+      guideCache = { key, source, paths: null };
+    }
+    ctx.save();
+    if (guides.onion && phase === 'before')
+      for (const ghost of artworkGhosts(guideCache.source, time)) {
+        ctx.fillStyle = ctx.strokeStyle = ghost.direction < 0 ? '#609ce8' : '#e49e58';
+        ctx.lineWidth = 1 / zoom;
+        for (const shape of ghost.shapes) {
+          ctx.globalAlpha = 0.2 * shape.opacity;
+          const path = new Path2D(pathData(shape));
+          if (shape.fill !== 'none') ctx.fill(path, shape.fillRule);
+          ctx.globalAlpha = 0.6 * shape.opacity;
+          ctx.stroke(path);
+        }
+      }
+    if (guides.arc && phase === 'after') {
+      guideCache.paths ??= artworkMotionPaths(guideCache.source);
+      ctx.globalAlpha = 0.8;
+      ctx.strokeStyle = ctx.fillStyle = '#438a87';
+      ctx.lineWidth = 1.2 / zoom;
+      for (const path of guideCache.paths) {
+        ctx.beginPath();
+        path.points.forEach((p, i) => (i ? ctx.lineTo(p.x, p.y) : ctx.moveTo(p.x, p.y)));
+        ctx.stroke();
+        path.points.forEach((p, i) => {
+          if (i % 4) return;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, 2 / zoom, 0, Math.PI * 2);
+          ctx.fill();
+        });
+      }
+    }
+    ctx.restore();
+  }
+  function draw() {
+    const v = vector(),
+      r = canvas.getBoundingClientRect(),
+      dpr = Math.min(devicePixelRatio, 2),
+      w = Math.round(r.width * dpr),
+      h = Math.round(r.height * dpr);
+    if (canvas.width !== w) canvas.width = w;
+    if (canvas.height !== h) canvas.height = h;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, w, h);
+    if (!v) return;
+    ctx.save();
+    ctx.translate(pan.x, pan.y);
+    ctx.scale(zoom, zoom);
+    ctx.shadowColor = '#0005';
+    ctx.shadowBlur = 10 / zoom;
+    ctx.fillStyle = '#fafafa';
+    ctx.fillRect(...v.viewBox);
+    ctx.shadowBlur = 0;
+    drawGuides(v, 'before');
+    renderVector(ctx, scratch ?? v, time, { outline: $('outline').checked });
+    drawGuides(v, 'after');
+    ctx.lineWidth = 1 / zoom;
+    ctx.strokeStyle = '#64a0ff';
+    const shapes = sampleVector(scratch ?? v, time);
+    for (const s of shapes.filter((s) => selection.has(s.id))) {
+      ctx.stroke(new Path2D(pathData(s)));
+      if (tool === 'direct') {
+        for (const a of anchors(s)) {
+          for (const i of [a.incoming, a.outgoing])
+            if (i !== null) {
+              ctx.beginPath();
+              ctx.moveTo(a.x, a.y);
+              ctx.lineTo(s.points[i], s.points[i + 1]);
+              ctx.stroke();
+              ctx.fillStyle = '#fafafa';
+              ctx.beginPath();
+              ctx.arc(s.points[i], s.points[i + 1], 3 / zoom, 0, Math.PI * 2);
+              ctx.fill();
+              ctx.stroke();
+            }
+          ctx.fillStyle = activePoint === a.index ? '#64a0ff' : '#ffffff';
+          ctx.fillRect(a.x - 3 / zoom, a.y - 3 / zoom, 6 / zoom, 6 / zoom);
+          ctx.strokeRect(a.x - 3 / zoom, a.y - 3 / zoom, 6 / zoom, 6 / zoom);
+        }
+      } else {
+        const b = shapeBounds(s);
+        ctx.strokeRect(b.x, b.y, b.width, b.height);
+      }
+    }
+    if (pen.length) {
+      ctx.beginPath();
+      pen.forEach((p, i) => (i ? ctx.lineTo(p.x, p.y) : ctx.moveTo(p.x, p.y)));
+      ctx.stroke();
+    }
+    ctx.restore();
+    $('zoom').textContent = Math.round(zoom * 100) + '%';
+    $('time').textContent = time.toFixed(2) + ' s';
+    $('scrub').value = time;
+    $('play').textContent = playing ? 'Ⅱ' : '▶';
+    $('status').textContent =
+      `${clipPicking ? 'Pick clipping source · Escape to cancel · ' : selection.size ? selection.size + ' selected · ' : ''}${tool === 'direct' ? 'Drag anchors or handles · Shift mirrors handles' : tool === 'pen' ? 'Click to add points · Enter finishes · Escape cancels' : 'Shift to multi-select · two fingers pan · pinch zoom'}`;
+    dirty = false;
+  }
+  function setTool(next) {
+    tool = next;
+    pen = [];
+    for (const b of panel.querySelectorAll('[data-av-tool]')) b.classList.toggle('active', b.dataset.avTool === next);
+    dirty = true;
+  }
+  function hit(p, picking = false) {
+    const v = vector(),
+      ss = sampleVector(v, time);
+    ctx.save();
+    ctx.resetTransform();
+    try {
+      for (const s of [...ss].reverse()) {
+        if (s.hidden || (!picking && s.locked) || (picking && clipPicking?.includes(s.id))) continue;
+        if (!picking && !vectorClipContains(ctx, v, s, ss, p.x, p.y)) continue;
+        const path = new Path2D(pathData(s));
+        ctx.lineWidth = Math.max(s.strokeWidth, 6 / zoom);
+        if (
+          (s.fill !== 'none' && ctx.isPointInPath(path, p.x, p.y, s.fillRule)) ||
+          vectorStrokeContains(ctx, s, p.x, p.y, 6 / zoom)
+        )
+          return s;
+      }
+    } finally {
+      ctx.restore();
+    }
+  }
+  function pointerHit(p) {
+    for (const s of selected().filter((s) => !s.locked)) {
+      for (const a of anchors(s)) {
+        for (const i of [a.incoming, a.outgoing, a.index])
+          if (i !== null && Math.hypot(s.points[i] - p.x, s.points[i + 1] - p.y) < 7 / zoom)
+            return { s, index: i, handle: i !== a.index };
+      }
+    }
+    return null;
+  }
+  function scratchShapes(shapes) {
+    const v = vector(),
+      map = new Map(shapes.map((s) => [s.id, s]));
+    scratch = { ...v, shapes: sampleVector(v, time).map((s) => map.get(s.id) ?? s), tracks: [] };
+    dirty = true;
+  }
+  function addShape(points, kind) {
+    const v = vector(),
+      id = uid();
+    let commands,
+      p = points;
+    const [a, b] = points;
+    if (kind === 'rect') {
+      commands = ['M', 'L', 'L', 'L', 'Z'];
+      p = [a.x, a.y, b.x, a.y, b.x, b.y, a.x, b.y];
+    } else if (kind === 'ellipse') {
+      const cx = (a.x + b.x) / 2,
+        cy = (a.y + b.y) / 2,
+        rx = Math.abs(a.x - b.x) / 2,
+        ry = Math.abs(a.y - b.y) / 2,
+        k = 0.55228475;
+      commands = ['M', 'C', 'C', 'C', 'C', 'Z'];
+      p = [
+        cx + rx,
+        cy,
+        cx + rx,
+        cy + k * ry,
+        cx + k * rx,
+        cy + ry,
+        cx,
+        cy + ry,
+        cx - k * rx,
+        cy + ry,
+        cx - rx,
+        cy + k * ry,
+        cx - rx,
+        cy,
+        cx - rx,
+        cy - k * ry,
+        cx - k * rx,
+        cy - ry,
+        cx,
+        cy - ry,
+        cx + k * rx,
+        cy - ry,
+        cx + rx,
+        cy - k * ry,
+        cx + rx,
+        cy,
+      ];
+    } else {
+      commands = points.map((_, i) => (i ? 'L' : 'M'));
+      commands.push('Z');
+      p = points.flatMap((p) => [p.x, p.y]);
+    }
+    return {
+      id,
+      name: kind === 'pen' ? 'Path' : kind === 'rect' ? 'Rectangle' : 'Ellipse',
+      commands,
+      points: p,
+      fill: '#c9a96e',
+      stroke: '#202020',
+      strokeWidth: 2,
+      opacity: 1,
+      lineCap: 'round',
+      lineJoin: 'round',
+      fillRule: 'nonzero',
+      role: 'literal',
+      hidden: false,
+      locked: false,
+    };
+  }
+  canvas.onpointerdown = (e) => {
+    if (!vector()) return;
+    canvas.setPointerCapture(e.pointerId);
+    touches.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    if (touches.size === 2) {
+      scratch = null;
+      drag = null;
+      const [a, b] = [...touches.values()];
+      gesture = { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2, d: Math.hypot(a.x - b.x, a.y - b.y), zoom, pan: { ...pan } };
+      return;
+    }
+    playing = false;
+    const p = position(e);
+    if (clipPicking && e.button !== 1 && !space) {
+      const found = hit(p, true);
+      if (found) pickClip(found.id);
+      return;
+    }
+    if (tool === 'hand' || space || e.button === 1) {
+      drag = { kind: 'pan', x: e.clientX, y: e.clientY, pan: { ...pan } };
+      return;
+    }
+    if (tool === 'pen') {
+      pen.push(p);
+      dirty = true;
+      return;
+    }
+    if (['rect', 'ellipse'].includes(tool)) {
+      drag = { kind: tool, p };
+      return;
+    }
+    const point = tool === 'direct' ? pointerHit(p) : null;
+    if (point) {
+      activePoint = point.index;
+      drag = { kind: 'point', ...point, p };
+      refreshProperties();
+      return;
+    }
+    const found = hit(p);
+    if (!found) {
+      choose(null, e.shiftKey);
+      return;
+    }
+    if (!selection.has(found.id) || e.shiftKey) choose(found.id, e.shiftKey);
+    drag = { kind: 'move', p, shapes: selected().filter((s) => !s.locked) };
+  };
+  canvas.onpointermove = (e) => {
+    if (touches.has(e.pointerId)) touches.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    if (gesture && touches.size === 2) {
+      const [a, b] = [...touches.values()],
+        r = canvas.getBoundingClientRect(),
+        cx = (a.x + b.x) / 2 - r.left,
+        cy = (a.y + b.y) / 2 - r.top,
+        ratio = Math.hypot(a.x - b.x, a.y - b.y) / Math.max(1, gesture.d);
+      zoom = Math.max(0.02, Math.min(40, gesture.zoom * ratio));
+      const scale = zoom / gesture.zoom;
+      pan = { x: cx - (gesture.x - r.left - gesture.pan.x) * scale, y: cy - (gesture.y - r.top - gesture.pan.y) * scale };
+      dirty = true;
+      return;
+    }
+    if (!drag) return;
+    const p = position(e);
+    if (drag.kind === 'pan') {
+      spacePanned = true;
+      pan = { x: drag.pan.x + e.clientX - drag.x, y: drag.pan.y + e.clientY - drag.y };
+      dirty = true;
+    } else if (drag.kind === 'point') {
+      scratchShapes([movePoint(drag.s, drag.index, p.x - drag.p.x, p.y - drag.p.y, { handle: drag.handle, mirror: e.shiftKey })]);
+    } else if (drag.kind === 'move') {
+      scratchShapes(drag.shapes.map((s) => transformShape(s, { dx: p.x - drag.p.x, dy: p.y - drag.p.y })));
+    } else {
+      const s = addShape([drag.p, p], drag.kind);
+      scratch = { ...vector(), shapes: [...sampleVector(vector(), time), s], tracks: [] };
+      drag.newShape = s;
+      dirty = true;
+    }
+  };
+  function end(e, cancel = false) {
+    touches.delete(e.pointerId);
+    if (gesture) {
+      if (!touches.size) gesture = null;
+      return;
+    }
+    if (drag && !cancel) {
+      if (drag.newShape) {
+        run(command('add', { value: drag.newShape }));
+        choose(drag.newShape.id);
+      } else if (scratch) {
+        const ids = drag.kind === 'point' ? [drag.s.id] : drag.shapes.map((s) => s.id);
+        commitChanges(scratch.shapes.filter((s) => ids.includes(s.id)).map((s) => [s.id, { points: s.points }]));
+      }
+    }
+    scratch = null;
+    drag = null;
+    dirty = true;
+  }
+  canvas.onpointerup = (e) => end(e);
+  canvas.onpointercancel = (e) => end(e, true);
+  canvas.addEventListener(
+    'wheel',
+    (e) => {
+      e.preventDefault();
+      const r = canvas.getBoundingClientRect();
+      if (e.ctrlKey || e.metaKey) {
+        const next = Math.max(0.02, Math.min(40, zoom * Math.exp(-e.deltaY * 0.012))),
+          ratio = next / zoom,
+          x = e.clientX - r.left,
+          y = e.clientY - r.top;
+        pan = { x: x - (x - pan.x) * ratio, y: y - (y - pan.y) * ratio };
+        zoom = next;
+      } else {
+        pan.x -= e.deltaX;
+        pan.y -= e.deltaY;
+      }
+      dirty = true;
+    },
+    { passive: false },
+  );
+  panel.onclick = async (e) => {
+    const el = e.target.closest('button');
+    try {
+      if (el?.id === 'av-trim-key') {
+        run(
+          selected()
+            .filter((s) => !s.locked)
+            .flatMap((s) =>
+              ['trimStart', 'trimEnd', 'trimOffset'].map((channel) =>
+                command('key', { ids: [s.id], channel, time, value: vectorValue(s, channel), easing: $('easing').value }),
+              ),
+            ),
+        );
+        return;
+      }
+      if (el?.id === 'av-clip-pick') {
+        clipPicking = [...selection].filter((id) => !vector().shapes.find((s) => s.id === id)?.locked);
+        if (!clipPicking.length) {
+          clipPicking = null;
+          throw Error('Unlock a selected path before adding clipping');
+        }
+        playing = false;
+        panel.classList.add('av-picking-clip');
+        refreshProperties();
+        dirty = true;
+        return;
+      }
+      if (el?.id === 'av-clip-cancel') {
+        clipPicking = null;
+        panel.classList.remove('av-picking-clip');
+        refreshProperties();
+        dirty = true;
+        return;
+      }
+      if (el?.id === 'av-clip-add') {
+        const source = $('clip-source').value;
+        if (!source) throw Error('Choose a clipping source');
+        run(command('clip', { source, hideSource: true }));
+        return;
+      }
+      if (el?.dataset.clipRemove) {
+        run(command('clip', { action: 'remove', source: el.dataset.clipRemove }));
+        return;
+      }
+      if (el?.dataset.clipSelect) {
+        clipPicking = null;
+        panel.classList.remove('av-picking-clip');
+        choose(el.dataset.clipSelect);
+        return;
+      }
+      if (el?.dataset.avTool) setTool(el.dataset.avTool);
+      if (el?.dataset.avTab) {
+        tab = el.dataset.avTab;
+        panel.querySelectorAll('[data-av-tab]').forEach((b) => b.classList.toggle('active', b === el));
+        refreshProperties();
+      }
+      if (el?.dataset.visible) {
+        run(
+          command('update', {
+            ids: [el.dataset.visible],
+            values: { hidden: !vector().shapes.find((s) => s.id === el.dataset.visible).hidden },
+          }),
+        );
+        return;
+      }
+      if (el?.dataset.locked) {
+        run(
+          command('update', {
+            ids: [el.dataset.locked],
+            values: { locked: !vector().shapes.find((s) => s.id === el.dataset.locked).locked },
+          }),
+        );
+        return;
+      }
+      const row = e.target.closest('[data-shape]');
+      if (row) choose(row.dataset.shape, e.shiftKey);
+      if (el?.dataset.avAction) {
+        const action = el.dataset.avAction;
+        run(command(['front', 'back'].includes(action) ? 'order' : action, { front: action === 'front' }));
+      }
+      if (el?.dataset.none) update({ [el.dataset.none]: 'none' });
+      if (el?.dataset.palette) update({ fill: el.dataset.palette });
+      if (el?.dataset.swatch)
+        update({
+          fill: $('record').checked
+            ? vector().swatches.find((w) => w.id === el.dataset.swatch).color
+            : { swatch: el.dataset.swatch },
+        });
+      if (el?.dataset.eyedrop) {
+        try {
+          const result = await new EyeDropper().open();
+          update({ [el.dataset.eyedrop]: result.sRGBHex });
+        } catch (err) {
+          if (err.name !== 'AbortError') throw err;
+        }
+      }
+      if (el?.dataset.transformAction) {
+        const op = el.dataset.transformAction;
+        commitChanges(
+          selected()
+            .filter((s) => !s.locked)
+            .map((s) => {
+              const b = shapeBounds(s),
+                p = transformShape(s, {
+                  cx: b.x + b.width / 2,
+                  cy: b.y + b.height / 2,
+                  sx: op === 'flipX' ? -1 : 1,
+                  sy: op === 'flipY' ? -1 : 1,
+                  angle: op === 'rotate' ? Math.PI / 2 : 0,
+                });
+              return [s.id, { points: p.points }];
+            }),
+        );
+      }
+      if (el?.dataset.align) {
+        const axis = el.dataset.align,
+          shapes = selected(),
+          min = Math.min(...shapes.map((s) => shapeBounds(s)[axis]));
+        commitChanges(
+          shapes
+            .filter((s) => !s.locked)
+            .map((s) => [
+              s.id,
+              { points: transformShape(s, { [axis === 'x' ? 'dx' : 'dy']: min - shapeBounds(s)[axis] }).points },
+            ]),
+        );
+      }
+      if (el?.dataset.keyShape) {
+        playing = false;
+        time = +el.dataset.time;
+        if (e.altKey) run(command('key', { ids: [el.dataset.keyShape], channel: el.dataset.channel, time, remove: true }));
+        else {
+          selection = new Set([el.dataset.keyShape]);
+          refreshProperties();
+          refreshLayers();
+          dirty = true;
+        }
+      }
+      if (el?.id === 'av-swap') commitChanges(selected().map((s) => [s.id, { fill: s.stroke, stroke: s.fill }]));
+      if (el?.id === 'av-same') {
+        const s = selected()[0];
+        selection = new Set(
+          sampleVector(vector(), time)
+            .filter((p) => !p.locked && JSON.stringify(p.fill) === JSON.stringify(s.fill))
+            .map((s) => s.id),
+        );
+        refreshProperties();
+        refreshLayers();
+        refreshTracks();
+        dirty = true;
+      }
+      if (el?.id === 'av-add-swatch') {
+        const color = paintColor(selected()[0].fill, vector()),
+          id = 'swatch-' + crypto.randomUUID().slice(0, 6);
+        run(command('swatch', { id, values: { name: 'Swatch ' + (vector().swatches.length + 1), color } }));
+      }
+      if (el?.id === 'av-edit-swatch') {
+        const s = selected()[0],
+          id = s.fill.swatch;
+        const c = panel.querySelector('[data-colour="fill"]');
+        run(command('swatch', { id, values: { color: c.value } }));
+      }
+      if (el?.id === 'av-fit') fit();
+      if (el?.id === 'av-play') {
+        if (time >= vector().duration) time = 0;
+        playing = !playing;
+        dirty = true;
+      }
+      if (el?.id === 'av-key') {
+        const commands = [];
+        for (const s of selected().filter((s) => !s.locked))
+          for (const channel of VECTOR_CHANNELS) {
+            if (channel.startsWith('trim') && (!s.trimMode || s.trimMode === 'off')) continue;
+            if (['fill', 'stroke'].includes(channel) && s[channel]?.type) continue;
+            commands.push(
+              command('key', {
+                ids: [s.id],
+                channel,
+                time,
+                value: ['fill', 'stroke'].includes(channel) ? paintColor(s[channel], vector()) : vectorValue(s, channel),
+                easing: $('easing').value,
+              }),
+            );
+          }
+        run(commands);
+      }
+      if (el?.id === 'av-export') {
+        downloadFile(svgText(vector(), time), (asset().name ?? assetId) + '.svg', 'image/svg+xml');
+      }
+      if (el?.id === 'av-use') {
+        attachAsset?.(assetId, vector().viewBox);
+        toast('Artwork added to the puppet.');
+      }
+      if (el?.id === 'av-new') {
+        const id = 'artwork-' + crypto.randomUUID().slice(0, 8);
+        run({
+          op: 'vector.create',
+          id,
+          src:
+            'data:image/svg+xml,' +
+            encodeURIComponent(
+              '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect x="128" y="128" width="256" height="256" rx="32" fill="#c9a96e" stroke="#202020" stroke-width="8"/></svg>',
+            ),
+        });
+        await openAsset(id);
+      }
+    } catch (err) {
+      toast(err.message, true);
+    }
+  };
+  panel.onchange = (e) => {
+    const el = e.target;
+    try {
+      if (el.dataset.clipOperation) {
+        if (el.value !== 'mixed')
+          run(
+            command('clip', {
+              source: el.dataset.clipOperation,
+              rule: el.value === 'outside' ? 'evenodd' : el.value,
+              inverse: el.value === 'outside',
+            }),
+          );
+      } else if (el.id === 'av-swatch-colour') {
+        run(command('swatch', { id: selected()[0].fill.swatch, values: { color: el.value } }));
+      } else if (el.id === 'av-asset') openAsset(el.value);
+      else if (el.id === 'av-duration' || el.id === 'av-loop') {
+        run(command('settings', { values: { duration: +$('duration').value, loop: $('loop').checked } }));
+        time = Math.min(time, vector().duration);
+      } else if (el.id === 'av-record') refreshProperties();
+      else if (el.dataset.colour || el.dataset.hex) {
+        const k = el.dataset.colour ?? el.dataset.hex;
+        update({ [k]: el.value.toLowerCase() });
+      } else if (el.dataset.trim) {
+        if (el.value.trim() !== '') update({ [el.dataset.trim]: +el.value / 100 });
+      } else if (el.dataset.property)
+        update({ [el.dataset.property]: ['name', 'trimMode', 'lineCap'].includes(el.dataset.property) ? el.value : +el.value });
+      else if (el.dataset.transform) {
+        const k = el.dataset.transform,
+          n = +el.value;
+        commitChanges(
+          selected()
+            .filter((s) => !s.locked)
+            .map((s) => {
+              const b = shapeBounds(s),
+                t =
+                  k === 'x'
+                    ? { dx: n - b.x }
+                    : k === 'y'
+                      ? { dy: n - b.y }
+                      : k === 'width'
+                        ? { sx: n / (b.width || 1), cx: b.x }
+                        : { sy: n / (b.height || 1), cy: b.y };
+              return [s.id, { points: transformShape(s, t).points }];
+            }),
+        );
+      } else if (el.id === 'av-fill-type') {
+        if ($('record').checked && el.value !== 'solid')
+          throw Error('Gradient changes edit the base artwork. Turn off Auto-key first.');
+        update({
+          fill:
+            el.value === 'solid'
+              ? '#c9a96e'
+              : {
+                  type: el.value,
+                  units: 'objectBoundingBox',
+                  x1: el.value === 'radial' ? 0.5 : 0,
+                  y1: 0.5,
+                  x2: el.value === 'radial' ? 0.5 : 1,
+                  y2: 0.5,
+                  stops: [
+                    { offset: 0, color: '#ead7a9', opacity: 1 },
+                    { offset: 1, color: '#94714a', opacity: 1 },
+                  ],
+                },
+        });
+      } else if (el.dataset.stop) {
+        const fill = structuredClone(selected()[0].fill);
+        fill.stops[+el.dataset.stop].color = el.value;
+        update({ fill });
+      }
+      dirty = true;
+    } catch (err) {
+      toast(err.message, true);
+      refreshProperties();
+    }
+  };
+  $('search').oninput = refreshLayers;
+  $('scrub').oninput = () => {
+    playing = false;
+    time = +$('scrub').value;
+    dirty = true;
+    refreshProperties();
+  };
+  $('outline').onchange = () => (dirty = true);
+  document.addEventListener(
+    'keydown',
+    (e) => {
+      if (panel.hidden || e.target.matches('input,select,textarea') || e.target.isContentEditable) return;
+      if (e.metaKey || e.ctrlKey) return;
+      const k = e.key.toLowerCase();
+      if (['v', 'a', 'p', 'm', 'l', 'h'].includes(k)) {
+        e.preventDefault();
+        setTool({ v: 'select', a: 'direct', p: 'pen', m: 'rect', l: 'ellipse', h: 'hand' }[k]);
+      }
+      if (e.code === 'Space') {
+        e.preventDefault();
+        if (!e.repeat) spacePanned = false;
+        space = true;
+      }
+      if (k === 'f') fit();
+      if (k === 'escape') {
+        clipPicking = null;
+        panel.classList.remove('av-picking-clip');
+        refreshProperties();
+        scratch = null;
+        drag = null;
+        pen = [];
+        dirty = true;
+      }
+      if (k === 'enter' && pen.length >= 3) {
+        const shape = addShape(pen, 'pen');
+        run(command('add', { value: shape }));
+        pen = [];
+        choose(shape.id);
+      }
+      if (k === 'delete' || k === 'backspace') {
+        e.preventDefault();
+        run(command('delete'));
+      }
+      if (k === 'arrowleft' || k === 'arrowright') {
+        e.preventDefault();
+        playing = false;
+        time = Math.max(0, Math.min(vector().duration, time + (k === 'arrowright' ? 1 : -1) / 24));
+        dirty = true;
+        refreshProperties();
+      }
+    },
+    true,
+  );
+  document.addEventListener('keyup', (e) => {
+    if (panel.hidden) return;
+    if (e.code === 'Space') {
+      if (!space) return;
+      space = false;
+      if (!spacePanned) $('play').click();
+    }
+  });
+  window.addEventListener('blur', () => {
+    space = false;
+    drag = null;
+    scratch = null;
+    touches.clear();
+    gesture = null;
+    dirty = true;
+  });
+  new ResizeObserver(() => (dirty = true)).observe(canvas);
+  let last = performance.now();
+  function frame(now) {
+    const dt = Math.min(0.1, (now - last) / 1000);
+    last = now;
+    if (!panel.hidden) {
+      if (lastRevision !== revision() && !drag) refresh();
+      if (playing && vector()) {
+        const advance = studioTransport.advance('art:' + assetId, time, dt, vector());
+        time = advance.time;
+        if (advance.ended) playing = false;
+        dirty = true;
+      }
+      if (dirty) draw();
+    }
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+  setTool('select');
+  const api = {
+    async show() {
+      panel.hidden = false;
+      document.body.classList.add('artwork-open');
+      const list = assetList(),
+        preferred = preferredAsset?.(),
+        id = list.some((a) => a.id === preferred) ? preferred : (assetId ?? list[0]?.id);
+      if (id) await openAsset(id);
+      else refresh();
+    },
+    hide() {
+      clipPicking = null;
+      panel.classList.remove('av-picking-clip');
+      panel.hidden = true;
+      document.body.classList.remove('artwork-open');
+      playing = false;
+      drag = null;
+      scratch = null;
+    },
+    openAsset,
+    async restore(state) {
+      const id = project().assets.some((a) => a.id === state.asset) ? state.asset : assetList()[0]?.id;
+      if (!id) return;
+      await openAsset(id);
+      time = Math.max(0, Math.min(vector()?.duration ?? 0, state.time ?? 0));
+      selection = new Set((state.selection ?? []).filter((id) => vector()?.shapes.some((s) => s.id === id)));
+      if (state.pan) pan = { ...state.pan };
+      if (Number.isFinite(state.zoom)) zoom = state.zoom;
+      tool = state.tool ?? 'select';
+      Object.assign(guides, state.guides ?? {});
+      dirty = true;
+      refresh();
+    },
+    seek(t) {
+      time = Math.max(0, Math.min(vector().duration, t));
+      playing = false;
+      dirty = true;
+      refreshProperties();
+    },
+    select(id) {
+      choose(id);
+    },
+    review(kind) {
+      if (kind === 'ghosts') guides.onion = !guides.onion;
+      else if (kind === 'arc') guides.arc = !guides.arc;
+      dirty = true;
+      return { ...guides };
+    },
+    playback({ playing: next }) {
+      if (!vector()) throw Error('Open artwork first');
+      if (time >= vector().duration) time = 0;
+      playing = !!next;
+      dirty = true;
+    },
+    snapshot: () => ({ asset: assetId, selection: [...selection], time, tool, zoom, pan, playing, guides: { ...guides } }),
+    fit,
+  };
+  workspace.register('artwork', 'Artwork', api);
+  return api;
 }

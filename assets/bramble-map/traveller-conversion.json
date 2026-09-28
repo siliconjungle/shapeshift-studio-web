@@ -1,0 +1,817 @@
+{
+  "source": "source/traveller-parts.png",
+  "parts": [
+    {
+      "name": "head",
+      "facing": "side",
+      "cut": {
+        "left": 0,
+        "top": 0,
+        "width": 454,
+        "height": 441
+      },
+      "width": 252,
+      "height": 238,
+      "preset": "cel",
+      "settings": {
+        "colors": 16,
+        "speckle": 4,
+        "precision": 6,
+        "difference": 14,
+        "corner": 80,
+        "length": 4.5,
+        "median": 3
+      },
+      "alphaThreshold": 128,
+      "paths": 24,
+      "colours": 9,
+      "curves": 300,
+      "bytes": 11729,
+      "silhouetteIoU": 0.9883532587736212,
+      "meanColorError": 0.032976912360962014,
+      "warnings": []
+    },
+    {
+      "name": "body",
+      "facing": "side",
+      "cut": {
+        "left": 454,
+        "top": 0,
+        "width": 390,
+        "height": 441
+      },
+      "width": 252,
+      "height": 189,
+      "preset": "cel",
+      "settings": {
+        "colors": 16,
+        "speckle": 4,
+        "precision": 6,
+        "difference": 14,
+        "corner": 80,
+        "length": 4.5,
+        "median": 3
+      },
+      "alphaThreshold": 128,
+      "paths": 21,
+      "colours": 10,
+      "curves": 234,
+      "bytes": 9345,
+      "silhouetteIoU": 0.9895802806811892,
+      "meanColorError": 0.029944808445663638,
+      "warnings": []
+    },
+    {
+      "name": "backpack",
+      "facing": "side",
+      "cut": {
+        "left": 844,
+        "top": 0,
+        "width": 410,
+        "height": 441
+      },
+      "width": 252,
+      "height": 269,
+      "preset": "cel",
+      "settings": {
+        "colors": 16,
+        "speckle": 4,
+        "precision": 6,
+        "difference": 14,
+        "corner": 80,
+        "length": 4.5,
+        "median": 3
+      },
+      "alphaThreshold": 128,
+      "paths": 18,
+      "colours": 6,
+      "curves": 264,
+      "bytes": 10556,
+      "silhouetteIoU": 0.993390930445515,
+      "meanColorError": 0.03427184572178059,
+      "warnings": []
+    },
+    {
+      "name": "arm-left",
+      "facing": "side",
+      "cut": {
+        "left": 0,
+        "top": 441,
+        "width": 454,
+        "height": 395
+      },
+      "width": 186,
+      "height": 331,
+      "preset": "cel",
+      "settings": {
+        "colors": 16,
+        "speckle": 4,
+        "precision": 6,
+        "difference": 14,
+        "corner": 80,
+        "length": 4.5,
+        "median": 3
+      },
+      "alphaThreshold": 128,
+      "paths": 7,
+      "colours": 7,
+      "curves": 120,
+      "bytes": 4872,
+      "silhouetteIoU": 0.9911233547597184,
+      "meanColorError": 0.024809851517570414,
+      "warnings": []
+    },
+    {
+      "name": "arm-right",
+      "facing": "side",
+      "cut": {
+        "left": 454,
+        "top": 441,
+        "width": 390,
+        "height": 395
+      },
+      "width": 188,
+      "height": 336,
+      "preset": "cel",
+      "settings": {
+        "colors": 16,
+        "speckle": 4,
+        "precision": 6,
+        "difference": 14,
+        "corner": 80,
+        "length": 4.5,
+        "median": 3
+      },
+      "alphaThreshold": 128,
+      "paths": 9,
+      "colours": 6,
+      "curves": 121,
+      "bytes": 5034,
+      "silhouetteIoU": 0.9902967552123115,
+      "meanColorError": 0.026086942284776208,
+      "warnings": []
+    },
+    {
+      "name": "staff",
+      "facing": "side",
+      "cut": {
+        "left": 844,
+        "top": 441,
+        "width": 410,
+        "height": 395
+      },
+      "width": 189,
+      "height": 359,
+      "preset": "cel",
+      "settings": {
+        "colors": 16,
+        "speckle": 4,
+        "precision": 6,
+        "difference": 14,
+        "corner": 80,
+        "length": 4.5,
+        "median": 3
+      },
+      "alphaThreshold": 128,
+      "paths": 2,
+      "colours": 2,
+      "curves": 96,
+      "bytes": 4269,
+      "silhouetteIoU": 0.9823260660468098,
+      "meanColorError": 0.028360322895186287,
+      "warnings": []
+    },
+    {
+      "name": "leg-left",
+      "facing": "side",
+      "cut": {
+        "left": 0,
+        "top": 836,
+        "width": 454,
+        "height": 418
+      },
+      "width": 211,
+      "height": 313,
+      "preset": "cel",
+      "settings": {
+        "colors": 16,
+        "speckle": 4,
+        "precision": 6,
+        "difference": 14,
+        "corner": 80,
+        "length": 4.5,
+        "median": 3
+      },
+      "alphaThreshold": 128,
+      "paths": 5,
+      "colours": 4,
+      "curves": 124,
+      "bytes": 5229,
+      "silhouetteIoU": 0.988861677577356,
+      "meanColorError": 0.024317066486865845,
+      "warnings": []
+    },
+    {
+      "name": "leg-right",
+      "facing": "side",
+      "cut": {
+        "left": 454,
+        "top": 836,
+        "width": 390,
+        "height": 418
+      },
+      "width": 216,
+      "height": 303,
+      "preset": "cel",
+      "settings": {
+        "colors": 16,
+        "speckle": 4,
+        "precision": 6,
+        "difference": 14,
+        "corner": 80,
+        "length": 4.5,
+        "median": 3
+      },
+      "alphaThreshold": 128,
+      "paths": 6,
+      "colours": 6,
+      "curves": 126,
+      "bytes": 5246,
+      "silhouetteIoU": 0.990243662075932,
+      "meanColorError": 0.026191341720387513,
+      "warnings": []
+    },
+    {
+      "name": "cape",
+      "facing": "side",
+      "cut": {
+        "left": 844,
+        "top": 836,
+        "width": 410,
+        "height": 418
+      },
+      "width": 220,
+      "height": 231,
+      "preset": "cel",
+      "settings": {
+        "colors": 16,
+        "speckle": 4,
+        "precision": 6,
+        "difference": 14,
+        "corner": 80,
+        "length": 4.5,
+        "median": 3
+      },
+      "alphaThreshold": 128,
+      "paths": 6,
+      "colours": 6,
+      "curves": 135,
+      "bytes": 5539,
+      "silhouetteIoU": 0.9725267525660625,
+      "meanColorError": 0.02432356060409517,
+      "warnings": []
+    },
+    {
+      "name": "head",
+      "facing": "front",
+      "cut": {
+        "left": 0,
+        "top": 0,
+        "width": 439,
+        "height": 445
+      },
+      "width": 252,
+      "height": 260,
+      "preset": "cel",
+      "settings": {
+        "colors": 16,
+        "speckle": 4,
+        "precision": 6,
+        "difference": 14,
+        "corner": 80,
+        "length": 4.5,
+        "median": 3
+      },
+      "alphaThreshold": 128,
+      "paths": 37,
+      "colours": 9,
+      "curves": 419,
+      "bytes": 16352,
+      "silhouetteIoU": 0.9905802390292856,
+      "meanColorError": 0.03591370604876419,
+      "warnings": []
+    },
+    {
+      "name": "body",
+      "facing": "front",
+      "cut": {
+        "left": 439,
+        "top": 0,
+        "width": 397,
+        "height": 445
+      },
+      "width": 252,
+      "height": 195,
+      "preset": "cel",
+      "settings": {
+        "colors": 16,
+        "speckle": 4,
+        "precision": 6,
+        "difference": 14,
+        "corner": 80,
+        "length": 4.5,
+        "median": 3
+      },
+      "alphaThreshold": 128,
+      "paths": 20,
+      "colours": 11,
+      "curves": 293,
+      "bytes": 11263,
+      "silhouetteIoU": 0.9908062234794908,
+      "meanColorError": 0.03103308555618569,
+      "warnings": []
+    },
+    {
+      "name": "backpack",
+      "facing": "front",
+      "cut": {
+        "left": 836,
+        "top": 0,
+        "width": 418,
+        "height": 445
+      },
+      "width": 252,
+      "height": 255,
+      "preset": "cel",
+      "settings": {
+        "colors": 16,
+        "speckle": 4,
+        "precision": 6,
+        "difference": 14,
+        "corner": 80,
+        "length": 4.5,
+        "median": 3
+      },
+      "alphaThreshold": 128,
+      "paths": 18,
+      "colours": 8,
+      "curves": 344,
+      "bytes": 13436,
+      "silhouetteIoU": 0.9912867982379538,
+      "meanColorError": 0.03655846223917691,
+      "warnings": []
+    },
+    {
+      "name": "arm-left",
+      "facing": "front",
+      "cut": {
+        "left": 0,
+        "top": 445,
+        "width": 439,
+        "height": 391
+      },
+      "width": 160,
+      "height": 344,
+      "preset": "cel",
+      "settings": {
+        "colors": 16,
+        "speckle": 4,
+        "precision": 6,
+        "difference": 14,
+        "corner": 80,
+        "length": 4.5,
+        "median": 3
+      },
+      "alphaThreshold": 128,
+      "paths": 21,
+      "colours": 9,
+      "curves": 223,
+      "bytes": 8648,
+      "silhouetteIoU": 0.9917239404352807,
+      "meanColorError": 0.028438302212603937,
+      "warnings": []
+    },
+    {
+      "name": "arm-right",
+      "facing": "front",
+      "cut": {
+        "left": 439,
+        "top": 445,
+        "width": 397,
+        "height": 391
+      },
+      "width": 158,
+      "height": 344,
+      "preset": "cel",
+      "settings": {
+        "colors": 16,
+        "speckle": 4,
+        "precision": 6,
+        "difference": 14,
+        "corner": 80,
+        "length": 4.5,
+        "median": 3
+      },
+      "alphaThreshold": 128,
+      "paths": 14,
+      "colours": 7,
+      "curves": 155,
+      "bytes": 6395,
+      "silhouetteIoU": 0.9881156439264084,
+      "meanColorError": 0.028406837830789018,
+      "warnings": []
+    },
+    {
+      "name": "staff",
+      "facing": "front",
+      "cut": {
+        "left": 836,
+        "top": 445,
+        "width": 418,
+        "height": 391
+      },
+      "width": 163,
+      "height": 357,
+      "preset": "cel",
+      "settings": {
+        "colors": 16,
+        "speckle": 4,
+        "precision": 6,
+        "difference": 14,
+        "corner": 80,
+        "length": 4.5,
+        "median": 3
+      },
+      "alphaThreshold": 128,
+      "paths": 2,
+      "colours": 2,
+      "curves": 88,
+      "bytes": 3915,
+      "silhouetteIoU": 0.9853488282898017,
+      "meanColorError": 0.030577320248707372,
+      "warnings": []
+    },
+    {
+      "name": "leg-left",
+      "facing": "front",
+      "cut": {
+        "left": 0,
+        "top": 836,
+        "width": 439,
+        "height": 418
+      },
+      "width": 176,
+      "height": 312,
+      "preset": "cel",
+      "settings": {
+        "colors": 16,
+        "speckle": 4,
+        "precision": 6,
+        "difference": 14,
+        "corner": 80,
+        "length": 4.5,
+        "median": 3
+      },
+      "alphaThreshold": 128,
+      "paths": 5,
+      "colours": 5,
+      "curves": 140,
+      "bytes": 5516,
+      "silhouetteIoU": 0.9896175004519745,
+      "meanColorError": 0.028657975695749665,
+      "warnings": []
+    },
+    {
+      "name": "leg-right",
+      "facing": "front",
+      "cut": {
+        "left": 439,
+        "top": 836,
+        "width": 397,
+        "height": 418
+      },
+      "width": 176,
+      "height": 312,
+      "preset": "cel",
+      "settings": {
+        "colors": 16,
+        "speckle": 4,
+        "precision": 6,
+        "difference": 14,
+        "corner": 80,
+        "length": 4.5,
+        "median": 3
+      },
+      "alphaThreshold": 128,
+      "paths": 5,
+      "colours": 5,
+      "curves": 115,
+      "bytes": 4594,
+      "silhouetteIoU": 0.989090342355447,
+      "meanColorError": 0.030874877605649234,
+      "warnings": []
+    },
+    {
+      "name": "cape",
+      "facing": "front",
+      "cut": {
+        "left": 836,
+        "top": 836,
+        "width": 418,
+        "height": 418
+      },
+      "width": 252,
+      "height": 187,
+      "preset": "cel",
+      "settings": {
+        "colors": 16,
+        "speckle": 4,
+        "precision": 6,
+        "difference": 14,
+        "corner": 80,
+        "length": 4.5,
+        "median": 3
+      },
+      "alphaThreshold": 128,
+      "paths": 4,
+      "colours": 3,
+      "curves": 113,
+      "bytes": 4527,
+      "silhouetteIoU": 0.9861967694566813,
+      "meanColorError": 0.02433907319322105,
+      "warnings": []
+    },
+    {
+      "name": "head",
+      "facing": "back",
+      "cut": {
+        "left": 0,
+        "top": 0,
+        "width": 433,
+        "height": 432
+      },
+      "width": 252,
+      "height": 240,
+      "preset": "cel",
+      "settings": {
+        "colors": 16,
+        "speckle": 4,
+        "precision": 6,
+        "difference": 14,
+        "corner": 80,
+        "length": 4.5,
+        "median": 3
+      },
+      "alphaThreshold": 128,
+      "paths": 4,
+      "colours": 3,
+      "curves": 155,
+      "bytes": 6245,
+      "silhouetteIoU": 0.98860413162981,
+      "meanColorError": 0.018432295718834056,
+      "warnings": []
+    },
+    {
+      "name": "body",
+      "facing": "back",
+      "cut": {
+        "left": 433,
+        "top": 0,
+        "width": 403,
+        "height": 432
+      },
+      "width": 252,
+      "height": 174,
+      "preset": "cel",
+      "settings": {
+        "colors": 16,
+        "speckle": 4,
+        "precision": 6,
+        "difference": 14,
+        "corner": 80,
+        "length": 4.5,
+        "median": 3
+      },
+      "alphaThreshold": 128,
+      "paths": 8,
+      "colours": 6,
+      "curves": 165,
+      "bytes": 6496,
+      "silhouetteIoU": 0.9911448450347881,
+      "meanColorError": 0.024802470009448893,
+      "warnings": []
+    },
+    {
+      "name": "backpack",
+      "facing": "back",
+      "cut": {
+        "left": 836,
+        "top": 0,
+        "width": 418,
+        "height": 432
+      },
+      "width": 252,
+      "height": 240,
+      "preset": "cel",
+      "settings": {
+        "colors": 16,
+        "speckle": 4,
+        "precision": 6,
+        "difference": 14,
+        "corner": 80,
+        "length": 4.5,
+        "median": 3
+      },
+      "alphaThreshold": 128,
+      "paths": 25,
+      "colours": 8,
+      "curves": 396,
+      "bytes": 15260,
+      "silhouetteIoU": 0.9926996821490823,
+      "meanColorError": 0.035142366208254755,
+      "warnings": []
+    },
+    {
+      "name": "arm-left",
+      "facing": "back",
+      "cut": {
+        "left": 0,
+        "top": 432,
+        "width": 433,
+        "height": 404
+      },
+      "width": 183,
+      "height": 343,
+      "preset": "cel",
+      "settings": {
+        "colors": 16,
+        "speckle": 4,
+        "precision": 6,
+        "difference": 14,
+        "corner": 80,
+        "length": 4.5,
+        "median": 3
+      },
+      "alphaThreshold": 128,
+      "paths": 6,
+      "colours": 5,
+      "curves": 98,
+      "bytes": 4292,
+      "silhouetteIoU": 0.9891082923649401,
+      "meanColorError": 0.028730790108463425,
+      "warnings": []
+    },
+    {
+      "name": "arm-right",
+      "facing": "back",
+      "cut": {
+        "left": 433,
+        "top": 432,
+        "width": 403,
+        "height": 404
+      },
+      "width": 183,
+      "height": 343,
+      "preset": "cel",
+      "settings": {
+        "colors": 16,
+        "speckle": 4,
+        "precision": 6,
+        "difference": 14,
+        "corner": 80,
+        "length": 4.5,
+        "median": 3
+      },
+      "alphaThreshold": 128,
+      "paths": 6,
+      "colours": 6,
+      "curves": 119,
+      "bytes": 5090,
+      "silhouetteIoU": 0.9910555045127817,
+      "meanColorError": 0.027460108733748656,
+      "warnings": []
+    },
+    {
+      "name": "staff",
+      "facing": "back",
+      "cut": {
+        "left": 836,
+        "top": 432,
+        "width": 418,
+        "height": 404
+      },
+      "width": 158,
+      "height": 379,
+      "preset": "cel",
+      "settings": {
+        "colors": 16,
+        "speckle": 4,
+        "precision": 6,
+        "difference": 14,
+        "corner": 80,
+        "length": 4.5,
+        "median": 3
+      },
+      "alphaThreshold": 128,
+      "paths": 2,
+      "colours": 2,
+      "curves": 94,
+      "bytes": 4053,
+      "silhouetteIoU": 0.9836911419808768,
+      "meanColorError": 0.030173986612281285,
+      "warnings": []
+    },
+    {
+      "name": "leg-left",
+      "facing": "back",
+      "cut": {
+        "left": 0,
+        "top": 836,
+        "width": 433,
+        "height": 418
+      },
+      "width": 171,
+      "height": 320,
+      "preset": "cel",
+      "settings": {
+        "colors": 16,
+        "speckle": 4,
+        "precision": 6,
+        "difference": 14,
+        "corner": 80,
+        "length": 4.5,
+        "median": 3
+      },
+      "alphaThreshold": 128,
+      "paths": 8,
+      "colours": 5,
+      "curves": 138,
+      "bytes": 5630,
+      "silhouetteIoU": 0.989391247779418,
+      "meanColorError": 0.02806575273376649,
+      "warnings": []
+    },
+    {
+      "name": "leg-right",
+      "facing": "back",
+      "cut": {
+        "left": 433,
+        "top": 836,
+        "width": 403,
+        "height": 418
+      },
+      "width": 171,
+      "height": 320,
+      "preset": "cel",
+      "settings": {
+        "colors": 16,
+        "speckle": 4,
+        "precision": 6,
+        "difference": 14,
+        "corner": 80,
+        "length": 4.5,
+        "median": 3
+      },
+      "alphaThreshold": 128,
+      "paths": 7,
+      "colours": 5,
+      "curves": 126,
+      "bytes": 5313,
+      "silhouetteIoU": 0.9885115010136911,
+      "meanColorError": 0.02905033175611483,
+      "warnings": []
+    },
+    {
+      "name": "cape",
+      "facing": "back",
+      "cut": {
+        "left": 836,
+        "top": 836,
+        "width": 418,
+        "height": 418
+      },
+      "width": 224,
+      "height": 220,
+      "preset": "cel",
+      "settings": {
+        "colors": 16,
+        "speckle": 4,
+        "precision": 6,
+        "difference": 14,
+        "corner": 80,
+        "length": 4.5,
+        "median": 3
+      },
+      "alphaThreshold": 128,
+      "paths": 3,
+      "colours": 3,
+      "curves": 100,
+      "bytes": 4230,
+      "silhouetteIoU": 0.9673667076898647,
+      "meanColorError": 0.024938770036801904,
+      "warnings": [
+        "Silhouette changed noticeably; inspect small details or try the detail preset."
+      ]
+    }
+  ]
+}

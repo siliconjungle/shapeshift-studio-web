@@ -1,0 +1,18 @@
+{
+  "prompt": "Create a transparent game asset sprite sheet matching the THREE supplied tree references EXACTLY in drawing style, trunk shapes and palette. Flat hand-drawn SVG-like cel shapes, thick dark brown ink, muted parchment ochre brown cream, no gradients or green. 3 columns, 2 rows with very wide transparent gutters. Top row: three chopped STUMPS, left the chunky gnarled oak from reference1 with exposed cream cut wood rings, middle the acacia from reference2 with its spreading roots and exposed golden cut wood, right the bent pine trunk from reference3 with its cream snow resting on roots and cut trunk. Each stump is SHORT, no canopy or branches, not an entire tree. Bottom row: one isolated falling foliage fragment per column: left a small rounded ochre oak leaf, middle a small golden acacia leaflet cluster, right a dark brown pine needle tuft with a cream snow cap. These are cohesive destructible-tree variants of the reference trees, not generic green fantasy forest items. All six isolated centered shapes with transparent background. No text, no labels, no shadows outside sprites, no frames.",
+  "source": "source/map-tree-effects-sheet.png",
+  "references": [
+    "cutouts/oak.png",
+    "cutouts/solis-tree.png",
+    "cutouts/cryos-pine.png"
+  ],
+  "conversion": "Little Gods cel preset, six-colour reduction, SVG tracing, native palette mapping, baked edge ink",
+  "assets": [
+    "map-stump-hearth.svg",
+    "map-stump-solis.svg",
+    "map-stump-cryos.svg",
+    "map-leaf-hearth.svg",
+    "map-leaf-solis.svg",
+    "map-leaf-cryos.svg"
+  ]
+}

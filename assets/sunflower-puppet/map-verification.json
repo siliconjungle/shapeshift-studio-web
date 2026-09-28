@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "checks": [
+    "click wave",
+    "keyboard wave",
+    "normal unlock progression",
+    "traveller reaches sunflower at the tree",
+    "character depth swaps in both directions",
+    "no page errors"
+  ]
+}

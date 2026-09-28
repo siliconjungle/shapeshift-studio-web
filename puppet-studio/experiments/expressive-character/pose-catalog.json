@@ -1,0 +1,4951 @@
+{
+  "status": "planned animation; generated concept artwork only",
+  "fps": 24,
+  "characters": [
+    "female",
+    "male"
+  ],
+  "exposure": "Continuous controls interpolate between listed keys; art replacements hold until an explicit switch. Smears normally last one frame. Audio viseme times depend on recordings.",
+  "expressions": [
+    {
+      "id": "rest",
+      "number": 1,
+      "approach": "Small breath and intentional eye aim; no constant head sway.",
+      "method": "continuous",
+      "keys": [
+        {
+          "frame": 0,
+          "action": "Rest"
+        },
+        {
+          "frame": 36,
+          "action": "Small inhale"
+        },
+        {
+          "frame": 72,
+          "action": "Rest"
+        }
+      ],
+      "frames": [
+        {
+          "frame": 0,
+          "from": "Rest",
+          "toward": "Small inhale",
+          "key": true
+        },
+        {
+          "frame": 1,
+          "from": "Rest",
+          "toward": "Small inhale",
+          "key": false
+        },
+        {
+          "frame": 2,
+          "from": "Rest",
+          "toward": "Small inhale",
+          "key": false
+        },
+        {
+          "frame": 3,
+          "from": "Rest",
+          "toward": "Small inhale",
+          "key": false
+        },
+        {
+          "frame": 4,
+          "from": "Rest",
+          "toward": "Small inhale",
+          "key": false
+        },
+        {
+          "frame": 5,
+          "from": "Rest",
+          "toward": "Small inhale",
+          "key": false
+        },
+        {
+          "frame": 6,
+          "from": "Rest",
+          "toward": "Small inhale",
+          "key": false
+        },
+        {
+          "frame": 7,
+          "from": "Rest",
+          "toward": "Small inhale",
+          "key": false
+        },
+        {
+          "frame": 8,
+          "from": "Rest",
+          "toward": "Small inhale",
+          "key": false
+        },
+        {
+          "frame": 9,
+          "from": "Rest",
+          "toward": "Small inhale",
+          "key": false
+        },
+        {
+          "frame": 10,
+          "from": "Rest",
+          "toward": "Small inhale",
+          "key": false
+        },
+        {
+          "frame": 11,
+          "from": "Rest",
+          "toward": "Small inhale",
+          "key": false
+        },
+        {
+          "frame": 12,
+          "from": "Rest",
+          "toward": "Small inhale",
+          "key": false
+        },
+        {
+          "frame": 13,
+          "from": "Rest",
+          "toward": "Small inhale",
+          "key": false
+        },
+        {
+          "frame": 14,
+          "from": "Rest",
+          "toward": "Small inhale",
+          "key": false
+        },
+        {
+          "frame": 15,
+          "from": "Rest",
+          "toward": "Small inhale",
+          "key": false
+        },
+        {
+          "frame": 16,
+          "from": "Rest",
+          "toward": "Small inhale",
+          "key": false
+        },
+        {
+          "frame": 17,
+          "from": "Rest",
+          "toward": "Small inhale",
+          "key": false
+        },
+        {
+          "frame": 18,
+          "from": "Rest",
+          "toward": "Small inhale",
+          "key": false
+        },
+        {
+          "frame": 19,
+          "from": "Rest",
+          "toward": "Small inhale",
+          "key": false
+        },
+        {
+          "frame": 20,
+          "from": "Rest",
+          "toward": "Small inhale",
+          "key": false
+        },
+        {
+          "frame": 21,
+          "from": "Rest",
+          "toward": "Small inhale",
+          "key": false
+        },
+        {
+          "frame": 22,
+          "from": "Rest",
+          "toward": "Small inhale",
+          "key": false
+        },
+        {
+          "frame": 23,
+          "from": "Rest",
+          "toward": "Small inhale",
+          "key": false
+        },
+        {
+          "frame": 24,
+          "from": "Rest",
+          "toward": "Small inhale",
+          "key": false
+        },
+        {
+          "frame": 25,
+          "from": "Rest",
+          "toward": "Small inhale",
+          "key": false
+        },
+        {
+          "frame": 26,
+          "from": "Rest",
+          "toward": "Small inhale",
+          "key": false
+        },
+        {
+          "frame": 27,
+          "from": "Rest",
+          "toward": "Small inhale",
+          "key": false
+        },
+        {
+          "frame": 28,
+          "from": "Rest",
+          "toward": "Small inhale",
+          "key": false
+        },
+        {
+          "frame": 29,
+          "from": "Rest",
+          "toward": "Small inhale",
+          "key": false
+        },
+        {
+          "frame": 30,
+          "from": "Rest",
+          "toward": "Small inhale",
+          "key": false
+        },
+        {
+          "frame": 31,
+          "from": "Rest",
+          "toward": "Small inhale",
+          "key": false
+        },
+        {
+          "frame": 32,
+          "from": "Rest",
+          "toward": "Small inhale",
+          "key": false
+        },
+        {
+          "frame": 33,
+          "from": "Rest",
+          "toward": "Small inhale",
+          "key": false
+        },
+        {
+          "frame": 34,
+          "from": "Rest",
+          "toward": "Small inhale",
+          "key": false
+        },
+        {
+          "frame": 35,
+          "from": "Rest",
+          "toward": "Small inhale",
+          "key": false
+        },
+        {
+          "frame": 36,
+          "from": "Small inhale",
+          "toward": "Rest",
+          "key": true
+        },
+        {
+          "frame": 37,
+          "from": "Small inhale",
+          "toward": "Rest",
+          "key": false
+        },
+        {
+          "frame": 38,
+          "from": "Small inhale",
+          "toward": "Rest",
+          "key": false
+        },
+        {
+          "frame": 39,
+          "from": "Small inhale",
+          "toward": "Rest",
+          "key": false
+        },
+        {
+          "frame": 40,
+          "from": "Small inhale",
+          "toward": "Rest",
+          "key": false
+        },
+        {
+          "frame": 41,
+          "from": "Small inhale",
+          "toward": "Rest",
+          "key": false
+        },
+        {
+          "frame": 42,
+          "from": "Small inhale",
+          "toward": "Rest",
+          "key": false
+        },
+        {
+          "frame": 43,
+          "from": "Small inhale",
+          "toward": "Rest",
+          "key": false
+        },
+        {
+          "frame": 44,
+          "from": "Small inhale",
+          "toward": "Rest",
+          "key": false
+        },
+        {
+          "frame": 45,
+          "from": "Small inhale",
+          "toward": "Rest",
+          "key": false
+        },
+        {
+          "frame": 46,
+          "from": "Small inhale",
+          "toward": "Rest",
+          "key": false
+        },
+        {
+          "frame": 47,
+          "from": "Small inhale",
+          "toward": "Rest",
+          "key": false
+        },
+        {
+          "frame": 48,
+          "from": "Small inhale",
+          "toward": "Rest",
+          "key": false
+        },
+        {
+          "frame": 49,
+          "from": "Small inhale",
+          "toward": "Rest",
+          "key": false
+        },
+        {
+          "frame": 50,
+          "from": "Small inhale",
+          "toward": "Rest",
+          "key": false
+        },
+        {
+          "frame": 51,
+          "from": "Small inhale",
+          "toward": "Rest",
+          "key": false
+        },
+        {
+          "frame": 52,
+          "from": "Small inhale",
+          "toward": "Rest",
+          "key": false
+        },
+        {
+          "frame": 53,
+          "from": "Small inhale",
+          "toward": "Rest",
+          "key": false
+        },
+        {
+          "frame": 54,
+          "from": "Small inhale",
+          "toward": "Rest",
+          "key": false
+        },
+        {
+          "frame": 55,
+          "from": "Small inhale",
+          "toward": "Rest",
+          "key": false
+        },
+        {
+          "frame": 56,
+          "from": "Small inhale",
+          "toward": "Rest",
+          "key": false
+        },
+        {
+          "frame": 57,
+          "from": "Small inhale",
+          "toward": "Rest",
+          "key": false
+        },
+        {
+          "frame": 58,
+          "from": "Small inhale",
+          "toward": "Rest",
+          "key": false
+        },
+        {
+          "frame": 59,
+          "from": "Small inhale",
+          "toward": "Rest",
+          "key": false
+        },
+        {
+          "frame": 60,
+          "from": "Small inhale",
+          "toward": "Rest",
+          "key": false
+        },
+        {
+          "frame": 61,
+          "from": "Small inhale",
+          "toward": "Rest",
+          "key": false
+        },
+        {
+          "frame": 62,
+          "from": "Small inhale",
+          "toward": "Rest",
+          "key": false
+        },
+        {
+          "frame": 63,
+          "from": "Small inhale",
+          "toward": "Rest",
+          "key": false
+        },
+        {
+          "frame": 64,
+          "from": "Small inhale",
+          "toward": "Rest",
+          "key": false
+        },
+        {
+          "frame": 65,
+          "from": "Small inhale",
+          "toward": "Rest",
+          "key": false
+        },
+        {
+          "frame": 66,
+          "from": "Small inhale",
+          "toward": "Rest",
+          "key": false
+        },
+        {
+          "frame": 67,
+          "from": "Small inhale",
+          "toward": "Rest",
+          "key": false
+        },
+        {
+          "frame": 68,
+          "from": "Small inhale",
+          "toward": "Rest",
+          "key": false
+        },
+        {
+          "frame": 69,
+          "from": "Small inhale",
+          "toward": "Rest",
+          "key": false
+        },
+        {
+          "frame": 70,
+          "from": "Small inhale",
+          "toward": "Rest",
+          "key": false
+        },
+        {
+          "frame": 71,
+          "from": "Small inhale",
+          "toward": "Rest",
+          "key": false
+        },
+        {
+          "frame": 72,
+          "from": "Rest",
+          "toward": "hold",
+          "key": true
+        }
+      ]
+    },
+    {
+      "id": "curious",
+      "number": 2,
+      "approach": "Eye aim, brow lift, head pitch; neck follows.",
+      "method": "continuous",
+      "keys": [
+        {
+          "frame": 0,
+          "action": "Live pose"
+        },
+        {
+          "frame": 1,
+          "action": "Eyes focus"
+        },
+        {
+          "frame": 4,
+          "action": "Brow lift"
+        },
+        {
+          "frame": 8,
+          "action": "Head leans toward stimulus"
+        },
+        {
+          "frame": 16,
+          "action": "Settle"
+        }
+      ],
+      "frames": [
+        {
+          "frame": 0,
+          "from": "Live pose",
+          "toward": "Eyes focus",
+          "key": true
+        },
+        {
+          "frame": 1,
+          "from": "Eyes focus",
+          "toward": "Brow lift",
+          "key": true
+        },
+        {
+          "frame": 2,
+          "from": "Eyes focus",
+          "toward": "Brow lift",
+          "key": false
+        },
+        {
+          "frame": 3,
+          "from": "Eyes focus",
+          "toward": "Brow lift",
+          "key": false
+        },
+        {
+          "frame": 4,
+          "from": "Brow lift",
+          "toward": "Head leans toward stimulus",
+          "key": true
+        },
+        {
+          "frame": 5,
+          "from": "Brow lift",
+          "toward": "Head leans toward stimulus",
+          "key": false
+        },
+        {
+          "frame": 6,
+          "from": "Brow lift",
+          "toward": "Head leans toward stimulus",
+          "key": false
+        },
+        {
+          "frame": 7,
+          "from": "Brow lift",
+          "toward": "Head leans toward stimulus",
+          "key": false
+        },
+        {
+          "frame": 8,
+          "from": "Head leans toward stimulus",
+          "toward": "Settle",
+          "key": true
+        },
+        {
+          "frame": 9,
+          "from": "Head leans toward stimulus",
+          "toward": "Settle",
+          "key": false
+        },
+        {
+          "frame": 10,
+          "from": "Head leans toward stimulus",
+          "toward": "Settle",
+          "key": false
+        },
+        {
+          "frame": 11,
+          "from": "Head leans toward stimulus",
+          "toward": "Settle",
+          "key": false
+        },
+        {
+          "frame": 12,
+          "from": "Head leans toward stimulus",
+          "toward": "Settle",
+          "key": false
+        },
+        {
+          "frame": 13,
+          "from": "Head leans toward stimulus",
+          "toward": "Settle",
+          "key": false
+        },
+        {
+          "frame": 14,
+          "from": "Head leans toward stimulus",
+          "toward": "Settle",
+          "key": false
+        },
+        {
+          "frame": 15,
+          "from": "Head leans toward stimulus",
+          "toward": "Settle",
+          "key": false
+        },
+        {
+          "frame": 16,
+          "from": "Settle",
+          "toward": "hold",
+          "key": true
+        }
+      ]
+    },
+    {
+      "id": "suspicious",
+      "number": 3,
+      "approach": "Asymmetric eyelids and sideways gaze; chin withdraws.",
+      "method": "continuous",
+      "keys": [
+        {
+          "frame": 0,
+          "action": "Live pose"
+        },
+        {
+          "frame": 1,
+          "action": "Eye dart"
+        },
+        {
+          "frame": 4,
+          "action": "Narrow one lid"
+        },
+        {
+          "frame": 8,
+          "action": "Chin back"
+        },
+        {
+          "frame": 18,
+          "action": "Hold suspicion"
+        }
+      ],
+      "frames": [
+        {
+          "frame": 0,
+          "from": "Live pose",
+          "toward": "Eye dart",
+          "key": true
+        },
+        {
+          "frame": 1,
+          "from": "Eye dart",
+          "toward": "Narrow one lid",
+          "key": true
+        },
+        {
+          "frame": 2,
+          "from": "Eye dart",
+          "toward": "Narrow one lid",
+          "key": false
+        },
+        {
+          "frame": 3,
+          "from": "Eye dart",
+          "toward": "Narrow one lid",
+          "key": false
+        },
+        {
+          "frame": 4,
+          "from": "Narrow one lid",
+          "toward": "Chin back",
+          "key": true
+        },
+        {
+          "frame": 5,
+          "from": "Narrow one lid",
+          "toward": "Chin back",
+          "key": false
+        },
+        {
+          "frame": 6,
+          "from": "Narrow one lid",
+          "toward": "Chin back",
+          "key": false
+        },
+        {
+          "frame": 7,
+          "from": "Narrow one lid",
+          "toward": "Chin back",
+          "key": false
+        },
+        {
+          "frame": 8,
+          "from": "Chin back",
+          "toward": "Hold suspicion",
+          "key": true
+        },
+        {
+          "frame": 9,
+          "from": "Chin back",
+          "toward": "Hold suspicion",
+          "key": false
+        },
+        {
+          "frame": 10,
+          "from": "Chin back",
+          "toward": "Hold suspicion",
+          "key": false
+        },
+        {
+          "frame": 11,
+          "from": "Chin back",
+          "toward": "Hold suspicion",
+          "key": false
+        },
+        {
+          "frame": 12,
+          "from": "Chin back",
+          "toward": "Hold suspicion",
+          "key": false
+        },
+        {
+          "frame": 13,
+          "from": "Chin back",
+          "toward": "Hold suspicion",
+          "key": false
+        },
+        {
+          "frame": 14,
+          "from": "Chin back",
+          "toward": "Hold suspicion",
+          "key": false
+        },
+        {
+          "frame": 15,
+          "from": "Chin back",
+          "toward": "Hold suspicion",
+          "key": false
+        },
+        {
+          "frame": 16,
+          "from": "Chin back",
+          "toward": "Hold suspicion",
+          "key": false
+        },
+        {
+          "frame": 17,
+          "from": "Chin back",
+          "toward": "Hold suspicion",
+          "key": false
+        },
+        {
+          "frame": 18,
+          "from": "Hold suspicion",
+          "toward": "hold",
+          "key": true
+        }
+      ]
+    },
+    {
+      "id": "smug",
+      "number": 4,
+      "approach": "One cheek and mouth corner lift ahead of chin.",
+      "method": "continuous",
+      "keys": [
+        {
+          "frame": 0,
+          "action": "Live pose"
+        },
+        {
+          "frame": 2,
+          "action": "Corner rises"
+        },
+        {
+          "frame": 5,
+          "action": "Lid lowers"
+        },
+        {
+          "frame": 9,
+          "action": "Chin tips up"
+        },
+        {
+          "frame": 18,
+          "action": "Hold"
+        }
+      ],
+      "frames": [
+        {
+          "frame": 0,
+          "from": "Live pose",
+          "toward": "Corner rises",
+          "key": true
+        },
+        {
+          "frame": 1,
+          "from": "Live pose",
+          "toward": "Corner rises",
+          "key": false
+        },
+        {
+          "frame": 2,
+          "from": "Corner rises",
+          "toward": "Lid lowers",
+          "key": true
+        },
+        {
+          "frame": 3,
+          "from": "Corner rises",
+          "toward": "Lid lowers",
+          "key": false
+        },
+        {
+          "frame": 4,
+          "from": "Corner rises",
+          "toward": "Lid lowers",
+          "key": false
+        },
+        {
+          "frame": 5,
+          "from": "Lid lowers",
+          "toward": "Chin tips up",
+          "key": true
+        },
+        {
+          "frame": 6,
+          "from": "Lid lowers",
+          "toward": "Chin tips up",
+          "key": false
+        },
+        {
+          "frame": 7,
+          "from": "Lid lowers",
+          "toward": "Chin tips up",
+          "key": false
+        },
+        {
+          "frame": 8,
+          "from": "Lid lowers",
+          "toward": "Chin tips up",
+          "key": false
+        },
+        {
+          "frame": 9,
+          "from": "Chin tips up",
+          "toward": "Hold",
+          "key": true
+        },
+        {
+          "frame": 10,
+          "from": "Chin tips up",
+          "toward": "Hold",
+          "key": false
+        },
+        {
+          "frame": 11,
+          "from": "Chin tips up",
+          "toward": "Hold",
+          "key": false
+        },
+        {
+          "frame": 12,
+          "from": "Chin tips up",
+          "toward": "Hold",
+          "key": false
+        },
+        {
+          "frame": 13,
+          "from": "Chin tips up",
+          "toward": "Hold",
+          "key": false
+        },
+        {
+          "frame": 14,
+          "from": "Chin tips up",
+          "toward": "Hold",
+          "key": false
+        },
+        {
+          "frame": 15,
+          "from": "Chin tips up",
+          "toward": "Hold",
+          "key": false
+        },
+        {
+          "frame": 16,
+          "from": "Chin tips up",
+          "toward": "Hold",
+          "key": false
+        },
+        {
+          "frame": 17,
+          "from": "Chin tips up",
+          "toward": "Hold",
+          "key": false
+        },
+        {
+          "frame": 18,
+          "from": "Hold",
+          "toward": "hold",
+          "key": true
+        }
+      ]
+    },
+    {
+      "id": "warm-smile",
+      "number": 5,
+      "approach": "Cheeks lift, lower lids rise, lips part gently.",
+      "method": "continuous",
+      "keys": [
+        {
+          "frame": 0,
+          "action": "Live pose"
+        },
+        {
+          "frame": 3,
+          "action": "Soften brows"
+        },
+        {
+          "frame": 6,
+          "action": "Cheek lift"
+        },
+        {
+          "frame": 12,
+          "action": "Mouth corner settle"
+        },
+        {
+          "frame": 22,
+          "action": "Hold"
+        }
+      ],
+      "frames": [
+        {
+          "frame": 0,
+          "from": "Live pose",
+          "toward": "Soften brows",
+          "key": true
+        },
+        {
+          "frame": 1,
+          "from": "Live pose",
+          "toward": "Soften brows",
+          "key": false
+        },
+        {
+          "frame": 2,
+          "from": "Live pose",
+          "toward": "Soften brows",
+          "key": false
+        },
+        {
+          "frame": 3,
+          "from": "Soften brows",
+          "toward": "Cheek lift",
+          "key": true
+        },
+        {
+          "frame": 4,
+          "from": "Soften brows",
+          "toward": "Cheek lift",
+          "key": false
+        },
+        {
+          "frame": 5,
+          "from": "Soften brows",
+          "toward": "Cheek lift",
+          "key": false
+        },
+        {
+          "frame": 6,
+          "from": "Cheek lift",
+          "toward": "Mouth corner settle",
+          "key": true
+        },
+        {
+          "frame": 7,
+          "from": "Cheek lift",
+          "toward": "Mouth corner settle",
+          "key": false
+        },
+        {
+          "frame": 8,
+          "from": "Cheek lift",
+          "toward": "Mouth corner settle",
+          "key": false
+        },
+        {
+          "frame": 9,
+          "from": "Cheek lift",
+          "toward": "Mouth corner settle",
+          "key": false
+        },
+        {
+          "frame": 10,
+          "from": "Cheek lift",
+          "toward": "Mouth corner settle",
+          "key": false
+        },
+        {
+          "frame": 11,
+          "from": "Cheek lift",
+          "toward": "Mouth corner settle",
+          "key": false
+        },
+        {
+          "frame": 12,
+          "from": "Mouth corner settle",
+          "toward": "Hold",
+          "key": true
+        },
+        {
+          "frame": 13,
+          "from": "Mouth corner settle",
+          "toward": "Hold",
+          "key": false
+        },
+        {
+          "frame": 14,
+          "from": "Mouth corner settle",
+          "toward": "Hold",
+          "key": false
+        },
+        {
+          "frame": 15,
+          "from": "Mouth corner settle",
+          "toward": "Hold",
+          "key": false
+        },
+        {
+          "frame": 16,
+          "from": "Mouth corner settle",
+          "toward": "Hold",
+          "key": false
+        },
+        {
+          "frame": 17,
+          "from": "Mouth corner settle",
+          "toward": "Hold",
+          "key": false
+        },
+        {
+          "frame": 18,
+          "from": "Mouth corner settle",
+          "toward": "Hold",
+          "key": false
+        },
+        {
+          "frame": 19,
+          "from": "Mouth corner settle",
+          "toward": "Hold",
+          "key": false
+        },
+        {
+          "frame": 20,
+          "from": "Mouth corner settle",
+          "toward": "Hold",
+          "key": false
+        },
+        {
+          "frame": 21,
+          "from": "Mouth corner settle",
+          "toward": "Hold",
+          "key": false
+        },
+        {
+          "frame": 22,
+          "from": "Hold",
+          "toward": "hold",
+          "key": true
+        }
+      ]
+    },
+    {
+      "id": "delight",
+      "number": 6,
+      "approach": "Compressed anticipation into cheek expansion and lifted fists.",
+      "method": "corrective",
+      "keys": [
+        {
+          "frame": 0,
+          "action": "Live pose"
+        },
+        {
+          "frame": 2,
+          "action": "Cheeks lift"
+        },
+        {
+          "frame": 4,
+          "action": "Dip"
+        },
+        {
+          "frame": 5,
+          "action": "Upward smear if extreme"
+        },
+        {
+          "frame": 6,
+          "action": "Delight"
+        },
+        {
+          "frame": 10,
+          "action": "Rebound"
+        },
+        {
+          "frame": 18,
+          "action": "Hair settles"
+        }
+      ],
+      "frames": [
+        {
+          "frame": 0,
+          "from": "Live pose",
+          "toward": "Cheeks lift",
+          "key": true
+        },
+        {
+          "frame": 1,
+          "from": "Live pose",
+          "toward": "Cheeks lift",
+          "key": false
+        },
+        {
+          "frame": 2,
+          "from": "Cheeks lift",
+          "toward": "Dip",
+          "key": true
+        },
+        {
+          "frame": 3,
+          "from": "Cheeks lift",
+          "toward": "Dip",
+          "key": false
+        },
+        {
+          "frame": 4,
+          "from": "Dip",
+          "toward": "Upward smear if extreme",
+          "key": true
+        },
+        {
+          "frame": 5,
+          "from": "Upward smear if extreme",
+          "toward": "Delight",
+          "key": true
+        },
+        {
+          "frame": 6,
+          "from": "Delight",
+          "toward": "Rebound",
+          "key": true
+        },
+        {
+          "frame": 7,
+          "from": "Delight",
+          "toward": "Rebound",
+          "key": false
+        },
+        {
+          "frame": 8,
+          "from": "Delight",
+          "toward": "Rebound",
+          "key": false
+        },
+        {
+          "frame": 9,
+          "from": "Delight",
+          "toward": "Rebound",
+          "key": false
+        },
+        {
+          "frame": 10,
+          "from": "Rebound",
+          "toward": "Hair settles",
+          "key": true
+        },
+        {
+          "frame": 11,
+          "from": "Rebound",
+          "toward": "Hair settles",
+          "key": false
+        },
+        {
+          "frame": 12,
+          "from": "Rebound",
+          "toward": "Hair settles",
+          "key": false
+        },
+        {
+          "frame": 13,
+          "from": "Rebound",
+          "toward": "Hair settles",
+          "key": false
+        },
+        {
+          "frame": 14,
+          "from": "Rebound",
+          "toward": "Hair settles",
+          "key": false
+        },
+        {
+          "frame": 15,
+          "from": "Rebound",
+          "toward": "Hair settles",
+          "key": false
+        },
+        {
+          "frame": 16,
+          "from": "Rebound",
+          "toward": "Hair settles",
+          "key": false
+        },
+        {
+          "frame": 17,
+          "from": "Rebound",
+          "toward": "Hair settles",
+          "key": false
+        },
+        {
+          "frame": 18,
+          "from": "Hair settles",
+          "toward": "hold",
+          "key": true
+        }
+      ]
+    },
+    {
+      "id": "laughter",
+      "number": 7,
+      "approach": "Jaw opening, cheek inflation, torso fold and uneven breath pulses.",
+      "method": "corrective",
+      "keys": [
+        {
+          "frame": 0,
+          "action": "Live pose"
+        },
+        {
+          "frame": 3,
+          "action": "Held grin"
+        },
+        {
+          "frame": 6,
+          "action": "Inhale"
+        },
+        {
+          "frame": 9,
+          "action": "Head back"
+        },
+        {
+          "frame": 13,
+          "action": "Fold"
+        },
+        {
+          "frame": 16,
+          "action": "Smaller laugh"
+        },
+        {
+          "frame": 22,
+          "action": "Recover"
+        },
+        {
+          "frame": 32,
+          "action": "Grin"
+        }
+      ],
+      "frames": [
+        {
+          "frame": 0,
+          "from": "Live pose",
+          "toward": "Held grin",
+          "key": true
+        },
+        {
+          "frame": 1,
+          "from": "Live pose",
+          "toward": "Held grin",
+          "key": false
+        },
+        {
+          "frame": 2,
+          "from": "Live pose",
+          "toward": "Held grin",
+          "key": false
+        },
+        {
+          "frame": 3,
+          "from": "Held grin",
+          "toward": "Inhale",
+          "key": true
+        },
+        {
+          "frame": 4,
+          "from": "Held grin",
+          "toward": "Inhale",
+          "key": false
+        },
+        {
+          "frame": 5,
+          "from": "Held grin",
+          "toward": "Inhale",
+          "key": false
+        },
+        {
+          "frame": 6,
+          "from": "Inhale",
+          "toward": "Head back",
+          "key": true
+        },
+        {
+          "frame": 7,
+          "from": "Inhale",
+          "toward": "Head back",
+          "key": false
+        },
+        {
+          "frame": 8,
+          "from": "Inhale",
+          "toward": "Head back",
+          "key": false
+        },
+        {
+          "frame": 9,
+          "from": "Head back",
+          "toward": "Fold",
+          "key": true
+        },
+        {
+          "frame": 10,
+          "from": "Head back",
+          "toward": "Fold",
+          "key": false
+        },
+        {
+          "frame": 11,
+          "from": "Head back",
+          "toward": "Fold",
+          "key": false
+        },
+        {
+          "frame": 12,
+          "from": "Head back",
+          "toward": "Fold",
+          "key": false
+        },
+        {
+          "frame": 13,
+          "from": "Fold",
+          "toward": "Smaller laugh",
+          "key": true
+        },
+        {
+          "frame": 14,
+          "from": "Fold",
+          "toward": "Smaller laugh",
+          "key": false
+        },
+        {
+          "frame": 15,
+          "from": "Fold",
+          "toward": "Smaller laugh",
+          "key": false
+        },
+        {
+          "frame": 16,
+          "from": "Smaller laugh",
+          "toward": "Recover",
+          "key": true
+        },
+        {
+          "frame": 17,
+          "from": "Smaller laugh",
+          "toward": "Recover",
+          "key": false
+        },
+        {
+          "frame": 18,
+          "from": "Smaller laugh",
+          "toward": "Recover",
+          "key": false
+        },
+        {
+          "frame": 19,
+          "from": "Smaller laugh",
+          "toward": "Recover",
+          "key": false
+        },
+        {
+          "frame": 20,
+          "from": "Smaller laugh",
+          "toward": "Recover",
+          "key": false
+        },
+        {
+          "frame": 21,
+          "from": "Smaller laugh",
+          "toward": "Recover",
+          "key": false
+        },
+        {
+          "frame": 22,
+          "from": "Recover",
+          "toward": "Grin",
+          "key": true
+        },
+        {
+          "frame": 23,
+          "from": "Recover",
+          "toward": "Grin",
+          "key": false
+        },
+        {
+          "frame": 24,
+          "from": "Recover",
+          "toward": "Grin",
+          "key": false
+        },
+        {
+          "frame": 25,
+          "from": "Recover",
+          "toward": "Grin",
+          "key": false
+        },
+        {
+          "frame": 26,
+          "from": "Recover",
+          "toward": "Grin",
+          "key": false
+        },
+        {
+          "frame": 27,
+          "from": "Recover",
+          "toward": "Grin",
+          "key": false
+        },
+        {
+          "frame": 28,
+          "from": "Recover",
+          "toward": "Grin",
+          "key": false
+        },
+        {
+          "frame": 29,
+          "from": "Recover",
+          "toward": "Grin",
+          "key": false
+        },
+        {
+          "frame": 30,
+          "from": "Recover",
+          "toward": "Grin",
+          "key": false
+        },
+        {
+          "frame": 31,
+          "from": "Recover",
+          "toward": "Grin",
+          "key": false
+        },
+        {
+          "frame": 32,
+          "from": "Grin",
+          "toward": "hold",
+          "key": true
+        }
+      ]
+    },
+    {
+      "id": "surprise",
+      "number": 8,
+      "approach": "Eye opening, round lips, head lift and late shoulder recoil.",
+      "method": "continuous",
+      "keys": [
+        {
+          "frame": 0,
+          "action": "Live pose"
+        },
+        {
+          "frame": 1,
+          "action": "Notice"
+        },
+        {
+          "frame": 3,
+          "action": "Brows rise"
+        },
+        {
+          "frame": 5,
+          "action": "Recoil"
+        },
+        {
+          "frame": 7,
+          "action": "Surprise"
+        },
+        {
+          "frame": 15,
+          "action": "Settle"
+        }
+      ],
+      "frames": [
+        {
+          "frame": 0,
+          "from": "Live pose",
+          "toward": "Notice",
+          "key": true
+        },
+        {
+          "frame": 1,
+          "from": "Notice",
+          "toward": "Brows rise",
+          "key": true
+        },
+        {
+          "frame": 2,
+          "from": "Notice",
+          "toward": "Brows rise",
+          "key": false
+        },
+        {
+          "frame": 3,
+          "from": "Brows rise",
+          "toward": "Recoil",
+          "key": true
+        },
+        {
+          "frame": 4,
+          "from": "Brows rise",
+          "toward": "Recoil",
+          "key": false
+        },
+        {
+          "frame": 5,
+          "from": "Recoil",
+          "toward": "Surprise",
+          "key": true
+        },
+        {
+          "frame": 6,
+          "from": "Recoil",
+          "toward": "Surprise",
+          "key": false
+        },
+        {
+          "frame": 7,
+          "from": "Surprise",
+          "toward": "Settle",
+          "key": true
+        },
+        {
+          "frame": 8,
+          "from": "Surprise",
+          "toward": "Settle",
+          "key": false
+        },
+        {
+          "frame": 9,
+          "from": "Surprise",
+          "toward": "Settle",
+          "key": false
+        },
+        {
+          "frame": 10,
+          "from": "Surprise",
+          "toward": "Settle",
+          "key": false
+        },
+        {
+          "frame": 11,
+          "from": "Surprise",
+          "toward": "Settle",
+          "key": false
+        },
+        {
+          "frame": 12,
+          "from": "Surprise",
+          "toward": "Settle",
+          "key": false
+        },
+        {
+          "frame": 13,
+          "from": "Surprise",
+          "toward": "Settle",
+          "key": false
+        },
+        {
+          "frame": 14,
+          "from": "Surprise",
+          "toward": "Settle",
+          "key": false
+        },
+        {
+          "frame": 15,
+          "from": "Settle",
+          "toward": "hold",
+          "key": true
+        }
+      ]
+    },
+    {
+      "id": "panic",
+      "number": 9,
+      "approach": "Extreme registered face assembly; preserve neck and mouth anchors.",
+      "method": "replacement",
+      "keys": [
+        {
+          "frame": 0,
+          "action": "Composed"
+        },
+        {
+          "frame": 3,
+          "action": "Notice"
+        },
+        {
+          "frame": 5,
+          "action": "Squash"
+        },
+        {
+          "frame": 6,
+          "action": "Smear"
+        },
+        {
+          "frame": 7,
+          "action": "Stretched breakdown"
+        },
+        {
+          "frame": 8,
+          "action": "Panic"
+        },
+        {
+          "frame": 10,
+          "action": "Hold"
+        },
+        {
+          "frame": 12,
+          "action": "Rebound"
+        },
+        {
+          "frame": 20,
+          "action": "Embarrassed"
+        },
+        {
+          "frame": 32,
+          "action": "Play it cool"
+        }
+      ],
+      "frames": [
+        {
+          "frame": 0,
+          "from": "Composed",
+          "toward": "Notice",
+          "key": true
+        },
+        {
+          "frame": 1,
+          "from": "Composed",
+          "toward": "Notice",
+          "key": false
+        },
+        {
+          "frame": 2,
+          "from": "Composed",
+          "toward": "Notice",
+          "key": false
+        },
+        {
+          "frame": 3,
+          "from": "Notice",
+          "toward": "Squash",
+          "key": true
+        },
+        {
+          "frame": 4,
+          "from": "Notice",
+          "toward": "Squash",
+          "key": false
+        },
+        {
+          "frame": 5,
+          "from": "Squash",
+          "toward": "Smear",
+          "key": true
+        },
+        {
+          "frame": 6,
+          "from": "Smear",
+          "toward": "Stretched breakdown",
+          "key": true
+        },
+        {
+          "frame": 7,
+          "from": "Stretched breakdown",
+          "toward": "Panic",
+          "key": true
+        },
+        {
+          "frame": 8,
+          "from": "Panic",
+          "toward": "Hold",
+          "key": true
+        },
+        {
+          "frame": 9,
+          "from": "Panic",
+          "toward": "Hold",
+          "key": false
+        },
+        {
+          "frame": 10,
+          "from": "Hold",
+          "toward": "Rebound",
+          "key": true
+        },
+        {
+          "frame": 11,
+          "from": "Hold",
+          "toward": "Rebound",
+          "key": false
+        },
+        {
+          "frame": 12,
+          "from": "Rebound",
+          "toward": "Embarrassed",
+          "key": true
+        },
+        {
+          "frame": 13,
+          "from": "Rebound",
+          "toward": "Embarrassed",
+          "key": false
+        },
+        {
+          "frame": 14,
+          "from": "Rebound",
+          "toward": "Embarrassed",
+          "key": false
+        },
+        {
+          "frame": 15,
+          "from": "Rebound",
+          "toward": "Embarrassed",
+          "key": false
+        },
+        {
+          "frame": 16,
+          "from": "Rebound",
+          "toward": "Embarrassed",
+          "key": false
+        },
+        {
+          "frame": 17,
+          "from": "Rebound",
+          "toward": "Embarrassed",
+          "key": false
+        },
+        {
+          "frame": 18,
+          "from": "Rebound",
+          "toward": "Embarrassed",
+          "key": false
+        },
+        {
+          "frame": 19,
+          "from": "Rebound",
+          "toward": "Embarrassed",
+          "key": false
+        },
+        {
+          "frame": 20,
+          "from": "Embarrassed",
+          "toward": "Play it cool",
+          "key": true
+        },
+        {
+          "frame": 21,
+          "from": "Embarrassed",
+          "toward": "Play it cool",
+          "key": false
+        },
+        {
+          "frame": 22,
+          "from": "Embarrassed",
+          "toward": "Play it cool",
+          "key": false
+        },
+        {
+          "frame": 23,
+          "from": "Embarrassed",
+          "toward": "Play it cool",
+          "key": false
+        },
+        {
+          "frame": 24,
+          "from": "Embarrassed",
+          "toward": "Play it cool",
+          "key": false
+        },
+        {
+          "frame": 25,
+          "from": "Embarrassed",
+          "toward": "Play it cool",
+          "key": false
+        },
+        {
+          "frame": 26,
+          "from": "Embarrassed",
+          "toward": "Play it cool",
+          "key": false
+        },
+        {
+          "frame": 27,
+          "from": "Embarrassed",
+          "toward": "Play it cool",
+          "key": false
+        },
+        {
+          "frame": 28,
+          "from": "Embarrassed",
+          "toward": "Play it cool",
+          "key": false
+        },
+        {
+          "frame": 29,
+          "from": "Embarrassed",
+          "toward": "Play it cool",
+          "key": false
+        },
+        {
+          "frame": 30,
+          "from": "Embarrassed",
+          "toward": "Play it cool",
+          "key": false
+        },
+        {
+          "frame": 31,
+          "from": "Embarrassed",
+          "toward": "Play it cool",
+          "key": false
+        },
+        {
+          "frame": 32,
+          "from": "Play it cool",
+          "toward": "hold",
+          "key": true
+        }
+      ]
+    },
+    {
+      "id": "annoyed",
+      "number": 10,
+      "approach": "Lids lower, mouth flattens, head sinks into collar/scarf.",
+      "method": "continuous",
+      "keys": [
+        {
+          "frame": 0,
+          "action": "Live pose"
+        },
+        {
+          "frame": 2,
+          "action": "Side eye"
+        },
+        {
+          "frame": 5,
+          "action": "Lower lids"
+        },
+        {
+          "frame": 9,
+          "action": "Head sinks"
+        },
+        {
+          "frame": 18,
+          "action": "Hold"
+        }
+      ],
+      "frames": [
+        {
+          "frame": 0,
+          "from": "Live pose",
+          "toward": "Side eye",
+          "key": true
+        },
+        {
+          "frame": 1,
+          "from": "Live pose",
+          "toward": "Side eye",
+          "key": false
+        },
+        {
+          "frame": 2,
+          "from": "Side eye",
+          "toward": "Lower lids",
+          "key": true
+        },
+        {
+          "frame": 3,
+          "from": "Side eye",
+          "toward": "Lower lids",
+          "key": false
+        },
+        {
+          "frame": 4,
+          "from": "Side eye",
+          "toward": "Lower lids",
+          "key": false
+        },
+        {
+          "frame": 5,
+          "from": "Lower lids",
+          "toward": "Head sinks",
+          "key": true
+        },
+        {
+          "frame": 6,
+          "from": "Lower lids",
+          "toward": "Head sinks",
+          "key": false
+        },
+        {
+          "frame": 7,
+          "from": "Lower lids",
+          "toward": "Head sinks",
+          "key": false
+        },
+        {
+          "frame": 8,
+          "from": "Lower lids",
+          "toward": "Head sinks",
+          "key": false
+        },
+        {
+          "frame": 9,
+          "from": "Head sinks",
+          "toward": "Hold",
+          "key": true
+        },
+        {
+          "frame": 10,
+          "from": "Head sinks",
+          "toward": "Hold",
+          "key": false
+        },
+        {
+          "frame": 11,
+          "from": "Head sinks",
+          "toward": "Hold",
+          "key": false
+        },
+        {
+          "frame": 12,
+          "from": "Head sinks",
+          "toward": "Hold",
+          "key": false
+        },
+        {
+          "frame": 13,
+          "from": "Head sinks",
+          "toward": "Hold",
+          "key": false
+        },
+        {
+          "frame": 14,
+          "from": "Head sinks",
+          "toward": "Hold",
+          "key": false
+        },
+        {
+          "frame": 15,
+          "from": "Head sinks",
+          "toward": "Hold",
+          "key": false
+        },
+        {
+          "frame": 16,
+          "from": "Head sinks",
+          "toward": "Hold",
+          "key": false
+        },
+        {
+          "frame": 17,
+          "from": "Head sinks",
+          "toward": "Hold",
+          "key": false
+        },
+        {
+          "frame": 18,
+          "from": "Hold",
+          "toward": "hold",
+          "key": true
+        }
+      ]
+    },
+    {
+      "id": "angry",
+      "number": 11,
+      "approach": "Brow compression, nose wrinkle and asymmetric tooth reveal.",
+      "method": "corrective",
+      "keys": [
+        {
+          "frame": 0,
+          "action": "Live pose"
+        },
+        {
+          "frame": 1,
+          "action": "Eye lock"
+        },
+        {
+          "frame": 4,
+          "action": "Brow pinch"
+        },
+        {
+          "frame": 7,
+          "action": "Jaw tension"
+        },
+        {
+          "frame": 12,
+          "action": "Lean forward"
+        },
+        {
+          "frame": 20,
+          "action": "Hold"
+        }
+      ],
+      "frames": [
+        {
+          "frame": 0,
+          "from": "Live pose",
+          "toward": "Eye lock",
+          "key": true
+        },
+        {
+          "frame": 1,
+          "from": "Eye lock",
+          "toward": "Brow pinch",
+          "key": true
+        },
+        {
+          "frame": 2,
+          "from": "Eye lock",
+          "toward": "Brow pinch",
+          "key": false
+        },
+        {
+          "frame": 3,
+          "from": "Eye lock",
+          "toward": "Brow pinch",
+          "key": false
+        },
+        {
+          "frame": 4,
+          "from": "Brow pinch",
+          "toward": "Jaw tension",
+          "key": true
+        },
+        {
+          "frame": 5,
+          "from": "Brow pinch",
+          "toward": "Jaw tension",
+          "key": false
+        },
+        {
+          "frame": 6,
+          "from": "Brow pinch",
+          "toward": "Jaw tension",
+          "key": false
+        },
+        {
+          "frame": 7,
+          "from": "Jaw tension",
+          "toward": "Lean forward",
+          "key": true
+        },
+        {
+          "frame": 8,
+          "from": "Jaw tension",
+          "toward": "Lean forward",
+          "key": false
+        },
+        {
+          "frame": 9,
+          "from": "Jaw tension",
+          "toward": "Lean forward",
+          "key": false
+        },
+        {
+          "frame": 10,
+          "from": "Jaw tension",
+          "toward": "Lean forward",
+          "key": false
+        },
+        {
+          "frame": 11,
+          "from": "Jaw tension",
+          "toward": "Lean forward",
+          "key": false
+        },
+        {
+          "frame": 12,
+          "from": "Lean forward",
+          "toward": "Hold",
+          "key": true
+        },
+        {
+          "frame": 13,
+          "from": "Lean forward",
+          "toward": "Hold",
+          "key": false
+        },
+        {
+          "frame": 14,
+          "from": "Lean forward",
+          "toward": "Hold",
+          "key": false
+        },
+        {
+          "frame": 15,
+          "from": "Lean forward",
+          "toward": "Hold",
+          "key": false
+        },
+        {
+          "frame": 16,
+          "from": "Lean forward",
+          "toward": "Hold",
+          "key": false
+        },
+        {
+          "frame": 17,
+          "from": "Lean forward",
+          "toward": "Hold",
+          "key": false
+        },
+        {
+          "frame": 18,
+          "from": "Lean forward",
+          "toward": "Hold",
+          "key": false
+        },
+        {
+          "frame": 19,
+          "from": "Lean forward",
+          "toward": "Hold",
+          "key": false
+        },
+        {
+          "frame": 20,
+          "from": "Hold",
+          "toward": "hold",
+          "key": true
+        }
+      ]
+    },
+    {
+      "id": "furious",
+      "number": 12,
+      "approach": "Foreshortened head/throat correction and shout jaw.",
+      "method": "replacement",
+      "keys": [
+        {
+          "frame": 0,
+          "action": "Live pose"
+        },
+        {
+          "frame": 2,
+          "action": "Lock eyes"
+        },
+        {
+          "frame": 5,
+          "action": "Load shoulders"
+        },
+        {
+          "frame": 6,
+          "action": "Forward smear"
+        },
+        {
+          "frame": 7,
+          "action": "Shout"
+        },
+        {
+          "frame": 10,
+          "action": "Small recoil"
+        },
+        {
+          "frame": 19,
+          "action": "Glare"
+        }
+      ],
+      "frames": [
+        {
+          "frame": 0,
+          "from": "Live pose",
+          "toward": "Lock eyes",
+          "key": true
+        },
+        {
+          "frame": 1,
+          "from": "Live pose",
+          "toward": "Lock eyes",
+          "key": false
+        },
+        {
+          "frame": 2,
+          "from": "Lock eyes",
+          "toward": "Load shoulders",
+          "key": true
+        },
+        {
+          "frame": 3,
+          "from": "Lock eyes",
+          "toward": "Load shoulders",
+          "key": false
+        },
+        {
+          "frame": 4,
+          "from": "Lock eyes",
+          "toward": "Load shoulders",
+          "key": false
+        },
+        {
+          "frame": 5,
+          "from": "Load shoulders",
+          "toward": "Forward smear",
+          "key": true
+        },
+        {
+          "frame": 6,
+          "from": "Forward smear",
+          "toward": "Shout",
+          "key": true
+        },
+        {
+          "frame": 7,
+          "from": "Shout",
+          "toward": "Small recoil",
+          "key": true
+        },
+        {
+          "frame": 8,
+          "from": "Shout",
+          "toward": "Small recoil",
+          "key": false
+        },
+        {
+          "frame": 9,
+          "from": "Shout",
+          "toward": "Small recoil",
+          "key": false
+        },
+        {
+          "frame": 10,
+          "from": "Small recoil",
+          "toward": "Glare",
+          "key": true
+        },
+        {
+          "frame": 11,
+          "from": "Small recoil",
+          "toward": "Glare",
+          "key": false
+        },
+        {
+          "frame": 12,
+          "from": "Small recoil",
+          "toward": "Glare",
+          "key": false
+        },
+        {
+          "frame": 13,
+          "from": "Small recoil",
+          "toward": "Glare",
+          "key": false
+        },
+        {
+          "frame": 14,
+          "from": "Small recoil",
+          "toward": "Glare",
+          "key": false
+        },
+        {
+          "frame": 15,
+          "from": "Small recoil",
+          "toward": "Glare",
+          "key": false
+        },
+        {
+          "frame": 16,
+          "from": "Small recoil",
+          "toward": "Glare",
+          "key": false
+        },
+        {
+          "frame": 17,
+          "from": "Small recoil",
+          "toward": "Glare",
+          "key": false
+        },
+        {
+          "frame": 18,
+          "from": "Small recoil",
+          "toward": "Glare",
+          "key": false
+        },
+        {
+          "frame": 19,
+          "from": "Glare",
+          "toward": "hold",
+          "key": true
+        }
+      ]
+    },
+    {
+      "id": "nervous-laugh",
+      "number": 13,
+      "approach": "Smile mouth with worried asymmetric eyes; uneven double laugh.",
+      "method": "corrective",
+      "keys": [
+        {
+          "frame": 0,
+          "action": "Live pose"
+        },
+        {
+          "frame": 2,
+          "action": "Gaze aside"
+        },
+        {
+          "frame": 5,
+          "action": "Forced grin"
+        },
+        {
+          "frame": 8,
+          "action": "Small laugh"
+        },
+        {
+          "frame": 12,
+          "action": "Hold awkwardly"
+        },
+        {
+          "frame": 16,
+          "action": "Smaller laugh"
+        },
+        {
+          "frame": 25,
+          "action": "Tight smile"
+        }
+      ],
+      "frames": [
+        {
+          "frame": 0,
+          "from": "Live pose",
+          "toward": "Gaze aside",
+          "key": true
+        },
+        {
+          "frame": 1,
+          "from": "Live pose",
+          "toward": "Gaze aside",
+          "key": false
+        },
+        {
+          "frame": 2,
+          "from": "Gaze aside",
+          "toward": "Forced grin",
+          "key": true
+        },
+        {
+          "frame": 3,
+          "from": "Gaze aside",
+          "toward": "Forced grin",
+          "key": false
+        },
+        {
+          "frame": 4,
+          "from": "Gaze aside",
+          "toward": "Forced grin",
+          "key": false
+        },
+        {
+          "frame": 5,
+          "from": "Forced grin",
+          "toward": "Small laugh",
+          "key": true
+        },
+        {
+          "frame": 6,
+          "from": "Forced grin",
+          "toward": "Small laugh",
+          "key": false
+        },
+        {
+          "frame": 7,
+          "from": "Forced grin",
+          "toward": "Small laugh",
+          "key": false
+        },
+        {
+          "frame": 8,
+          "from": "Small laugh",
+          "toward": "Hold awkwardly",
+          "key": true
+        },
+        {
+          "frame": 9,
+          "from": "Small laugh",
+          "toward": "Hold awkwardly",
+          "key": false
+        },
+        {
+          "frame": 10,
+          "from": "Small laugh",
+          "toward": "Hold awkwardly",
+          "key": false
+        },
+        {
+          "frame": 11,
+          "from": "Small laugh",
+          "toward": "Hold awkwardly",
+          "key": false
+        },
+        {
+          "frame": 12,
+          "from": "Hold awkwardly",
+          "toward": "Smaller laugh",
+          "key": true
+        },
+        {
+          "frame": 13,
+          "from": "Hold awkwardly",
+          "toward": "Smaller laugh",
+          "key": false
+        },
+        {
+          "frame": 14,
+          "from": "Hold awkwardly",
+          "toward": "Smaller laugh",
+          "key": false
+        },
+        {
+          "frame": 15,
+          "from": "Hold awkwardly",
+          "toward": "Smaller laugh",
+          "key": false
+        },
+        {
+          "frame": 16,
+          "from": "Smaller laugh",
+          "toward": "Tight smile",
+          "key": true
+        },
+        {
+          "frame": 17,
+          "from": "Smaller laugh",
+          "toward": "Tight smile",
+          "key": false
+        },
+        {
+          "frame": 18,
+          "from": "Smaller laugh",
+          "toward": "Tight smile",
+          "key": false
+        },
+        {
+          "frame": 19,
+          "from": "Smaller laugh",
+          "toward": "Tight smile",
+          "key": false
+        },
+        {
+          "frame": 20,
+          "from": "Smaller laugh",
+          "toward": "Tight smile",
+          "key": false
+        },
+        {
+          "frame": 21,
+          "from": "Smaller laugh",
+          "toward": "Tight smile",
+          "key": false
+        },
+        {
+          "frame": 22,
+          "from": "Smaller laugh",
+          "toward": "Tight smile",
+          "key": false
+        },
+        {
+          "frame": 23,
+          "from": "Smaller laugh",
+          "toward": "Tight smile",
+          "key": false
+        },
+        {
+          "frame": 24,
+          "from": "Smaller laugh",
+          "toward": "Tight smile",
+          "key": false
+        },
+        {
+          "frame": 25,
+          "from": "Tight smile",
+          "toward": "hold",
+          "key": true
+        }
+      ]
+    },
+    {
+      "id": "holding-laughter",
+      "number": 14,
+      "approach": "Local cheek inflation; mouth seal remains closed.",
+      "method": "corrective",
+      "keys": [
+        {
+          "frame": 0,
+          "action": "Live pose"
+        },
+        {
+          "frame": 3,
+          "action": "Press lips"
+        },
+        {
+          "frame": 7,
+          "action": "Cheeks fill"
+        },
+        {
+          "frame": 11,
+          "action": "Eyes squeeze"
+        },
+        {
+          "frame": 16,
+          "action": "Contain breath"
+        },
+        {
+          "frame": 25,
+          "action": "Release to grin"
+        }
+      ],
+      "frames": [
+        {
+          "frame": 0,
+          "from": "Live pose",
+          "toward": "Press lips",
+          "key": true
+        },
+        {
+          "frame": 1,
+          "from": "Live pose",
+          "toward": "Press lips",
+          "key": false
+        },
+        {
+          "frame": 2,
+          "from": "Live pose",
+          "toward": "Press lips",
+          "key": false
+        },
+        {
+          "frame": 3,
+          "from": "Press lips",
+          "toward": "Cheeks fill",
+          "key": true
+        },
+        {
+          "frame": 4,
+          "from": "Press lips",
+          "toward": "Cheeks fill",
+          "key": false
+        },
+        {
+          "frame": 5,
+          "from": "Press lips",
+          "toward": "Cheeks fill",
+          "key": false
+        },
+        {
+          "frame": 6,
+          "from": "Press lips",
+          "toward": "Cheeks fill",
+          "key": false
+        },
+        {
+          "frame": 7,
+          "from": "Cheeks fill",
+          "toward": "Eyes squeeze",
+          "key": true
+        },
+        {
+          "frame": 8,
+          "from": "Cheeks fill",
+          "toward": "Eyes squeeze",
+          "key": false
+        },
+        {
+          "frame": 9,
+          "from": "Cheeks fill",
+          "toward": "Eyes squeeze",
+          "key": false
+        },
+        {
+          "frame": 10,
+          "from": "Cheeks fill",
+          "toward": "Eyes squeeze",
+          "key": false
+        },
+        {
+          "frame": 11,
+          "from": "Eyes squeeze",
+          "toward": "Contain breath",
+          "key": true
+        },
+        {
+          "frame": 12,
+          "from": "Eyes squeeze",
+          "toward": "Contain breath",
+          "key": false
+        },
+        {
+          "frame": 13,
+          "from": "Eyes squeeze",
+          "toward": "Contain breath",
+          "key": false
+        },
+        {
+          "frame": 14,
+          "from": "Eyes squeeze",
+          "toward": "Contain breath",
+          "key": false
+        },
+        {
+          "frame": 15,
+          "from": "Eyes squeeze",
+          "toward": "Contain breath",
+          "key": false
+        },
+        {
+          "frame": 16,
+          "from": "Contain breath",
+          "toward": "Release to grin",
+          "key": true
+        },
+        {
+          "frame": 17,
+          "from": "Contain breath",
+          "toward": "Release to grin",
+          "key": false
+        },
+        {
+          "frame": 18,
+          "from": "Contain breath",
+          "toward": "Release to grin",
+          "key": false
+        },
+        {
+          "frame": 19,
+          "from": "Contain breath",
+          "toward": "Release to grin",
+          "key": false
+        },
+        {
+          "frame": 20,
+          "from": "Contain breath",
+          "toward": "Release to grin",
+          "key": false
+        },
+        {
+          "frame": 21,
+          "from": "Contain breath",
+          "toward": "Release to grin",
+          "key": false
+        },
+        {
+          "frame": 22,
+          "from": "Contain breath",
+          "toward": "Release to grin",
+          "key": false
+        },
+        {
+          "frame": 23,
+          "from": "Contain breath",
+          "toward": "Release to grin",
+          "key": false
+        },
+        {
+          "frame": 24,
+          "from": "Contain breath",
+          "toward": "Release to grin",
+          "key": false
+        },
+        {
+          "frame": 25,
+          "from": "Release to grin",
+          "toward": "hold",
+          "key": true
+        }
+      ]
+    },
+    {
+      "id": "suppressed-anger",
+      "number": 15,
+      "approach": "Clenched corners, restrained brow pinch and cheek tension.",
+      "method": "corrective",
+      "keys": [
+        {
+          "frame": 0,
+          "action": "Live pose"
+        },
+        {
+          "frame": 2,
+          "action": "Brow pinches"
+        },
+        {
+          "frame": 6,
+          "action": "Lips press"
+        },
+        {
+          "frame": 10,
+          "action": "Nose flare"
+        },
+        {
+          "frame": 17,
+          "action": "Inhale through nose"
+        },
+        {
+          "frame": 26,
+          "action": "Hold"
+        }
+      ],
+      "frames": [
+        {
+          "frame": 0,
+          "from": "Live pose",
+          "toward": "Brow pinches",
+          "key": true
+        },
+        {
+          "frame": 1,
+          "from": "Live pose",
+          "toward": "Brow pinches",
+          "key": false
+        },
+        {
+          "frame": 2,
+          "from": "Brow pinches",
+          "toward": "Lips press",
+          "key": true
+        },
+        {
+          "frame": 3,
+          "from": "Brow pinches",
+          "toward": "Lips press",
+          "key": false
+        },
+        {
+          "frame": 4,
+          "from": "Brow pinches",
+          "toward": "Lips press",
+          "key": false
+        },
+        {
+          "frame": 5,
+          "from": "Brow pinches",
+          "toward": "Lips press",
+          "key": false
+        },
+        {
+          "frame": 6,
+          "from": "Lips press",
+          "toward": "Nose flare",
+          "key": true
+        },
+        {
+          "frame": 7,
+          "from": "Lips press",
+          "toward": "Nose flare",
+          "key": false
+        },
+        {
+          "frame": 8,
+          "from": "Lips press",
+          "toward": "Nose flare",
+          "key": false
+        },
+        {
+          "frame": 9,
+          "from": "Lips press",
+          "toward": "Nose flare",
+          "key": false
+        },
+        {
+          "frame": 10,
+          "from": "Nose flare",
+          "toward": "Inhale through nose",
+          "key": true
+        },
+        {
+          "frame": 11,
+          "from": "Nose flare",
+          "toward": "Inhale through nose",
+          "key": false
+        },
+        {
+          "frame": 12,
+          "from": "Nose flare",
+          "toward": "Inhale through nose",
+          "key": false
+        },
+        {
+          "frame": 13,
+          "from": "Nose flare",
+          "toward": "Inhale through nose",
+          "key": false
+        },
+        {
+          "frame": 14,
+          "from": "Nose flare",
+          "toward": "Inhale through nose",
+          "key": false
+        },
+        {
+          "frame": 15,
+          "from": "Nose flare",
+          "toward": "Inhale through nose",
+          "key": false
+        },
+        {
+          "frame": 16,
+          "from": "Nose flare",
+          "toward": "Inhale through nose",
+          "key": false
+        },
+        {
+          "frame": 17,
+          "from": "Inhale through nose",
+          "toward": "Hold",
+          "key": true
+        },
+        {
+          "frame": 18,
+          "from": "Inhale through nose",
+          "toward": "Hold",
+          "key": false
+        },
+        {
+          "frame": 19,
+          "from": "Inhale through nose",
+          "toward": "Hold",
+          "key": false
+        },
+        {
+          "frame": 20,
+          "from": "Inhale through nose",
+          "toward": "Hold",
+          "key": false
+        },
+        {
+          "frame": 21,
+          "from": "Inhale through nose",
+          "toward": "Hold",
+          "key": false
+        },
+        {
+          "frame": 22,
+          "from": "Inhale through nose",
+          "toward": "Hold",
+          "key": false
+        },
+        {
+          "frame": 23,
+          "from": "Inhale through nose",
+          "toward": "Hold",
+          "key": false
+        },
+        {
+          "frame": 24,
+          "from": "Inhale through nose",
+          "toward": "Hold",
+          "key": false
+        },
+        {
+          "frame": 25,
+          "from": "Inhale through nose",
+          "toward": "Hold",
+          "key": false
+        },
+        {
+          "frame": 26,
+          "from": "Hold",
+          "toward": "hold",
+          "key": true
+        }
+      ]
+    },
+    {
+      "id": "disgust",
+      "number": 16,
+      "approach": "Diagonal nose/lip pull with head withdrawal and warding hand.",
+      "method": "corrective",
+      "keys": [
+        {
+          "frame": 0,
+          "action": "Live pose"
+        },
+        {
+          "frame": 2,
+          "action": "Nose wrinkles"
+        },
+        {
+          "frame": 5,
+          "action": "Lip curls"
+        },
+        {
+          "frame": 9,
+          "action": "Head withdraws"
+        },
+        {
+          "frame": 14,
+          "action": "Hand wards off"
+        },
+        {
+          "frame": 22,
+          "action": "Settle"
+        }
+      ],
+      "frames": [
+        {
+          "frame": 0,
+          "from": "Live pose",
+          "toward": "Nose wrinkles",
+          "key": true
+        },
+        {
+          "frame": 1,
+          "from": "Live pose",
+          "toward": "Nose wrinkles",
+          "key": false
+        },
+        {
+          "frame": 2,
+          "from": "Nose wrinkles",
+          "toward": "Lip curls",
+          "key": true
+        },
+        {
+          "frame": 3,
+          "from": "Nose wrinkles",
+          "toward": "Lip curls",
+          "key": false
+        },
+        {
+          "frame": 4,
+          "from": "Nose wrinkles",
+          "toward": "Lip curls",
+          "key": false
+        },
+        {
+          "frame": 5,
+          "from": "Lip curls",
+          "toward": "Head withdraws",
+          "key": true
+        },
+        {
+          "frame": 6,
+          "from": "Lip curls",
+          "toward": "Head withdraws",
+          "key": false
+        },
+        {
+          "frame": 7,
+          "from": "Lip curls",
+          "toward": "Head withdraws",
+          "key": false
+        },
+        {
+          "frame": 8,
+          "from": "Lip curls",
+          "toward": "Head withdraws",
+          "key": false
+        },
+        {
+          "frame": 9,
+          "from": "Head withdraws",
+          "toward": "Hand wards off",
+          "key": true
+        },
+        {
+          "frame": 10,
+          "from": "Head withdraws",
+          "toward": "Hand wards off",
+          "key": false
+        },
+        {
+          "frame": 11,
+          "from": "Head withdraws",
+          "toward": "Hand wards off",
+          "key": false
+        },
+        {
+          "frame": 12,
+          "from": "Head withdraws",
+          "toward": "Hand wards off",
+          "key": false
+        },
+        {
+          "frame": 13,
+          "from": "Head withdraws",
+          "toward": "Hand wards off",
+          "key": false
+        },
+        {
+          "frame": 14,
+          "from": "Hand wards off",
+          "toward": "Settle",
+          "key": true
+        },
+        {
+          "frame": 15,
+          "from": "Hand wards off",
+          "toward": "Settle",
+          "key": false
+        },
+        {
+          "frame": 16,
+          "from": "Hand wards off",
+          "toward": "Settle",
+          "key": false
+        },
+        {
+          "frame": 17,
+          "from": "Hand wards off",
+          "toward": "Settle",
+          "key": false
+        },
+        {
+          "frame": 18,
+          "from": "Hand wards off",
+          "toward": "Settle",
+          "key": false
+        },
+        {
+          "frame": 19,
+          "from": "Hand wards off",
+          "toward": "Settle",
+          "key": false
+        },
+        {
+          "frame": 20,
+          "from": "Hand wards off",
+          "toward": "Settle",
+          "key": false
+        },
+        {
+          "frame": 21,
+          "from": "Hand wards off",
+          "toward": "Settle",
+          "key": false
+        },
+        {
+          "frame": 22,
+          "from": "Settle",
+          "toward": "hold",
+          "key": true
+        }
+      ]
+    },
+    {
+      "id": "mortified",
+      "number": 17,
+      "approach": "Head/collar corrective, blush and hand-to-cheek constraint.",
+      "method": "corrective",
+      "keys": [
+        {
+          "frame": 0,
+          "action": "Live pose"
+        },
+        {
+          "frame": 2,
+          "action": "Gaze drops"
+        },
+        {
+          "frame": 5,
+          "action": "Lips press"
+        },
+        {
+          "frame": 9,
+          "action": "Head sinks"
+        },
+        {
+          "frame": 12,
+          "action": "Hand contacts face"
+        },
+        {
+          "frame": 18,
+          "action": "Blush"
+        },
+        {
+          "frame": 26,
+          "action": "Eye dart"
+        }
+      ],
+      "frames": [
+        {
+          "frame": 0,
+          "from": "Live pose",
+          "toward": "Gaze drops",
+          "key": true
+        },
+        {
+          "frame": 1,
+          "from": "Live pose",
+          "toward": "Gaze drops",
+          "key": false
+        },
+        {
+          "frame": 2,
+          "from": "Gaze drops",
+          "toward": "Lips press",
+          "key": true
+        },
+        {
+          "frame": 3,
+          "from": "Gaze drops",
+          "toward": "Lips press",
+          "key": false
+        },
+        {
+          "frame": 4,
+          "from": "Gaze drops",
+          "toward": "Lips press",
+          "key": false
+        },
+        {
+          "frame": 5,
+          "from": "Lips press",
+          "toward": "Head sinks",
+          "key": true
+        },
+        {
+          "frame": 6,
+          "from": "Lips press",
+          "toward": "Head sinks",
+          "key": false
+        },
+        {
+          "frame": 7,
+          "from": "Lips press",
+          "toward": "Head sinks",
+          "key": false
+        },
+        {
+          "frame": 8,
+          "from": "Lips press",
+          "toward": "Head sinks",
+          "key": false
+        },
+        {
+          "frame": 9,
+          "from": "Head sinks",
+          "toward": "Hand contacts face",
+          "key": true
+        },
+        {
+          "frame": 10,
+          "from": "Head sinks",
+          "toward": "Hand contacts face",
+          "key": false
+        },
+        {
+          "frame": 11,
+          "from": "Head sinks",
+          "toward": "Hand contacts face",
+          "key": false
+        },
+        {
+          "frame": 12,
+          "from": "Hand contacts face",
+          "toward": "Blush",
+          "key": true
+        },
+        {
+          "frame": 13,
+          "from": "Hand contacts face",
+          "toward": "Blush",
+          "key": false
+        },
+        {
+          "frame": 14,
+          "from": "Hand contacts face",
+          "toward": "Blush",
+          "key": false
+        },
+        {
+          "frame": 15,
+          "from": "Hand contacts face",
+          "toward": "Blush",
+          "key": false
+        },
+        {
+          "frame": 16,
+          "from": "Hand contacts face",
+          "toward": "Blush",
+          "key": false
+        },
+        {
+          "frame": 17,
+          "from": "Hand contacts face",
+          "toward": "Blush",
+          "key": false
+        },
+        {
+          "frame": 18,
+          "from": "Blush",
+          "toward": "Eye dart",
+          "key": true
+        },
+        {
+          "frame": 19,
+          "from": "Blush",
+          "toward": "Eye dart",
+          "key": false
+        },
+        {
+          "frame": 20,
+          "from": "Blush",
+          "toward": "Eye dart",
+          "key": false
+        },
+        {
+          "frame": 21,
+          "from": "Blush",
+          "toward": "Eye dart",
+          "key": false
+        },
+        {
+          "frame": 22,
+          "from": "Blush",
+          "toward": "Eye dart",
+          "key": false
+        },
+        {
+          "frame": 23,
+          "from": "Blush",
+          "toward": "Eye dart",
+          "key": false
+        },
+        {
+          "frame": 24,
+          "from": "Blush",
+          "toward": "Eye dart",
+          "key": false
+        },
+        {
+          "frame": 25,
+          "from": "Blush",
+          "toward": "Eye dart",
+          "key": false
+        },
+        {
+          "frame": 26,
+          "from": "Eye dart",
+          "toward": "hold",
+          "key": true
+        }
+      ]
+    },
+    {
+      "id": "guilty",
+      "number": 18,
+      "approach": "Head lowers while pupils look up; apologetic one-sided mouth.",
+      "method": "continuous",
+      "keys": [
+        {
+          "frame": 0,
+          "action": "Live pose"
+        },
+        {
+          "frame": 2,
+          "action": "Eyes dart"
+        },
+        {
+          "frame": 5,
+          "action": "Chin lowers"
+        },
+        {
+          "frame": 9,
+          "action": "Eyes lift under brow"
+        },
+        {
+          "frame": 16,
+          "action": "Uneasy mouth"
+        },
+        {
+          "frame": 24,
+          "action": "Hold"
+        }
+      ],
+      "frames": [
+        {
+          "frame": 0,
+          "from": "Live pose",
+          "toward": "Eyes dart",
+          "key": true
+        },
+        {
+          "frame": 1,
+          "from": "Live pose",
+          "toward": "Eyes dart",
+          "key": false
+        },
+        {
+          "frame": 2,
+          "from": "Eyes dart",
+          "toward": "Chin lowers",
+          "key": true
+        },
+        {
+          "frame": 3,
+          "from": "Eyes dart",
+          "toward": "Chin lowers",
+          "key": false
+        },
+        {
+          "frame": 4,
+          "from": "Eyes dart",
+          "toward": "Chin lowers",
+          "key": false
+        },
+        {
+          "frame": 5,
+          "from": "Chin lowers",
+          "toward": "Eyes lift under brow",
+          "key": true
+        },
+        {
+          "frame": 6,
+          "from": "Chin lowers",
+          "toward": "Eyes lift under brow",
+          "key": false
+        },
+        {
+          "frame": 7,
+          "from": "Chin lowers",
+          "toward": "Eyes lift under brow",
+          "key": false
+        },
+        {
+          "frame": 8,
+          "from": "Chin lowers",
+          "toward": "Eyes lift under brow",
+          "key": false
+        },
+        {
+          "frame": 9,
+          "from": "Eyes lift under brow",
+          "toward": "Uneasy mouth",
+          "key": true
+        },
+        {
+          "frame": 10,
+          "from": "Eyes lift under brow",
+          "toward": "Uneasy mouth",
+          "key": false
+        },
+        {
+          "frame": 11,
+          "from": "Eyes lift under brow",
+          "toward": "Uneasy mouth",
+          "key": false
+        },
+        {
+          "frame": 12,
+          "from": "Eyes lift under brow",
+          "toward": "Uneasy mouth",
+          "key": false
+        },
+        {
+          "frame": 13,
+          "from": "Eyes lift under brow",
+          "toward": "Uneasy mouth",
+          "key": false
+        },
+        {
+          "frame": 14,
+          "from": "Eyes lift under brow",
+          "toward": "Uneasy mouth",
+          "key": false
+        },
+        {
+          "frame": 15,
+          "from": "Eyes lift under brow",
+          "toward": "Uneasy mouth",
+          "key": false
+        },
+        {
+          "frame": 16,
+          "from": "Uneasy mouth",
+          "toward": "Hold",
+          "key": true
+        },
+        {
+          "frame": 17,
+          "from": "Uneasy mouth",
+          "toward": "Hold",
+          "key": false
+        },
+        {
+          "frame": 18,
+          "from": "Uneasy mouth",
+          "toward": "Hold",
+          "key": false
+        },
+        {
+          "frame": 19,
+          "from": "Uneasy mouth",
+          "toward": "Hold",
+          "key": false
+        },
+        {
+          "frame": 20,
+          "from": "Uneasy mouth",
+          "toward": "Hold",
+          "key": false
+        },
+        {
+          "frame": 21,
+          "from": "Uneasy mouth",
+          "toward": "Hold",
+          "key": false
+        },
+        {
+          "frame": 22,
+          "from": "Uneasy mouth",
+          "toward": "Hold",
+          "key": false
+        },
+        {
+          "frame": 23,
+          "from": "Uneasy mouth",
+          "toward": "Hold",
+          "key": false
+        },
+        {
+          "frame": 24,
+          "from": "Hold",
+          "toward": "hold",
+          "key": true
+        }
+      ]
+    },
+    {
+      "id": "pleading",
+      "number": 19,
+      "approach": "Forward/up head aim, inner brows lifted; clasped hand contact.",
+      "method": "corrective",
+      "keys": [
+        {
+          "frame": 0,
+          "action": "Live pose"
+        },
+        {
+          "frame": 3,
+          "action": "Inner brows rise"
+        },
+        {
+          "frame": 7,
+          "action": "Hands clasp"
+        },
+        {
+          "frame": 12,
+          "action": "Lean forward"
+        },
+        {
+          "frame": 18,
+          "action": "Lower lip projects"
+        },
+        {
+          "frame": 30,
+          "action": "Hold"
+        }
+      ],
+      "frames": [
+        {
+          "frame": 0,
+          "from": "Live pose",
+          "toward": "Inner brows rise",
+          "key": true
+        },
+        {
+          "frame": 1,
+          "from": "Live pose",
+          "toward": "Inner brows rise",
+          "key": false
+        },
+        {
+          "frame": 2,
+          "from": "Live pose",
+          "toward": "Inner brows rise",
+          "key": false
+        },
+        {
+          "frame": 3,
+          "from": "Inner brows rise",
+          "toward": "Hands clasp",
+          "key": true
+        },
+        {
+          "frame": 4,
+          "from": "Inner brows rise",
+          "toward": "Hands clasp",
+          "key": false
+        },
+        {
+          "frame": 5,
+          "from": "Inner brows rise",
+          "toward": "Hands clasp",
+          "key": false
+        },
+        {
+          "frame": 6,
+          "from": "Inner brows rise",
+          "toward": "Hands clasp",
+          "key": false
+        },
+        {
+          "frame": 7,
+          "from": "Hands clasp",
+          "toward": "Lean forward",
+          "key": true
+        },
+        {
+          "frame": 8,
+          "from": "Hands clasp",
+          "toward": "Lean forward",
+          "key": false
+        },
+        {
+          "frame": 9,
+          "from": "Hands clasp",
+          "toward": "Lean forward",
+          "key": false
+        },
+        {
+          "frame": 10,
+          "from": "Hands clasp",
+          "toward": "Lean forward",
+          "key": false
+        },
+        {
+          "frame": 11,
+          "from": "Hands clasp",
+          "toward": "Lean forward",
+          "key": false
+        },
+        {
+          "frame": 12,
+          "from": "Lean forward",
+          "toward": "Lower lip projects",
+          "key": true
+        },
+        {
+          "frame": 13,
+          "from": "Lean forward",
+          "toward": "Lower lip projects",
+          "key": false
+        },
+        {
+          "frame": 14,
+          "from": "Lean forward",
+          "toward": "Lower lip projects",
+          "key": false
+        },
+        {
+          "frame": 15,
+          "from": "Lean forward",
+          "toward": "Lower lip projects",
+          "key": false
+        },
+        {
+          "frame": 16,
+          "from": "Lean forward",
+          "toward": "Lower lip projects",
+          "key": false
+        },
+        {
+          "frame": 17,
+          "from": "Lean forward",
+          "toward": "Lower lip projects",
+          "key": false
+        },
+        {
+          "frame": 18,
+          "from": "Lower lip projects",
+          "toward": "Hold",
+          "key": true
+        },
+        {
+          "frame": 19,
+          "from": "Lower lip projects",
+          "toward": "Hold",
+          "key": false
+        },
+        {
+          "frame": 20,
+          "from": "Lower lip projects",
+          "toward": "Hold",
+          "key": false
+        },
+        {
+          "frame": 21,
+          "from": "Lower lip projects",
+          "toward": "Hold",
+          "key": false
+        },
+        {
+          "frame": 22,
+          "from": "Lower lip projects",
+          "toward": "Hold",
+          "key": false
+        },
+        {
+          "frame": 23,
+          "from": "Lower lip projects",
+          "toward": "Hold",
+          "key": false
+        },
+        {
+          "frame": 24,
+          "from": "Lower lip projects",
+          "toward": "Hold",
+          "key": false
+        },
+        {
+          "frame": 25,
+          "from": "Lower lip projects",
+          "toward": "Hold",
+          "key": false
+        },
+        {
+          "frame": 26,
+          "from": "Lower lip projects",
+          "toward": "Hold",
+          "key": false
+        },
+        {
+          "frame": 27,
+          "from": "Lower lip projects",
+          "toward": "Hold",
+          "key": false
+        },
+        {
+          "frame": 28,
+          "from": "Lower lip projects",
+          "toward": "Hold",
+          "key": false
+        },
+        {
+          "frame": 29,
+          "from": "Lower lip projects",
+          "toward": "Hold",
+          "key": false
+        },
+        {
+          "frame": 30,
+          "from": "Hold",
+          "toward": "hold",
+          "key": true
+        }
+      ]
+    },
+    {
+      "id": "grief",
+      "number": 20,
+      "approach": "Jaw/cheek contour correction, bowed spine and tear paths.",
+      "method": "corrective",
+      "keys": [
+        {
+          "frame": 0,
+          "action": "Live pose"
+        },
+        {
+          "frame": 4,
+          "action": "Inner brow lift"
+        },
+        {
+          "frame": 10,
+          "action": "Gaze falls"
+        },
+        {
+          "frame": 18,
+          "action": "Face crumples"
+        },
+        {
+          "frame": 26,
+          "action": "Torso folds"
+        },
+        {
+          "frame": 34,
+          "action": "Exhale"
+        },
+        {
+          "frame": 46,
+          "action": "Tear/hold"
+        }
+      ],
+      "frames": [
+        {
+          "frame": 0,
+          "from": "Live pose",
+          "toward": "Inner brow lift",
+          "key": true
+        },
+        {
+          "frame": 1,
+          "from": "Live pose",
+          "toward": "Inner brow lift",
+          "key": false
+        },
+        {
+          "frame": 2,
+          "from": "Live pose",
+          "toward": "Inner brow lift",
+          "key": false
+        },
+        {
+          "frame": 3,
+          "from": "Live pose",
+          "toward": "Inner brow lift",
+          "key": false
+        },
+        {
+          "frame": 4,
+          "from": "Inner brow lift",
+          "toward": "Gaze falls",
+          "key": true
+        },
+        {
+          "frame": 5,
+          "from": "Inner brow lift",
+          "toward": "Gaze falls",
+          "key": false
+        },
+        {
+          "frame": 6,
+          "from": "Inner brow lift",
+          "toward": "Gaze falls",
+          "key": false
+        },
+        {
+          "frame": 7,
+          "from": "Inner brow lift",
+          "toward": "Gaze falls",
+          "key": false
+        },
+        {
+          "frame": 8,
+          "from": "Inner brow lift",
+          "toward": "Gaze falls",
+          "key": false
+        },
+        {
+          "frame": 9,
+          "from": "Inner brow lift",
+          "toward": "Gaze falls",
+          "key": false
+        },
+        {
+          "frame": 10,
+          "from": "Gaze falls",
+          "toward": "Face crumples",
+          "key": true
+        },
+        {
+          "frame": 11,
+          "from": "Gaze falls",
+          "toward": "Face crumples",
+          "key": false
+        },
+        {
+          "frame": 12,
+          "from": "Gaze falls",
+          "toward": "Face crumples",
+          "key": false
+        },
+        {
+          "frame": 13,
+          "from": "Gaze falls",
+          "toward": "Face crumples",
+          "key": false
+        },
+        {
+          "frame": 14,
+          "from": "Gaze falls",
+          "toward": "Face crumples",
+          "key": false
+        },
+        {
+          "frame": 15,
+          "from": "Gaze falls",
+          "toward": "Face crumples",
+          "key": false
+        },
+        {
+          "frame": 16,
+          "from": "Gaze falls",
+          "toward": "Face crumples",
+          "key": false
+        },
+        {
+          "frame": 17,
+          "from": "Gaze falls",
+          "toward": "Face crumples",
+          "key": false
+        },
+        {
+          "frame": 18,
+          "from": "Face crumples",
+          "toward": "Torso folds",
+          "key": true
+        },
+        {
+          "frame": 19,
+          "from": "Face crumples",
+          "toward": "Torso folds",
+          "key": false
+        },
+        {
+          "frame": 20,
+          "from": "Face crumples",
+          "toward": "Torso folds",
+          "key": false
+        },
+        {
+          "frame": 21,
+          "from": "Face crumples",
+          "toward": "Torso folds",
+          "key": false
+        },
+        {
+          "frame": 22,
+          "from": "Face crumples",
+          "toward": "Torso folds",
+          "key": false
+        },
+        {
+          "frame": 23,
+          "from": "Face crumples",
+          "toward": "Torso folds",
+          "key": false
+        },
+        {
+          "frame": 24,
+          "from": "Face crumples",
+          "toward": "Torso folds",
+          "key": false
+        },
+        {
+          "frame": 25,
+          "from": "Face crumples",
+          "toward": "Torso folds",
+          "key": false
+        },
+        {
+          "frame": 26,
+          "from": "Torso folds",
+          "toward": "Exhale",
+          "key": true
+        },
+        {
+          "frame": 27,
+          "from": "Torso folds",
+          "toward": "Exhale",
+          "key": false
+        },
+        {
+          "frame": 28,
+          "from": "Torso folds",
+          "toward": "Exhale",
+          "key": false
+        },
+        {
+          "frame": 29,
+          "from": "Torso folds",
+          "toward": "Exhale",
+          "key": false
+        },
+        {
+          "frame": 30,
+          "from": "Torso folds",
+          "toward": "Exhale",
+          "key": false
+        },
+        {
+          "frame": 31,
+          "from": "Torso folds",
+          "toward": "Exhale",
+          "key": false
+        },
+        {
+          "frame": 32,
+          "from": "Torso folds",
+          "toward": "Exhale",
+          "key": false
+        },
+        {
+          "frame": 33,
+          "from": "Torso folds",
+          "toward": "Exhale",
+          "key": false
+        },
+        {
+          "frame": 34,
+          "from": "Exhale",
+          "toward": "Tear/hold",
+          "key": true
+        },
+        {
+          "frame": 35,
+          "from": "Exhale",
+          "toward": "Tear/hold",
+          "key": false
+        },
+        {
+          "frame": 36,
+          "from": "Exhale",
+          "toward": "Tear/hold",
+          "key": false
+        },
+        {
+          "frame": 37,
+          "from": "Exhale",
+          "toward": "Tear/hold",
+          "key": false
+        },
+        {
+          "frame": 38,
+          "from": "Exhale",
+          "toward": "Tear/hold",
+          "key": false
+        },
+        {
+          "frame": 39,
+          "from": "Exhale",
+          "toward": "Tear/hold",
+          "key": false
+        },
+        {
+          "frame": 40,
+          "from": "Exhale",
+          "toward": "Tear/hold",
+          "key": false
+        },
+        {
+          "frame": 41,
+          "from": "Exhale",
+          "toward": "Tear/hold",
+          "key": false
+        },
+        {
+          "frame": 42,
+          "from": "Exhale",
+          "toward": "Tear/hold",
+          "key": false
+        },
+        {
+          "frame": 43,
+          "from": "Exhale",
+          "toward": "Tear/hold",
+          "key": false
+        },
+        {
+          "frame": 44,
+          "from": "Exhale",
+          "toward": "Tear/hold",
+          "key": false
+        },
+        {
+          "frame": 45,
+          "from": "Exhale",
+          "toward": "Tear/hold",
+          "key": false
+        },
+        {
+          "frame": 46,
+          "from": "Tear/hold",
+          "toward": "hold",
+          "key": true
+        }
+      ]
+    },
+    {
+      "id": "exhausted",
+      "number": 21,
+      "approach": "Heavy lids, yawning jaw correction and slow head weight.",
+      "method": "corrective",
+      "keys": [
+        {
+          "frame": 0,
+          "action": "Live pose"
+        },
+        {
+          "frame": 5,
+          "action": "Lids droop"
+        },
+        {
+          "frame": 12,
+          "action": "Jaw opens"
+        },
+        {
+          "frame": 20,
+          "action": "Yawn"
+        },
+        {
+          "frame": 29,
+          "action": "Jaw closes"
+        },
+        {
+          "frame": 40,
+          "action": "Head settles"
+        }
+      ],
+      "frames": [
+        {
+          "frame": 0,
+          "from": "Live pose",
+          "toward": "Lids droop",
+          "key": true
+        },
+        {
+          "frame": 1,
+          "from": "Live pose",
+          "toward": "Lids droop",
+          "key": false
+        },
+        {
+          "frame": 2,
+          "from": "Live pose",
+          "toward": "Lids droop",
+          "key": false
+        },
+        {
+          "frame": 3,
+          "from": "Live pose",
+          "toward": "Lids droop",
+          "key": false
+        },
+        {
+          "frame": 4,
+          "from": "Live pose",
+          "toward": "Lids droop",
+          "key": false
+        },
+        {
+          "frame": 5,
+          "from": "Lids droop",
+          "toward": "Jaw opens",
+          "key": true
+        },
+        {
+          "frame": 6,
+          "from": "Lids droop",
+          "toward": "Jaw opens",
+          "key": false
+        },
+        {
+          "frame": 7,
+          "from": "Lids droop",
+          "toward": "Jaw opens",
+          "key": false
+        },
+        {
+          "frame": 8,
+          "from": "Lids droop",
+          "toward": "Jaw opens",
+          "key": false
+        },
+        {
+          "frame": 9,
+          "from": "Lids droop",
+          "toward": "Jaw opens",
+          "key": false
+        },
+        {
+          "frame": 10,
+          "from": "Lids droop",
+          "toward": "Jaw opens",
+          "key": false
+        },
+        {
+          "frame": 11,
+          "from": "Lids droop",
+          "toward": "Jaw opens",
+          "key": false
+        },
+        {
+          "frame": 12,
+          "from": "Jaw opens",
+          "toward": "Yawn",
+          "key": true
+        },
+        {
+          "frame": 13,
+          "from": "Jaw opens",
+          "toward": "Yawn",
+          "key": false
+        },
+        {
+          "frame": 14,
+          "from": "Jaw opens",
+          "toward": "Yawn",
+          "key": false
+        },
+        {
+          "frame": 15,
+          "from": "Jaw opens",
+          "toward": "Yawn",
+          "key": false
+        },
+        {
+          "frame": 16,
+          "from": "Jaw opens",
+          "toward": "Yawn",
+          "key": false
+        },
+        {
+          "frame": 17,
+          "from": "Jaw opens",
+          "toward": "Yawn",
+          "key": false
+        },
+        {
+          "frame": 18,
+          "from": "Jaw opens",
+          "toward": "Yawn",
+          "key": false
+        },
+        {
+          "frame": 19,
+          "from": "Jaw opens",
+          "toward": "Yawn",
+          "key": false
+        },
+        {
+          "frame": 20,
+          "from": "Yawn",
+          "toward": "Jaw closes",
+          "key": true
+        },
+        {
+          "frame": 21,
+          "from": "Yawn",
+          "toward": "Jaw closes",
+          "key": false
+        },
+        {
+          "frame": 22,
+          "from": "Yawn",
+          "toward": "Jaw closes",
+          "key": false
+        },
+        {
+          "frame": 23,
+          "from": "Yawn",
+          "toward": "Jaw closes",
+          "key": false
+        },
+        {
+          "frame": 24,
+          "from": "Yawn",
+          "toward": "Jaw closes",
+          "key": false
+        },
+        {
+          "frame": 25,
+          "from": "Yawn",
+          "toward": "Jaw closes",
+          "key": false
+        },
+        {
+          "frame": 26,
+          "from": "Yawn",
+          "toward": "Jaw closes",
+          "key": false
+        },
+        {
+          "frame": 27,
+          "from": "Yawn",
+          "toward": "Jaw closes",
+          "key": false
+        },
+        {
+          "frame": 28,
+          "from": "Yawn",
+          "toward": "Jaw closes",
+          "key": false
+        },
+        {
+          "frame": 29,
+          "from": "Jaw closes",
+          "toward": "Head settles",
+          "key": true
+        },
+        {
+          "frame": 30,
+          "from": "Jaw closes",
+          "toward": "Head settles",
+          "key": false
+        },
+        {
+          "frame": 31,
+          "from": "Jaw closes",
+          "toward": "Head settles",
+          "key": false
+        },
+        {
+          "frame": 32,
+          "from": "Jaw closes",
+          "toward": "Head settles",
+          "key": false
+        },
+        {
+          "frame": 33,
+          "from": "Jaw closes",
+          "toward": "Head settles",
+          "key": false
+        },
+        {
+          "frame": 34,
+          "from": "Jaw closes",
+          "toward": "Head settles",
+          "key": false
+        },
+        {
+          "frame": 35,
+          "from": "Jaw closes",
+          "toward": "Head settles",
+          "key": false
+        },
+        {
+          "frame": 36,
+          "from": "Jaw closes",
+          "toward": "Head settles",
+          "key": false
+        },
+        {
+          "frame": 37,
+          "from": "Jaw closes",
+          "toward": "Head settles",
+          "key": false
+        },
+        {
+          "frame": 38,
+          "from": "Jaw closes",
+          "toward": "Head settles",
+          "key": false
+        },
+        {
+          "frame": 39,
+          "from": "Jaw closes",
+          "toward": "Head settles",
+          "key": false
+        },
+        {
+          "frame": 40,
+          "from": "Head settles",
+          "toward": "hold",
+          "key": true
+        }
+      ]
+    },
+    {
+      "id": "relieved",
+      "number": 22,
+      "approach": "Relax jaw, cheek and shoulders on long exhale.",
+      "method": "continuous",
+      "keys": [
+        {
+          "frame": 0,
+          "action": "Tense pose"
+        },
+        {
+          "frame": 3,
+          "action": "Eyes soften"
+        },
+        {
+          "frame": 7,
+          "action": "Close lids"
+        },
+        {
+          "frame": 12,
+          "action": "Jaw releases"
+        },
+        {
+          "frame": 20,
+          "action": "Shoulders drop"
+        },
+        {
+          "frame": 32,
+          "action": "Quiet smile"
+        },
+        {
+          "frame": 42,
+          "action": "Open eyes"
+        }
+      ],
+      "frames": [
+        {
+          "frame": 0,
+          "from": "Tense pose",
+          "toward": "Eyes soften",
+          "key": true
+        },
+        {
+          "frame": 1,
+          "from": "Tense pose",
+          "toward": "Eyes soften",
+          "key": false
+        },
+        {
+          "frame": 2,
+          "from": "Tense pose",
+          "toward": "Eyes soften",
+          "key": false
+        },
+        {
+          "frame": 3,
+          "from": "Eyes soften",
+          "toward": "Close lids",
+          "key": true
+        },
+        {
+          "frame": 4,
+          "from": "Eyes soften",
+          "toward": "Close lids",
+          "key": false
+        },
+        {
+          "frame": 5,
+          "from": "Eyes soften",
+          "toward": "Close lids",
+          "key": false
+        },
+        {
+          "frame": 6,
+          "from": "Eyes soften",
+          "toward": "Close lids",
+          "key": false
+        },
+        {
+          "frame": 7,
+          "from": "Close lids",
+          "toward": "Jaw releases",
+          "key": true
+        },
+        {
+          "frame": 8,
+          "from": "Close lids",
+          "toward": "Jaw releases",
+          "key": false
+        },
+        {
+          "frame": 9,
+          "from": "Close lids",
+          "toward": "Jaw releases",
+          "key": false
+        },
+        {
+          "frame": 10,
+          "from": "Close lids",
+          "toward": "Jaw releases",
+          "key": false
+        },
+        {
+          "frame": 11,
+          "from": "Close lids",
+          "toward": "Jaw releases",
+          "key": false
+        },
+        {
+          "frame": 12,
+          "from": "Jaw releases",
+          "toward": "Shoulders drop",
+          "key": true
+        },
+        {
+          "frame": 13,
+          "from": "Jaw releases",
+          "toward": "Shoulders drop",
+          "key": false
+        },
+        {
+          "frame": 14,
+          "from": "Jaw releases",
+          "toward": "Shoulders drop",
+          "key": false
+        },
+        {
+          "frame": 15,
+          "from": "Jaw releases",
+          "toward": "Shoulders drop",
+          "key": false
+        },
+        {
+          "frame": 16,
+          "from": "Jaw releases",
+          "toward": "Shoulders drop",
+          "key": false
+        },
+        {
+          "frame": 17,
+          "from": "Jaw releases",
+          "toward": "Shoulders drop",
+          "key": false
+        },
+        {
+          "frame": 18,
+          "from": "Jaw releases",
+          "toward": "Shoulders drop",
+          "key": false
+        },
+        {
+          "frame": 19,
+          "from": "Jaw releases",
+          "toward": "Shoulders drop",
+          "key": false
+        },
+        {
+          "frame": 20,
+          "from": "Shoulders drop",
+          "toward": "Quiet smile",
+          "key": true
+        },
+        {
+          "frame": 21,
+          "from": "Shoulders drop",
+          "toward": "Quiet smile",
+          "key": false
+        },
+        {
+          "frame": 22,
+          "from": "Shoulders drop",
+          "toward": "Quiet smile",
+          "key": false
+        },
+        {
+          "frame": 23,
+          "from": "Shoulders drop",
+          "toward": "Quiet smile",
+          "key": false
+        },
+        {
+          "frame": 24,
+          "from": "Shoulders drop",
+          "toward": "Quiet smile",
+          "key": false
+        },
+        {
+          "frame": 25,
+          "from": "Shoulders drop",
+          "toward": "Quiet smile",
+          "key": false
+        },
+        {
+          "frame": 26,
+          "from": "Shoulders drop",
+          "toward": "Quiet smile",
+          "key": false
+        },
+        {
+          "frame": 27,
+          "from": "Shoulders drop",
+          "toward": "Quiet smile",
+          "key": false
+        },
+        {
+          "frame": 28,
+          "from": "Shoulders drop",
+          "toward": "Quiet smile",
+          "key": false
+        },
+        {
+          "frame": 29,
+          "from": "Shoulders drop",
+          "toward": "Quiet smile",
+          "key": false
+        },
+        {
+          "frame": 30,
+          "from": "Shoulders drop",
+          "toward": "Quiet smile",
+          "key": false
+        },
+        {
+          "frame": 31,
+          "from": "Shoulders drop",
+          "toward": "Quiet smile",
+          "key": false
+        },
+        {
+          "frame": 32,
+          "from": "Quiet smile",
+          "toward": "Open eyes",
+          "key": true
+        },
+        {
+          "frame": 33,
+          "from": "Quiet smile",
+          "toward": "Open eyes",
+          "key": false
+        },
+        {
+          "frame": 34,
+          "from": "Quiet smile",
+          "toward": "Open eyes",
+          "key": false
+        },
+        {
+          "frame": 35,
+          "from": "Quiet smile",
+          "toward": "Open eyes",
+          "key": false
+        },
+        {
+          "frame": 36,
+          "from": "Quiet smile",
+          "toward": "Open eyes",
+          "key": false
+        },
+        {
+          "frame": 37,
+          "from": "Quiet smile",
+          "toward": "Open eyes",
+          "key": false
+        },
+        {
+          "frame": 38,
+          "from": "Quiet smile",
+          "toward": "Open eyes",
+          "key": false
+        },
+        {
+          "frame": 39,
+          "from": "Quiet smile",
+          "toward": "Open eyes",
+          "key": false
+        },
+        {
+          "frame": 40,
+          "from": "Quiet smile",
+          "toward": "Open eyes",
+          "key": false
+        },
+        {
+          "frame": 41,
+          "from": "Quiet smile",
+          "toward": "Open eyes",
+          "key": false
+        },
+        {
+          "frame": 42,
+          "from": "Open eyes",
+          "toward": "hold",
+          "key": true
+        }
+      ]
+    },
+    {
+      "id": "defiant",
+      "number": 23,
+      "approach": "Chin and chest lift; pointing hand uses gesture replacement.",
+      "method": "corrective",
+      "keys": [
+        {
+          "frame": 0,
+          "action": "Live pose"
+        },
+        {
+          "frame": 2,
+          "action": "Brow leads"
+        },
+        {
+          "frame": 4,
+          "action": "Anticipation"
+        },
+        {
+          "frame": 6,
+          "action": "Arm smear"
+        },
+        {
+          "frame": 7,
+          "action": "Point lands"
+        },
+        {
+          "frame": 11,
+          "action": "Retract overshoot"
+        },
+        {
+          "frame": 22,
+          "action": "Settle"
+        }
+      ],
+      "frames": [
+        {
+          "frame": 0,
+          "from": "Live pose",
+          "toward": "Brow leads",
+          "key": true
+        },
+        {
+          "frame": 1,
+          "from": "Live pose",
+          "toward": "Brow leads",
+          "key": false
+        },
+        {
+          "frame": 2,
+          "from": "Brow leads",
+          "toward": "Anticipation",
+          "key": true
+        },
+        {
+          "frame": 3,
+          "from": "Brow leads",
+          "toward": "Anticipation",
+          "key": false
+        },
+        {
+          "frame": 4,
+          "from": "Anticipation",
+          "toward": "Arm smear",
+          "key": true
+        },
+        {
+          "frame": 5,
+          "from": "Anticipation",
+          "toward": "Arm smear",
+          "key": false
+        },
+        {
+          "frame": 6,
+          "from": "Arm smear",
+          "toward": "Point lands",
+          "key": true
+        },
+        {
+          "frame": 7,
+          "from": "Point lands",
+          "toward": "Retract overshoot",
+          "key": true
+        },
+        {
+          "frame": 8,
+          "from": "Point lands",
+          "toward": "Retract overshoot",
+          "key": false
+        },
+        {
+          "frame": 9,
+          "from": "Point lands",
+          "toward": "Retract overshoot",
+          "key": false
+        },
+        {
+          "frame": 10,
+          "from": "Point lands",
+          "toward": "Retract overshoot",
+          "key": false
+        },
+        {
+          "frame": 11,
+          "from": "Retract overshoot",
+          "toward": "Settle",
+          "key": true
+        },
+        {
+          "frame": 12,
+          "from": "Retract overshoot",
+          "toward": "Settle",
+          "key": false
+        },
+        {
+          "frame": 13,
+          "from": "Retract overshoot",
+          "toward": "Settle",
+          "key": false
+        },
+        {
+          "frame": 14,
+          "from": "Retract overshoot",
+          "toward": "Settle",
+          "key": false
+        },
+        {
+          "frame": 15,
+          "from": "Retract overshoot",
+          "toward": "Settle",
+          "key": false
+        },
+        {
+          "frame": 16,
+          "from": "Retract overshoot",
+          "toward": "Settle",
+          "key": false
+        },
+        {
+          "frame": 17,
+          "from": "Retract overshoot",
+          "toward": "Settle",
+          "key": false
+        },
+        {
+          "frame": 18,
+          "from": "Retract overshoot",
+          "toward": "Settle",
+          "key": false
+        },
+        {
+          "frame": 19,
+          "from": "Retract overshoot",
+          "toward": "Settle",
+          "key": false
+        },
+        {
+          "frame": 20,
+          "from": "Retract overshoot",
+          "toward": "Settle",
+          "key": false
+        },
+        {
+          "frame": 21,
+          "from": "Retract overshoot",
+          "toward": "Settle",
+          "key": false
+        },
+        {
+          "frame": 22,
+          "from": "Settle",
+          "toward": "hold",
+          "key": true
+        }
+      ]
+    },
+    {
+      "id": "determined",
+      "number": 24,
+      "approach": "Controlled inhale, narrowed eyes and planted forward stance.",
+      "method": "continuous",
+      "keys": [
+        {
+          "frame": 0,
+          "action": "Live pose"
+        },
+        {
+          "frame": 3,
+          "action": "Inhale"
+        },
+        {
+          "frame": 7,
+          "action": "Chin dips"
+        },
+        {
+          "frame": 11,
+          "action": "Eyes narrow"
+        },
+        {
+          "frame": 16,
+          "action": "Fists set"
+        },
+        {
+          "frame": 28,
+          "action": "Exhale/hold"
+        }
+      ],
+      "frames": [
+        {
+          "frame": 0,
+          "from": "Live pose",
+          "toward": "Inhale",
+          "key": true
+        },
+        {
+          "frame": 1,
+          "from": "Live pose",
+          "toward": "Inhale",
+          "key": false
+        },
+        {
+          "frame": 2,
+          "from": "Live pose",
+          "toward": "Inhale",
+          "key": false
+        },
+        {
+          "frame": 3,
+          "from": "Inhale",
+          "toward": "Chin dips",
+          "key": true
+        },
+        {
+          "frame": 4,
+          "from": "Inhale",
+          "toward": "Chin dips",
+          "key": false
+        },
+        {
+          "frame": 5,
+          "from": "Inhale",
+          "toward": "Chin dips",
+          "key": false
+        },
+        {
+          "frame": 6,
+          "from": "Inhale",
+          "toward": "Chin dips",
+          "key": false
+        },
+        {
+          "frame": 7,
+          "from": "Chin dips",
+          "toward": "Eyes narrow",
+          "key": true
+        },
+        {
+          "frame": 8,
+          "from": "Chin dips",
+          "toward": "Eyes narrow",
+          "key": false
+        },
+        {
+          "frame": 9,
+          "from": "Chin dips",
+          "toward": "Eyes narrow",
+          "key": false
+        },
+        {
+          "frame": 10,
+          "from": "Chin dips",
+          "toward": "Eyes narrow",
+          "key": false
+        },
+        {
+          "frame": 11,
+          "from": "Eyes narrow",
+          "toward": "Fists set",
+          "key": true
+        },
+        {
+          "frame": 12,
+          "from": "Eyes narrow",
+          "toward": "Fists set",
+          "key": false
+        },
+        {
+          "frame": 13,
+          "from": "Eyes narrow",
+          "toward": "Fists set",
+          "key": false
+        },
+        {
+          "frame": 14,
+          "from": "Eyes narrow",
+          "toward": "Fists set",
+          "key": false
+        },
+        {
+          "frame": 15,
+          "from": "Eyes narrow",
+          "toward": "Fists set",
+          "key": false
+        },
+        {
+          "frame": 16,
+          "from": "Fists set",
+          "toward": "Exhale/hold",
+          "key": true
+        },
+        {
+          "frame": 17,
+          "from": "Fists set",
+          "toward": "Exhale/hold",
+          "key": false
+        },
+        {
+          "frame": 18,
+          "from": "Fists set",
+          "toward": "Exhale/hold",
+          "key": false
+        },
+        {
+          "frame": 19,
+          "from": "Fists set",
+          "toward": "Exhale/hold",
+          "key": false
+        },
+        {
+          "frame": 20,
+          "from": "Fists set",
+          "toward": "Exhale/hold",
+          "key": false
+        },
+        {
+          "frame": 21,
+          "from": "Fists set",
+          "toward": "Exhale/hold",
+          "key": false
+        },
+        {
+          "frame": 22,
+          "from": "Fists set",
+          "toward": "Exhale/hold",
+          "key": false
+        },
+        {
+          "frame": 23,
+          "from": "Fists set",
+          "toward": "Exhale/hold",
+          "key": false
+        },
+        {
+          "frame": 24,
+          "from": "Fists set",
+          "toward": "Exhale/hold",
+          "key": false
+        },
+        {
+          "frame": 25,
+          "from": "Fists set",
+          "toward": "Exhale/hold",
+          "key": false
+        },
+        {
+          "frame": 26,
+          "from": "Fists set",
+          "toward": "Exhale/hold",
+          "key": false
+        },
+        {
+          "frame": 27,
+          "from": "Fists set",
+          "toward": "Exhale/hold",
+          "key": false
+        },
+        {
+          "frame": 28,
+          "from": "Exhale/hold",
+          "toward": "hold",
+          "key": true
+        }
+      ]
+    }
+  ],
+  "bodyPoses": [
+    "listen",
+    "sneak",
+    "brace",
+    "accuse",
+    "plead",
+    "collapse-laughing",
+    "shrink",
+    "celebrate"
+  ],
+  "mouthShapes": [
+    "rest",
+    "M B P",
+    "AH",
+    "EH UH",
+    "EE IH",
+    "OH",
+    "OO W",
+    "F V",
+    "L",
+    "TH",
+    "S Z",
+    "SH CH J"
+  ]
+}

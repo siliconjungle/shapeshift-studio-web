@@ -1,0 +1,27 @@
+import {sceneDefaults,nodeDefaults,littleGodsMaterialStyle} from '../scene3d/schema.js';
+import {defaultFluid,ensureFX} from '../fx/schema.js';
+const rest=(x=0,y=0)=>({x,y,rotation:0,scaleX:1,scaleY:1});
+const svg=(body,w=160,h=160)=>'data:image/svg+xml,'+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}">${body}</svg>`);
+const ink='#292a29';
+const path=(id,commands,points,fill,stroke=ink)=>({id,name:id,hidden:false,locked:false,commands,points,fill,stroke,strokeWidth:2.2,fillRule:'nonzero',lineCap:'round',lineJoin:'round',opacity:1});
+export function illustrationExample(kind='puppet'){
+ const p={format:'inkwell-puppet',version:1,name:'Illustration workshop',assets:[],joints:[],clips:[{id:'study',name:'Drawings, ink & wind',duration:6,fps:30,loop:true,tracks:{}}]};
+ const add=(id,name,body,x,y,w=160,h=160)=>{p.assets.push({id,name,src:svg(body,w,h)});p.joints.push({id,name,parent:null,rest:rest(x,y),layer:2,sprite:{asset:id,width:w,height:h,pivotX:.5,pivotY:1}});};
+ add('head','Pose-driven hood',`<path d="M22 126 Q4 87 28 43 Q43 8 82 19 Q136 11 145 73 Q157 127 133 142 Q77 153 22 126Z" fill="#7e9690" stroke="${ink}" stroke-width="2"/><path d="M40 100 Q23 62 66 45 Q105 30 125 63 Q148 104 110 127 Q63 138 40 100Z" fill="#e4c695" stroke="${ink}" stroke-width="2"/><path d="M67 75L67 85 M103 72L103 82 M75 104Q88 111 100 100" fill="none" stroke="${ink}" stroke-width="3" stroke-linecap="round"/>`,-215,-10);
+ p.assets.push({id:'smile',name:'Smiling hood drawing',src:svg(`<path d="M22 126 Q4 87 28 43 Q43 8 82 19 Q136 11 145 73 Q157 127 133 142 Q77 153 22 126Z" fill="#7e9690" stroke="${ink}" stroke-width="2"/><path d="M40 100 Q23 62 66 45 Q105 30 125 63 Q155 101 115 125 Q60 146 40 100Z" fill="#e4c695" stroke="${ink}" stroke-width="2"/><path d="M59 80Q66 70 74 80 M96 78Q104 66 113 77 M73 100Q90 125 106 97Z" fill="${ink}" stroke="${ink}" stroke-width="2"/>`)});
+ p.joints[0].visual={edge:{enabled:true,width:2.4,color:ink}};
+ const clip=p.clips[0];clip.tracks.head=[{time:0,value:rest(),easing:'smooth'},{time:2,value:{...rest(),rotation:35},easing:'smooth'},{time:3,value:{...rest(),rotation:35},easing:'smooth'},{time:5.5,value:rest(),easing:'smooth'},{time:6,value:rest(),easing:'smooth'}];
+ clip.tools={layers:[{id:'smile-corrective',name:'Smile as hood tilts',enabled:true,weight:1,values:{},driver:{joint:'head',channel:'rotation',from:5,to:30,easing:'smooth'},artwork:{head:{asset:'smile',threshold:.55,morph:{inflate:.18,bend:.06},shade:{kind:'hatch',opacity:.3,color:'#735448',x:.55,y:.5,angle:-28,spacing:12,protectInk:true}}}}]};
+ add('flame','Held contour drawings',`<path d="M78 10Q133 75 125 108Q110 151 74 144Q19 141 31 93Q62 61 78 10Z" fill="#c99660" stroke="${ink}" stroke-width="2"/>`,0,-10);
+ p.assets.find(a=>a.id==='flame').vector={version:1,viewBox:[0,0,160,160],duration:6,fps:30,loop:true,swatches:[],tracks:[],shapes:[path('flame',['M','C','C','C','C','Z'],[78,10,90,45,137,77,125,108,110,151,80,155,54,140,19,123,22,107,31,93,62,61,62,32,78,10],'#c99660')],boil:{enabled:true,amount:1.5,rate:6,variants:4,seed:7,scale:45}};
+ for(const [id,x,lag,strength]of [['reed-a',-275,.08,1],['reed-b',-190,.65,.75]]){add(id,lag<.1?'Light reed':'Heavy reed',`<path d="M32 98Q24 67 32 20 M30 65Q0 54 9 32Q40 35 30 65 M32 42Q57 46 58 15Q29 18 32 42" fill="#9aa48b" stroke="${ink}" stroke-width="2.2"/>`,x,155,64,110);p.joints.at(-1).fieldReceiver={enabled:true,lag,strength,rotation:.3,translation:0};p.joints.at(-1).visual={edge:{enabled:true,width:2.4,color:ink}};}
+ p.motionFields=[{id:'shared-gust',enabled:true,kind:'gust',center:[-360,70],velocity:[70,0],direction:[1,0],radius:150,strength:32,start:0,duration:6,frequency:.7}];
+ ensureFX(p);p.fx.fluids=[{...defaultFluid('ink-smoke'),name:'Connected ink smoke',x:215,y:-80,width:155,height:195,resolution:40,duration:6,vectorContours:true,surfaceTension:.8,strokeWidth:2.4,inkColor:ink,colors:['#a4b6ad'],threshold:.2,velocityY:-25,vorticity:8}];
+ p.fx.fluids.push({...defaultFluid('drips'),name:'Separating droplets',x:60,y:125,width:120,height:115,resolution:40,duration:6,vectorContours:true,surfaceTension:2,strokeWidth:2.4,inkColor:ink,colors:['#96a9b8'],threshold:.2,sourceX:.5,sourceY:.15,sourceWobble:0,sourcePulse:1.2,sourceDuty:.18,sourceRadius:.085,gravityY:80,velocityY:4,vorticity:0,temperature:0,buoyancy:0,dissipation:.5});
+ for(const [id,text,x,y,w]of [['caption-a','POSE → DRAWING',-215,35,175],['caption-b','LINE BOIL',0,35,140],['caption-c','CONNECTED INK',215,35,170],['caption-d','ONE GUST · TWO RESPONSES',-220,198,260]])add(id,text,`<text x="${w/2}" y="18" text-anchor="middle" font-family="sans-serif" font-size="12" letter-spacing="1.3" fill="#aebbb7">${text}</text>`,x,y,w,25);
+ if(kind==='fold'){
+  p.name='Finite bend regions';const s=p.scene3d=sceneDefaults();s.camera={...s.camera,position:[4,3,6],target:[0,1.2,0],size:4.7};s.environment.background='#26322f';Object.assign(s.materials[0],littleGodsMaterialStyle(s.materials[0]));s.camera.size=3.8;
+  const n=nodeDefaults('sheet','plane');n.name='Illustrated flexible surface';n.dimensions=[2.3,3,.02];n.position=[0,1.2,0];n.deform.foldOffset=-.8;n.deform.foldWidth=1.5;n.surfaces={front:{asset:'head'},back:{asset:'smile'}};s.nodes.push(n);s.clips[0].name='Distributed bend to crease';s.clips[0].tracks=[{node:'sheet',channel:'deform.foldAngle',keys:[{time:0,value:0,easing:'smooth'},{time:2,value:100,easing:'smooth'},{time:4,value:100,easing:'smooth'},{time:6,value:0,easing:'smooth'}]}];
+ }
+ return p;
+}

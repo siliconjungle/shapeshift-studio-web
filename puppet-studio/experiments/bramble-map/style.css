@@ -1,0 +1,87 @@
+@font-face{font-family:Inkwell;src:url('../../../assets/bramble-map/fonts/InkwellText-Variable.woff2') format('woff2');font-weight:300 900;font-display:swap}
+@font-face{font-family:InkwellDisplay;src:url('../../../assets/bramble-map/fonts/InkwellDisplay-Variable.woff2') format('woff2');font-weight:300 900;font-display:swap}
+:root{color-scheme:light;--ink:#68472e;--paper:#eee5cf;--muted:#9c7c56;--accent:#8c5d35}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Inkwell,serif;font-variation-settings:'wght' 450,'VOIC' 1,'ROND' 30,'LIFT' 8}
+button,input,select{font:inherit;color:inherit}button{cursor:pointer;touch-action:manipulation}button:focus-visible,input:focus-visible,select:focus-visible,[role=button]:focus-visible{outline:2px solid var(--accent);outline-offset:4px}button:disabled{cursor:default;opacity:.55}
+.map-shell{height:100svh;min-height:320px;position:relative;isolation:isolate;overflow:hidden}
+/* Fit the complete 3:2 scene, with the travel overlay anchored to the artwork. */
+.map-viewport{width:min(100%,150svh);aspect-ratio:3/2;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%)}#map{display:block;width:100%;height:100%;overflow:hidden;user-select:none}
+#loading{position:absolute;inset:0;display:grid;place-content:center;z-index:6;background:var(--paper);font:500 28px InkwellDisplay,serif}#loading[hidden]{display:none}
+.map-location{cursor:pointer;outline:none}.map-location .hit{fill:transparent}.map-location:focus-visible .halo{stroke:var(--accent);stroke-width:2;stroke-dasharray:4 7}.map-label{font-family:InkwellDisplay,serif;font-variation-settings:'wght' 660,'VOIC' 1,'ROND' 30;fill:#68472e;text-anchor:middle;dominant-baseline:alphabetic;font-size:27px;pointer-events:none}.compass-label{font:500 24px InkwellDisplay,serif;text-anchor:middle;fill:#946a41}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+.map-renderer{position:absolute;pointer-events:none}#map{position:relative}.mesh-rendered use,.mesh-rendered #routes path{visibility:hidden}
+
+.map-location:focus-visible .halo{opacity:1}
+
+.map-foreground{z-index:2}
+
+
+/* Generated parchment SVG; text remains live and accessible. */
+.travel-action{position:absolute;z-index:4;right:max(24px,env(safe-area-inset-right));bottom:max(24px,env(safe-area-inset-bottom));width:200px;height:64px;font-size:20px;padding:8px 26px;border:0;border-radius:0;background:transparent url('../../../assets/bramble-map/travel-backing-ui.svg') center/100% 100% no-repeat;box-shadow:none;color:#382e25;text-shadow:none;filter:drop-shadow(0 3px 2px #46382424);transition:transform .12s,filter .12s;white-space:nowrap}
+.travel-action:not(:disabled):hover{filter:drop-shadow(0 4px 3px #46382440) brightness(1.035);transform:translateY(-2px) rotate(-1deg)}
+.travel-action:not(:disabled):active{transform:translateY(1px) scale(.97)}
+.travel-action:focus,.travel-action:focus-visible{outline:none;outline-offset:0}
+.travel-action:disabled{opacity:1;color:#756550}
+.travel-action[hidden]{display:none}
+@media(prefers-reduced-motion:reduce){.travel-action{transition:none}.travel-action:not(:disabled):hover,.travel-action:not(:disabled):active{transform:none}}
+@media(max-width:600px){.travel-action{right:18px;bottom:max(18px,env(safe-area-inset-bottom));font-size:17px;padding:11px 18px}}
+
+#map{touch-action:manipulation;cursor:default}
+.travel-spark{position:absolute;z-index:5;width:7px;height:7px;margin:-3.5px;pointer-events:none;background:#f3e7c9;border:1px solid #665743;box-shadow:0 1px 2px #211e1a33}
+#map:focus{outline:none}#map:focus-visible{outline:1px solid #8c765866;outline-offset:-1px}
+
+.travel-dots{display:inline-flex;align-items:flex-end;gap:3px;width:24px;margin-left:3px;height:12px;vertical-align:baseline}
+.travel-dots i{display:block;width:5px;height:5px;flex:none;background:currentColor;border-radius:46% 54% 43% 57%;transform-origin:50% 100%;animation:travel-dot 1.2s calc(var(--dot)*.13s) infinite both}
+@keyframes travel-dot{
+ 0%,12%,74%,100%{transform:translateY(0) scale(1,1)}
+ 22%{transform:translateY(1px) scale(1.4,.62)}
+ 37%{transform:translateY(-6px) scale(.76,1.3)}
+ 49%{transform:translateY(-7px) scale(1.06,.96)}
+ 61%{transform:translateY(1px) scale(1.35,.7)}
+ 69%{transform:translateY(-1px) scale(.96,1.08)}
+}
+@media(prefers-reduced-motion:reduce){.travel-dots i{animation:none}}
+
+/* A quiet walking rhythm; independent transforms preserve the click squash. */
+.travel-action:disabled{transform-origin:50% 75%;animation:travel-button-walk 1.2s .28s ease-in-out infinite}
+@keyframes travel-button-walk{
+ 0%,50%,100%{rotate:0deg;translate:0 0}
+ 25%{rotate:-2deg;translate:-1px -1.5px}
+ 75%{rotate:2deg;translate:1px -1.5px}
+}
+@media(prefers-reduced-motion:reduce){.travel-action:disabled{animation:none}}
+
+/* Both labels share one fixed slot while crossfading; the backing never resizes. */
+.travel-action{display:grid;place-items:center}
+.travel-label{grid-area:1/1;white-space:nowrap;pointer-events:none;transform-origin:50% 60%}
+
+[data-scenery]{cursor:pointer;outline:none}
+[data-scenery]:focus{outline:none}
+[data-scenery]:focus-visible{outline:none}
+[data-scenery]>rect{stroke:none}
+[data-scenery][aria-disabled="true"]{cursor:default}
+.map-location:focus,.map-location:focus-visible{outline:none}
+.map-location:focus-visible .halo{opacity:0;stroke:none}
+
+[data-cloud-id],[data-cloud-id]:focus,[data-cloud-id]:focus-visible{cursor:pointer;outline:none;-webkit-tap-highlight-color:transparent}
+
+[data-map-bird],[data-map-bird]:focus,[data-map-bird]:focus-visible{cursor:pointer;outline:none;-webkit-tap-highlight-color:transparent}
+
+/* Enter-level iris covers the entire screen, including the floating action. */
+.map-iris{position:fixed;inset:0;z-index:1000;outline:none;touch-action:none;overflow:hidden}
+.map-iris[hidden]{display:none}.map-iris canvas{display:block;width:100%;height:100%}
+
+/* Generated title lettering over the map's parchment. No extra render pass. */
+.title-screen{position:fixed;inset:0;z-index:1100;background:#eee5cf url('../../../assets/bramble-map/background.svg') center/cover no-repeat;isolation:isolate;overflow:hidden}
+.title-screen::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 44%,#f4ecd8d9 0%,#e9dcc3b8 55%,#b8a18252 100%);pointer-events:none}
+.title-screen[hidden]{display:none}
+.title-start{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(26px,5svh,54px);width:100%;height:100%;padding:36px 24px 48px;border:0;background:none;color:#382e25;outline:none;opacity:1!important;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.title-start:focus-visible{outline:none}
+.title-start:disabled{cursor:default}
+.title-logo{display:block;width:min(660px,78vw,100svh);height:auto;max-height:63svh;object-fit:contain;transform-origin:50% 78%;user-select:none;pointer-events:none;animation:title-arrive .8s cubic-bezier(.2,.8,.2,1) both}
+.title-prompt{font:550 clamp(18px,2.2vw,26px) InkwellDisplay,serif;letter-spacing:.025em;text-align:center;transform-origin:center;min-height:1.4em}
+.title-screen[data-state=ready] .title-prompt{animation:title-breathe 2.4s ease-in-out infinite}
+.title-screen[data-state=starting] .title-logo,.title-screen[data-state=starting] .title-prompt{animation:none}
+@keyframes title-arrive{0%{opacity:0;transform:translateY(16px) scale(.94,1.04)}65%{opacity:1;transform:translateY(-3px) scale(1.015,.985)}100%{opacity:1;transform:none}}
+@keyframes title-breathe{0%,100%{opacity:.7;transform:translateY(1px) scale(1.01,.97)}50%{opacity:1;transform:translateY(-2px) scale(.99,1.025)}}
+@media(prefers-reduced-motion:reduce){.title-logo,.title-screen[data-state=ready] .title-prompt{animation:none}}

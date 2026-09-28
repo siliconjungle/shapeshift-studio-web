@@ -1,0 +1,133 @@
+{
+  "generation_id": "a53c6829-c32a-4da2-81da-0acab7c18459",
+  "duration": 1.78,
+  "file_size": 170924,
+  "encoding": {
+    "format": "wav",
+    "sample_rate": 48000
+  },
+  "snippets": [
+    [
+      {
+        "id": "9113b744-aab5-4230-af2b-beaf0272fb39",
+        "text": "Hmmm... boola meli?",
+        "generation_id": "9113b744-aab5-4230-af2b-beaf0272fb39",
+        "utterance_index": 0,
+        "audio_format": "wav",
+        "timestamps": [
+          {
+            "type": "phoneme",
+            "text": "b",
+            "time": {
+              "begin": 860,
+              "end": 880
+            }
+          },
+          {
+            "type": "phoneme",
+            "text": "u",
+            "time": {
+              "begin": 920,
+              "end": 940
+            }
+          },
+          {
+            "type": "phoneme",
+            "text": "l",
+            "time": {
+              "begin": 1020,
+              "end": 1040
+            }
+          },
+          {
+            "type": "phoneme",
+            "text": "m",
+            "time": {
+              "begin": 1140,
+              "end": 1160
+            }
+          },
+          {
+            "type": "phoneme",
+            "text": "ɛ",
+            "time": {
+              "begin": 1200,
+              "end": 1220
+            }
+          },
+          {
+            "type": "phoneme",
+            "text": "l",
+            "time": {
+              "begin": 1280,
+              "end": 1300
+            }
+          },
+          {
+            "type": "phoneme",
+            "text": "l",
+            "time": {
+              "begin": 1300,
+              "end": 1320
+            }
+          },
+          {
+            "type": "phoneme",
+            "text": "i",
+            "time": {
+              "begin": 1340,
+              "end": 1360
+            }
+          },
+          {
+            "type": "word",
+            "text": "Hmmm...",
+            "time": {
+              "begin": 860,
+              "end": 1040
+            }
+          },
+          {
+            "type": "word",
+            "text": "boola",
+            "time": {
+              "begin": 1140,
+              "end": 1300
+            }
+          },
+          {
+            "type": "word",
+            "text": "meli?",
+            "time": {
+              "begin": 1300,
+              "end": 1360
+            }
+          }
+        ],
+        "transcribed_text": null
+      }
+    ]
+  ],
+  "request": {
+    "version": "2",
+    "include_timestamp_types": [
+      "word",
+      "phoneme"
+    ],
+    "utterances": [
+      {
+        "text": "Hmmm... boola meli?",
+        "voice": {
+          "id": "5bf306e9-a002-4d69-8554-25d19bc21183"
+        },
+        "speed": 1.13,
+        "trailing_silence": 0.06
+      }
+    ],
+    "split_utterances": false,
+    "format": {
+      "type": "wav"
+    },
+    "num_generations": 1
+  }
+}

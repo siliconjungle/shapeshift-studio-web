@@ -1,0 +1,1 @@
+Numeral outlines from the existing assets/bramble-map/fonts/InkwellText-Variable.woff2, using wght=500, other axes at their defaults. Rebuild with python scripts/build-dice-font.py. No generated typeface or pip artwork is used.

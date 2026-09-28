@@ -1,3 +1,10 @@
+import {remapJoysticks} from '../joysticks/model.js';
+import {remapSolos} from '../solos/model.js';
+import {remapDrawOrder} from '../draw-order/model.js';
+import {constraintBindings,bindConstraints} from '../constraints/transfer.js';
+import {remapMeshes} from '../mesh/model.js';
+import {remapBoneBindings} from '../bone-binding/model.js';
+import {captureProcedural,proceduralBindings,remapProcedural,appendProcedural} from '@shapeshift-labs/studio-core/procedural/transfer';
 import {puppetSource,puppetSourceKey} from '../puppet-sources.js';
 import {projectAppearance} from './appearance.js';
 import {captureComponentDependencies,importComponentDependencies,componentDependencyNodes} from './library-dependencies.js';
@@ -10,7 +17,7 @@ export function capturePuppetDependencies(p,nodes){
  // Resolve the selected voice palette before importing into another style catalog.
  for(const c of source.clips)for(const e of c.cues??[])if(e.audio&&source.voiceOverrides?.[e.audio.library])e.audio.library=source.voiceOverrides[e.audio.library];delete source.voiceOverrides;
  const motion=captureComponentMotion(source,2,source.joints),dependencies=captureComponentDependencies(source,2,source.joints);captureMotionDependencies(source,2,motion,dependencies);
- result[key]={name:source.name,nodes:source.joints,motion,dependencies};
+ source.procedural=captureProcedural(source.procedural,2,new Set(source.joints.map(j=>j.id)),{includeUnattached:true,owner:source.joints.find(j=>!j.parent)?.id});result[key]={name:source.name,nodes:source.joints,motion,dependencies,...(source.procedural?{procedural:source.procedural}:{})};
  }return result;
 }
 export function importPuppetDependencies(p,item){
@@ -31,7 +38,8 @@ export function importPuppetDependencies(p,item){
  const unique=(base,used)=>{let id=base,i=2;while(used.has(id))id=base+'-'+i++;used.add(id);return id;};
  for(const [i,j]of packet.nodes.entries())joints[j.id]=unique(prefix+'-'+i,usedJoints);for(const [i,c]of packet.motion.clips.entries())clips[c.id]=unique(prefix+'-clip-'+i,usedClips);
  const deps=importComponentDependencies(p,{id:prefix,dimension:2,dependencies:packet.dependencies}),added=componentDependencyNodes(packet.nodes,deps).map(n=>({...n,id:joints[n.id],parent:n.parent?joints[n.parent]:null,...(n.bodyJoin?{bodyJoin:{...n.bodyJoin,targetNode:joints[n.bodyJoin.targetNode]}}:{})}));
- p.joints.push(...added);for(const c of packet.motion.clips)p.clips.push(bindComponentClip(c,2,joints,clips,deps));
+ const constraintIds=constraintBindings(packet.motion.constraints??[],p,prefix);p.constraints??=[];p.constraints.push(...bindConstraints(packet.motion.constraints??[],joints,constraintIds));deps.constraints=constraintIds;
+ if(packet.motion.drawOrder?.length){p.drawOrder??=[];p.drawOrder.push(...remapDrawOrder(packet.motion.drawOrder,joints));}remapJoysticks(added,[],joints,clips);remapSolos(added,[],joints);remapBoneBindings(added,joints);remapMeshes(added,joints);p.joints.push(...added);if(packet.procedural){const maps=proceduralBindings(packet.procedural,2,p.procedural,prefix),value=remapProcedural(packet.procedural,2,joints,maps);p.procedural=appendProcedural(p.procedural,value,2);}for(const c of packet.motion.clips)p.clips.push(bindComponentClip(c,2,joints,clips,deps));
  const id=unique(prefix,new Set(p.puppetSources.map(s=>s.id)));p.puppetSources.push({id,name:packet.name,roots:added.filter(j=>!j.parent).map(j=>j.id),clips:Object.values(clips),library:{id:item.id,key,revision:item.revision,joints:copy(joints),clips:copy(clips)}});maps[key]={source:id,joints,clips};
  }return maps;
 }

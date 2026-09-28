@@ -1,0 +1,77 @@
+{
+  "pipeline": "Built-in image generation → transparent cutout → actual Little Gods cel 16-colour reduction and SVG conversion",
+  "assets": [
+    {
+      "name": "camp",
+      "source": "source/camp-revised.png",
+      "width": 652,
+      "height": 592,
+      "preset": "cel",
+      "settings": {
+        "colors": 16,
+        "speckle": 4,
+        "precision": 6,
+        "difference": 14,
+        "corner": 80,
+        "length": 4.5,
+        "median": 3
+      },
+      "alphaThreshold": 128,
+      "paths": 238,
+      "colours": 15,
+      "curves": 3744,
+      "bytes": 138534,
+      "silhouetteIoU": 0.9951744271298506,
+      "meanColorError": 0.024644746316527456,
+      "warnings": []
+    },
+    {
+      "name": "shop",
+      "source": "source/shop-revised.png",
+      "width": 652,
+      "height": 649,
+      "preset": "cel",
+      "settings": {
+        "colors": 16,
+        "speckle": 4,
+        "precision": 6,
+        "difference": 14,
+        "corner": 80,
+        "length": 4.5,
+        "median": 3
+      },
+      "alphaThreshold": 128,
+      "paths": 616,
+      "colours": 15,
+      "curves": 8040,
+      "bytes": 290617,
+      "silhouetteIoU": 0.9940466991927354,
+      "meanColorError": 0.03987470204776848,
+      "warnings": []
+    },
+    {
+      "name": "shrine",
+      "source": "source/shrine-revised.png",
+      "width": 652,
+      "height": 538,
+      "preset": "cel",
+      "settings": {
+        "colors": 16,
+        "speckle": 4,
+        "precision": 6,
+        "difference": 14,
+        "corner": 80,
+        "length": 4.5,
+        "median": 3
+      },
+      "alphaThreshold": 128,
+      "paths": 582,
+      "colours": 15,
+      "curves": 8817,
+      "bytes": 318888,
+      "silhouetteIoU": 0.9925891181988743,
+      "meanColorError": 0.03023292346802408,
+      "warnings": []
+    }
+  ]
+}
