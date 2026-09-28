@@ -26,3 +26,14 @@ test('broker isolates tabs, rejects cross-site writes, deduplicates requests and
   assert.equal((await request(`/api/sessions/${a.id}/call`,{op:'history.undo'})).status,410);
  }finally{server.closeAllConnections();await new Promise(resolve=>server.close(resolve));}
 });
+
+test('catalogue discovery works before any editor registers and remains read-only',async()=>{
+ const server=createStudioServer();await new Promise(r=>server.listen(0,'127.0.0.1',r));
+ try{const base='http://127.0.0.1:'+server.address().port;
+  const search=await fetch(base+'/api/catalog?query=potion').then(r=>r.json());assert.ok(search.features.some(f=>f.id==='liquid'));
+  const detail=await fetch(base+'/api/catalog?id=liquid').then(r=>r.json());assert.ok(detail.recipes.some(r=>r.id==='add-liquid'));
+  const sessions=await fetch(base+'/api/sessions').then(r=>r.json());assert.deepEqual(sessions.sessions,[]);
+  assert.equal((await fetch(base+'/api/catalog?id=missing')).status,400);
+  assert.equal((await fetch(base+'/api/catalog',{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'})).status,404);
+ }finally{await new Promise(r=>server.close(r));}
+});

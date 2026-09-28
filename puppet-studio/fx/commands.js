@@ -326,6 +326,7 @@ export const capabilities = () => ({
     'vector.duplicate',
     'vector.order',
     'vector.boolean',
+    'vector.clip',
     'grading.set',
     'grading.reset',
     'motion.targetKey',

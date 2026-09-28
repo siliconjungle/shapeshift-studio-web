@@ -2,6 +2,24 @@
 
 A standalone browser editor for 2D puppets, SVG artwork, illustrated 3D scenes, animation, sound, entities, and data-defined behaviour.
 
+## Find a feature
+
+Open **Features** in the editor toolbar, or visit `/features/index.html` for the searchable catalogue. Start with the [complete feature guide](docs/features.md): it covers tools, requirements, supported limits, Core imports, authoring commands and runnable recipes.
+
+Agents can discover features **before starting a server or opening a browser**:
+
+```sh
+npm run studio -- catalog
+npm run studio -- catalog --query "lip sync"
+npm run studio -- catalog liquid
+npm run studio -- catalog --command illustration.liquid
+npm run studio -- recipe add-liquid --json '{"joint":"body","fill":0.7}'
+```
+
+Recipes print validated request payloads; they never execute implicitly. Dispatch each returned request through `npm run studio -- call OP --json ARGS`, or `window.shapeshiftStudio.api.call(request)`, after checking its requirements and your project IDs. `catalog --all true` returns the complete catalogue. The live API exposes the same data through `catalog.search`, `catalog.feature`, `catalog.command` and `catalog.recipe`.
+
+The source of truth is Studio Core `src/catalog/features.json`, imported by this editor, CLI and documentation generator. Run `npm run catalog:docs` after upgrading the catalogue; tests check command coverage, recipe execution/undo and documentation freshness.
+
 ## Run
 
 Use Node.js 22 or later. Run `npm ci`, `npm run build`, then `npm start`. Open http://127.0.0.1:4354/.

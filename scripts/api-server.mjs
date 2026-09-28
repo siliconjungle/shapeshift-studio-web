@@ -1,9 +1,10 @@
+import {queryCatalog} from '@shapeshift-labs/studio-core/catalog';
 import http from 'node:http';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { randomUUID, randomBytes, timingSafeEqual } from 'node:crypto';
 
-const types={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json':'application/json','.svg':'image/svg+xml','.mp3':'audio/mpeg','.png':'image/png','.webp':'image/webp'};
+const types={'.md':'text/markdown; charset=utf-8','.html':'text/html','.js':'text/javascript','.css':'text/css','.json':'application/json','.svg':'image/svg+xml','.mp3':'audio/mpeg','.png':'image/png','.webp':'image/webp'};
 const json=(res,status,value)=>{res.writeHead(status,{'Content-Type':'application/json','Cache-Control':'no-store'});res.end(JSON.stringify(value));};
 async function body(req){let size=0;const chunks=[];for await(const chunk of req){size+=chunk.length;if(size>192*1024*1024)throw Error('Request exceeds 192 MB');chunks.push(chunk);}return JSON.parse(Buffer.concat(chunks).toString()||'{}');}
 const equal=(a,b)=>typeof a==='string'&&a.length===b.length&&timingSafeEqual(Buffer.from(a),Buffer.from(b));
@@ -25,6 +26,7 @@ export function createStudioServer({root=path.resolve(import.meta.dirname,'../di
     if(req.headers.origin&&req.headers.origin!=='http://'+host){json(res,403,{error:'Same-origin requests only'});return;}
     if(req.headers['sec-fetch-site']==='cross-site'){json(res,403,{error:'Same-origin requests only'});return;}
     if(req.method==='POST'&&!req.headers['content-type']?.startsWith('application/json')){json(res,415,{error:'JSON content type required'});return;}
+    if(pathname==='/api/catalog'&&req.method==='GET'){json(res,200,queryCatalog({query:url.searchParams.get('query')??'',id:url.searchParams.get('id')??undefined,category:url.searchParams.get('category')??undefined,scope:url.searchParams.get('scope')??undefined}));return;}
     for(const session of sessions.values())if(Date.now()-session.lastSeen>sessionTTL)expire(session);
     if(pathname==='/api/sessions'&&req.method==='GET'){json(res,200,{sessions:[...sessions.values()].map(info)});return;}
     if(pathname==='/api/sessions'&&req.method==='POST'){

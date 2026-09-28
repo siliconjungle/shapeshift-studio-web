@@ -184,3 +184,18 @@ The API covers each UI domain through both its authored data and its live contro
 | Machine transport | Loopback broker and CLI | Real child-process CLI to Chrome; broker isolation, request deduplication and cross-origin rejection |
 
 Run `npm test`, `npm run build`, and `npm run test:api`. The API browser suite launches its own ephemeral local server and installed Google Chrome, and mutes audio. `npm run test:browser` runs the existing behaviour/rendering suite against a running server. The tests cover representative workflows and critical boundaries; they do not enumerate every possible authored value or every click combination.
+
+## Feature discovery
+
+Discovery is read-only and does not require an idle editor. `api.describe` advertises the catalogue version, entry count and links.
+
+```json
+{"op":"catalog.search","args":{"query":"liquid","scope":"web"}}
+{"op":"catalog.feature","args":{"id":"liquid"}}
+{"op":"catalog.command","args":{"op":"illustration.liquid"}}
+{"op":"catalog.recipe","args":{"id":"add-liquid","inputs":{"joint":"body","fill":0.7}}}
+```
+
+`catalog.search` accepts optional `query`, `category` and `scope` (`core` or `web`). Feature detail includes requirements, limits, commands, Core imports, documentation, example links and recipe input schemas. `catalog.recipe` expands validated inputs into concrete request payloads and does not execute them. Input schemas use JSON Schema 2020-12; they describe the supported recipes, not every advanced command payload. The project store remains responsible for validating IDs and contextual constraints when requests are dispatched.
+
+For discovery without a session, use `npm run studio -- catalog`, or GET `/api/catalog?query=liquid` from the local server. Static builds include `/features/catalog.json`, `/features/index.html` and `/docs/features.md`; these require no local API server.

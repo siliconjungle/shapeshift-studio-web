@@ -1,8 +1,10 @@
+import {queryCatalog,commandInfo,expandRecipe,featureCatalog} from '@shapeshift-labs/studio-core/catalog';
 import {createUIControls} from './ui-controls.js';
 import {clearActivityError,waitForActivity,activityState,reportActivityError} from './activity.js';
 import {beginArtifacts,endArtifacts,beginAnswers,endAnswers} from './artifacts.js';
 
 const contracts={
+ 'catalog.search':{query:'search terms (optional)',category:'category (optional)',scope:'core|web (optional)'},'catalog.feature':{id:'feature ID'},'catalog.recipe':{id:'recipe ID',inputs:'validated recipe inputs; returns requests without executing them'},'catalog.command':{op:'authoring command name'},
  'api.describe':{},'document.graph':{mode:'2d|3d'},'runtime.inspect':{},'editor.inspect':{project:'boolean (default false)'},'document.read':{},
  'document.dispatch':{commands:'command or command[]; one undo entry'},'document.patch':{patches:'{op:set|insert|remove|test,path:(string|integer)[],value?:JSON}[]'},
  'history.undo':{},'history.redo':{},'workspace.open':{view:'puppet|scene|artwork|preview',drill:'boolean'},'workspace.back':{},
@@ -22,7 +24,7 @@ const contracts={
  'ui.pointer':{ref:'canvas/control ref (or id/unique selector)',events:'[{type:pointerdown|pointermove|pointerup|pointercancel|dblclick|wheel,x,y,...PointerEvent options}]'},
  'ui.batch':{actions:'[{op:ui.set|ui.activate|...,args:{...}}]; ordered; not a document transaction'}
 };
-const reads=new Set(['api.describe','editor.inspect','document.read','document.graph','runtime.inspect','ui.inspect']);
+const reads=new Set(['catalog.search','catalog.feature','catalog.recipe','catalog.command','api.describe','editor.inspect','document.read','document.graph','runtime.inspect','ui.inspect']);
 const jsonCopy=value=>value===undefined?null:JSON.parse(JSON.stringify(value));
 const failure=(code,message)=>Object.assign(Error(message),{code});
 
@@ -42,9 +44,13 @@ export function createLiveAPI(host){
  window.addEventListener('blur',()=>pointers.clear());
  function busy(){for(const element of drafts)if(!element.isConnected||element.closest('dialog:not([open]),[hidden]'))drafts.delete(element);return host.pending()||pointers.size||drafts.size;}
  function contextKey(){return JSON.stringify(host.context());}
- function describe(){return{version:1,documentation:'docs/live-api.md',examples:[{op:'workspace.open',args:{view:'artwork'}},{op:'panel.set',args:{panel:'timeline',open:true}},{op:'document.dispatch',args:{commands:{op:'joint.add',id:'socket',parent:'root'}}},{op:'document.patch',args:{patches:[{op:'set',path:['name'],value:'My project'}]}},{op:'ui.set',args:{ref:'use a ref from ui.inspect',value:'New value'}},{op:'export',args:{format:'project'}}],operations:contracts,modules:host.modules,panels:host.panels,commands:host.capabilities(),request:{op:'operation name',args:'operation arguments',expectedRevision:'optional committed project revision',expectedContext:'optional context token from editor.inspect',answers:'optional ordered native prompt answers'},rules:['Commands share the current editor and undo history.','UI refs expire when their elements are replaced. Inspect again after edits.','A busy human gesture or uncommitted human form returns EDITOR_BUSY.','Document batches are atomic; UI batches stop on error and retain completed actions.','Exports return base64 artifacts; no native file dialogs or arbitrary evaluation.']};}
+ function describe(){return{version:1,documentation:'docs/live-api.md',catalogue:{version:featureCatalog.version,features:featureCatalog.features.length,recipes:featureCatalog.recipes.length,offline:'npm run studio -- catalog',json:'features/catalog.json',documentation:'docs/features.md',search:'catalog.search'},examples:[{op:'workspace.open',args:{view:'artwork'}},{op:'panel.set',args:{panel:'timeline',open:true}},{op:'document.dispatch',args:{commands:{op:'joint.add',id:'socket',parent:'root'}}},{op:'document.patch',args:{patches:[{op:'set',path:['name'],value:'My project'}]}},{op:'ui.set',args:{ref:'use a ref from ui.inspect',value:'New value'}},{op:'export',args:{format:'project'}}],operations:contracts,modules:host.modules,panels:host.panels,commands:host.capabilities(),request:{op:'operation name',args:'operation arguments',expectedRevision:'optional committed project revision',expectedContext:'optional context token from editor.inspect',answers:'optional ordered native prompt answers'},rules:['Commands share the current editor and undo history.','UI refs expire when their elements are replaced. Inspect again after edits.','A busy human gesture or uncommitted human form returns EDITOR_BUSY.','Document batches are atomic; UI batches stop on error and retain completed actions.','Exports return base64 artifacts; no native file dialogs or arbitrary evaluation.']};}
  function inspect(args={}){return{...host.inspect(),context:contextKey(),ui:controls.inspect(),revision:host.revision(),busy:!!busy(),activity:activityState(),request:active,...args.project?{project:host.project()}: {}};}
  async function perform(op,args){
+  if(op==='catalog.search')return queryCatalog({query:args.query,category:args.category,scope:args.scope});
+  if(op==='catalog.feature')return queryCatalog({id:args.id??''});
+  if(op==='catalog.recipe')return expandRecipe(args.id,args.inputs);
+  if(op==='catalog.command')return commandInfo(args.op);
   if(op==='api.describe')return describe();
   if(op==='editor.inspect')return inspect(args);
   if(op==='document.read')return host.project();

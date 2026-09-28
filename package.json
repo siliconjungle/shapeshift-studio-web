@@ -1,11 +1,11 @@
 {
   "name": "@shapeshift-labs/studio-web",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Shapeshift Studio web editor",
   "scripts": {
     "build": "node scripts/build.mjs",
     "start": "node scripts/serve.mjs",
-    "test": "node --test puppet-studio/entities/definitions.test.mjs puppet-studio/references/references.test.mjs puppet-studio/body-joins.test.mjs puppet-studio/authoring/behaviour.test.mjs puppet-studio/api/document-commands.test.mjs scripts/api-server.test.mjs puppet-studio/authoring/speech.test.mjs puppet-studio/illustration/container-liquid.test.mjs puppet-studio/dice/dice.test.mjs puppet-studio/dice/duel.test.mjs puppet-studio/dice/reactions.test.mjs puppet-studio/noodle/noodle.test.mjs puppet-studio/shape-lab/shape-lab.test.mjs puppet-studio/constraints/follow-path.test.mjs puppet-studio/joysticks/joysticks.test.mjs puppet-studio/solos/solos.test.mjs puppet-studio/draw-order/draw-order.test.mjs puppet-studio/mesh/mesh.test.mjs puppet-studio/bone-binding/bone-binding.test.mjs puppet-studio/constraints/constraints.test.mjs puppet-studio/state-machine/state-machine.test.mjs puppet-studio/slicing/n-slicing.test.mjs puppet-studio/vector/trim.test.mjs puppet-studio/vector/clipping.test.mjs puppet-studio/procedural/procedural.test.mjs puppet-studio/procedural3d/procedural3d.test.mjs puppet-studio/authoring/library-procedural.test.mjs puppet-studio/illustration/illustration.test.mjs",
+    "test": "node --test puppet-studio/entities/definitions.test.mjs puppet-studio/references/references.test.mjs puppet-studio/body-joins.test.mjs puppet-studio/authoring/behaviour.test.mjs puppet-studio/api/document-commands.test.mjs scripts/api-server.test.mjs puppet-studio/authoring/speech.test.mjs puppet-studio/illustration/container-liquid.test.mjs puppet-studio/dice/dice.test.mjs puppet-studio/dice/duel.test.mjs puppet-studio/dice/reactions.test.mjs puppet-studio/noodle/noodle.test.mjs puppet-studio/shape-lab/shape-lab.test.mjs puppet-studio/constraints/follow-path.test.mjs puppet-studio/joysticks/joysticks.test.mjs puppet-studio/solos/solos.test.mjs puppet-studio/draw-order/draw-order.test.mjs puppet-studio/mesh/mesh.test.mjs puppet-studio/bone-binding/bone-binding.test.mjs puppet-studio/constraints/constraints.test.mjs puppet-studio/state-machine/state-machine.test.mjs puppet-studio/slicing/n-slicing.test.mjs puppet-studio/vector/trim.test.mjs puppet-studio/vector/clipping.test.mjs puppet-studio/procedural/procedural.test.mjs puppet-studio/procedural3d/procedural3d.test.mjs puppet-studio/authoring/library-procedural.test.mjs puppet-studio/illustration/illustration.test.mjs puppet-studio/catalog/catalog.test.mjs",
     "test:browser": "node scripts/qa/behaviour.mjs",
     "studio": "node scripts/studio.mjs",
     "test:api": "node scripts/qa/live-api.mjs",
@@ -14,7 +14,8 @@
     "vectorize:video": "node scripts/vectorize-video.mjs",
     "build:video": "node scripts/build-video-vectorizer.mjs",
     "serve:video": "node scripts/serve-video-vectorizer.mjs",
-    "test:examples": "node --test puppet-studio/experiments/bramble-map/*.test.mjs puppet-studio/experiments/sunflower-puppet/*.test.mjs puppet-studio/portrait/*.test.mjs puppet-studio/experiments/potion/*.test.mjs"
+    "test:examples": "node --test puppet-studio/experiments/bramble-map/*.test.mjs puppet-studio/experiments/sunflower-puppet/*.test.mjs puppet-studio/portrait/*.test.mjs puppet-studio/experiments/potion/*.test.mjs",
+    "catalog:docs": "node scripts/catalog-docs.mjs"
   },
   "keywords": [],
   "author": "",
@@ -23,7 +24,7 @@
     "@shapeshift-labs/frontier": "0.1.9",
     "@shapeshift-labs/frontier-scene": "0.1.0",
     "@shapeshift-labs/frontier-virtual": "0.1.0",
-    "@shapeshift-labs/studio-core": "github:siliconjungle/shapeshift-studio-core#31721ed36e00d65181ad738016bce5dcc5e4cd1f",
+    "@shapeshift-labs/studio-core": "github:siliconjungle/shapeshift-studio-core#9442d2d45f53729a315a04bc6deeccbc958ad2f0",
     "@silicon-jungle/inkwell-sdk": "0.0.7",
     "fflate": "0.8.2",
     "gifenc": "1.0.3",

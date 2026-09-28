@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import fs from 'node:fs/promises';
+import {queryCatalog,commandInfo,expandRecipe,featureCatalog} from '@shapeshift-labs/studio-core/catalog';
 import { randomUUID } from 'node:crypto';
 
 const argv=process.argv.slice(2),options={};
@@ -8,7 +9,9 @@ const base=options.url??process.env.STUDIO_URL??'http://127.0.0.1:4354';
 async function request(path,value){const res=await fetch(base+path,value===undefined?{}:{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(value)});const data=await res.json();if(!res.ok)throw Error(data.error??res.statusText);return data;}
 async function main(){
  const [command='help',operation]=argv;
- if(command==='help'){console.log('Usage: studio sessions | inspect | capabilities | call <operation> | dispatch | export <format> | result <id>\nOptions: --url URL --session ID --json JSON --file FILE --revision N --context TOKEN --request-id ID --answers JSON --out FILE --timeout MS\nUse capabilities for operation arguments; inspect exposes current UI control references.');return;}
+ if(command==='help'){console.log('Usage: studio catalog [feature-id] | recipe <recipe-id> | sessions | inspect | capabilities | call <operation> | dispatch | export <format> | result <id>\nOptions: --url URL --session ID --json JSON --file FILE --revision N --context TOKEN --request-id ID --answers JSON --out FILE --timeout MS\nOffline discovery: catalog --query TEXT --scope core|web --category CATEGORY; catalog --command COMMAND; catalog --all true. Recipe inputs: recipe ID --json JSON. Discovery prints data and never executes recipes.\nUse capabilities for operation arguments; inspect exposes current UI control references.');return;}
+ if(command==='catalog')return options.all==='true'?featureCatalog:options.command?commandInfo(options.command):queryCatalog({id:operation,query:options.query??'',category:options.category,scope:options.scope});
+ if(command==='recipe')return expandRecipe(operation,options.file?JSON.parse(await fs.readFile(options.file,'utf8')):JSON.parse(options.json??'{}'));
  if(command==='sessions')return request('/api/sessions');
  if(command==='result')return request('/api/requests/'+encodeURIComponent(operation));
  const sessions=(await request('/api/sessions')).sessions;

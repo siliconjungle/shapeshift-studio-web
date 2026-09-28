@@ -1,3 +1,4 @@
+import {featureCatalog} from '@shapeshift-labs/studio-core/catalog';
 import fs from 'node:fs/promises';import path from 'node:path';import {build} from 'esbuild';
 const root=path.resolve(import.meta.dirname,'..');const out=path.join(root,'dist');
 await fs.rm(out,{recursive:true,force:true});await fs.mkdir(out,{recursive:true});
@@ -20,4 +21,8 @@ for(const name of ['bramble-map','sunflower-puppet','potion']){
  for(const file of await fs.readdir(path.join(root,relative)))if(/\.(html|css|json|svg)$/.test(file))await fs.copyFile(path.join(root,relative,file),path.join(out,relative,file));
 }
 
+await build({...options,entryPoints:['features/app.js'],outfile:'dist/features/app.js'});
+await fs.copyFile(path.join(root,'features/index.html'),path.join(out,'features/index.html'));
+await fs.writeFile(path.join(out,'features/catalog.json'),JSON.stringify(featureCatalog));
+await fs.cp(path.join(root,'docs'),path.join(out,'docs'),{recursive:true});
 console.log('Built standalone Shapeshift Studio.');
