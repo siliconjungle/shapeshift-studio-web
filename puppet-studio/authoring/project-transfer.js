@@ -7,6 +7,6 @@ export async function portableProject(project,{baseURL=document.baseURI,fetcher=
  const cache=new Map(),jobs=[];
  const embed=src=>{if(src.startsWith('data:'))return Promise.resolve(src);const url=new URL(src,baseURL).href;if(!cache.has(url))cache.set(url,(async()=>{const response=await fetcher(url);if(!response.ok)throw Error('Could not embed project resource: '+url);return encode(await response.blob())})());return cache.get(url)};
  function visit(value){if(!value||typeof value!=='object')return;for(const key of ['src','originalSrc'])if(typeof value[key]==='string')jobs.push(async()=>{value[key]=await embed(value[key])});if(Array.isArray(value.frames))jobs.push(async()=>{value.frames=await Promise.all(value.frames.map(embed))});for(const [key,child]of Object.entries(value))if(!['program','parameters','frames','controllerLibraries','entityDefinitions'].includes(key)&&child&&typeof child==='object')visit(child)}
- for(const resources of [out.assets,out.scene3d?.resources,out.fx?.models,out.library?.items])visit(resources);
+ for(const resources of [out.assets,out.speech?.chunks,out.scene3d?.resources,out.fx?.models,out.library?.items])visit(resources);
  let cursor=0;await Promise.all(Array.from({length:Math.min(4,jobs.length)},async()=>{while(cursor<jobs.length)await jobs[cursor++]()}));return out;
 }

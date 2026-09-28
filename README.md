@@ -31,3 +31,34 @@ With the built editor running, `npm run test:browser` checks behaviour authoring
 AI tools can operate the same open tab as a person, including project edits, undo/redo, views, panels, selection, tools, playback, canvas gestures, imports and exports. Start with `npm run studio -- sessions`, `npm run studio -- capabilities`, and `npm run studio -- inspect`. Use `--session ID` to choose a tab and `--revision N` to reject stale edits. The browser entry point is `window.shapeshiftStudio.api.call({op,args})`.
 
 See the [live API contract, examples and coverage](docs/live-api.md). Run `npm run test:api` for the CLI-to-browser and human/AI concurrency checks.
+
+## Liquid and speech tools
+
+The **Liquid** panel attaches a sealed 2D liquid surface to the selected puppet
+joint. Edit its boundary, fill, slosh response, colours, bubbles and draw order;
+key fill/colours on the shared timeline. Its sound preset adds procedural slosh,
+pop, pour and other cues to **Sound**. This is a stylized container simulation;
+the existing grid-based fluid effects remain available separately.
+
+The **Speech** panel embeds recordings, accepts timed viseme cues, binds mouth
+artwork and facial pose offsets, and places dialogue on puppet clips. Playback,
+seeking and timeline retiming keep recordings and mouth timing together. It uses
+supplied alignment cues; it does not automatically transcribe audio. See the
+[speech guide](puppet-studio/authoring/speech.md) for the data format and commands.
+
+After starting Studio, append `?example=potion` or `?example=speech` to the editor
+URL to open the included [potion](puppet-studio/examples/potion.puppet.json) or
+[voiced portrait](puppet-studio/examples/speech.puppet.json). The examples contain
+embedded artwork/audio and do not overwrite the autosaved project. Use Save
+project to retain example edits. The portrait demonstrates authored vector facial
+acting with its recordings; reusable viseme-to-artwork bindings are available in
+Speech for other characters.
+
+Both panels are exposed through the live API (`panel.set` with `illustration`
+or `speech`). `api.describe` lists the `illustration.*` and `speech.*` commands;
+these use the same validated undo history as the UI. Project and HTML exports
+include recorded audio. Voiced HTML players start audio after a Play click.
+GIF, PNG and sprite-sheet exports are visual formats and contain no audio.
+
+Run `npm test` for liquid conservation/scrubbing, speech timing/audio scheduling,
+portable recordings, undo/redo, example compatibility and the existing suites.

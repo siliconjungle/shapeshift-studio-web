@@ -1,3 +1,7 @@
+import {validateSpeech,speechAt} from '@shapeshift-labs/studio-core/speech';
+import {validateLiquid} from '@shapeshift-labs/studio-core/illustration/container-liquid';
+import {validateIllustrationTracks} from '@shapeshift-labs/studio-core/illustration/tracks';
+import {validateEffectBindings} from '@shapeshift-labs/studio-core/illustration/effect-state';
 import {prepareBodyJoinProfiles} from './body-join-profiles.js';
 export {prepareBodyJoinProfiles} from './body-join-profiles.js';
 import {validateBodyJoins,bodyJoinFrame,deformBodyPoint} from './body-joins.js';
@@ -65,12 +69,12 @@ export function effectDelta(effect,time){
   if(effect.type==='squash'){value.scaleY=Math.max(.1,1+amount/100);value.scaleX=effect.volume===false?1:1/value.scaleY;}
   return value;
 }
-export function poseAt(project,clip,time,{solveIK=true,tools=true,dynamics=true,overrides=[]}={}){
+export function poseAt(project,clip,time,{solveIK=true,tools=true,dynamics=true,overrides=[],speech=true,speechTime=time}={}){
   const transforms=new Map(),deltas=new Map();
   for(const j of project.joints){const delta=sampleTrack(clip?.tracks[j.id],time),t={...j.rest};deltas.set(j.id,delta);for(const c of CHANNELS)t[c]=c.startsWith('scale')?t[c]*delta[c]:t[c]+((clip?.ik?.[j.id]&&['x','y'].includes(c))?0:delta[c]);transforms.set(j.id,t);}
   for(const effect of clip?.effects??[]){if(effect.enabled===false)continue;const t=transforms.get(effect.joint),d=effectDelta({...effect,duration:clip.duration},time);for(const c of CHANNELS)t[c]=c.startsWith('scale')?t[c]*d[c]:t[c]+d[c];}
   if(dynamics)for(const j of project.joints){const t=transforms.get(j.id),d=dynamicMotion(j.visual?.motion,time);for(const c of CHANNELS)t[c]=c.startsWith('scale')?t[c]*d[c]:t[c]+d[c];}
-  if(tools)poseLayers(transforms,clip?.tools,time,clip?.duration??1,(layer,at)=>{const source=project.clips.find(c=>c.id===layer.sourceClip),age=Math.max(0,at-(layer.start??0))*(layer.speed??1)+(layer.offset??0),t=layer.loop===false?Math.min(source.duration,age):age%source.duration,sampled=poseAt(project,source,t,{tools:false,dynamics:false}),values={};for(const id of layer.joints){const p=sampled.get(id);values[id]=Object.fromEntries(CHANNELS.map(k=>[k,k.startsWith('scale')?p.transform[k]/p.joint.rest[k]:p.transform[k]-p.joint.rest[k]]));}return values;});
+  if(tools)poseLayers(transforms,clip?.tools,time,clip?.duration??1,(layer,at)=>{const source=project.clips.find(c=>c.id===layer.sourceClip),age=Math.max(0,at-(layer.start??0))*(layer.speed??1)+(layer.offset??0),t=layer.loop===false?Math.min(source.duration,age):age%source.duration,sampled=poseAt(project,source,t,{tools:false,dynamics:false,speech:false}),values={};for(const id of layer.joints){const p=sampled.get(id);values[id]=Object.fromEntries(CHANNELS.map(k=>[k,k.startsWith('scale')?p.transform[k]/p.joint.rest[k]:p.transform[k]-p.joint.rest[k]]));}return values;});
   let result=buildPose(project,transforms);
   const ikTargets=new Map();
   if(clip?.ik&&solveIK){
@@ -95,8 +99,10 @@ export function poseAt(project,clip,time,{solveIK=true,tools=true,dynamics=true,
       ikTargets.set(endId,target);
     }
   }
-  if(tools)solvePoseTools(project,clip,time,result,transforms,t=>poseAt(project,clip,t,{solveIK,tools:false}));
+  if(tools)solvePoseTools(project,clip,time,result,transforms,t=>poseAt(project,clip,t,{solveIK,tools:false,speech:false}));
   for(const [id,p]of result){p.delta=deltas.get(id);const target=ikTargets.get(id);if(target){p.ikTarget=target;p.ikError=Math.hypot(p.world[4]-target.x,p.world[5]-target.y);}}
+  const spoken=speech?speechAt(project,clip,speechTime):{transforms:{},artwork:{},active:[]};result.speech=spoken;
+  for(const [id,values]of Object.entries(spoken.transforms)){const p=result.get(id);if(!p)continue;for(const [k,v]of Object.entries(values))p.transform[k]=k.startsWith('scale')?Math.max(.01,p.transform[k]*(1+v)):p.transform[k]+v;transforms.set(id,p.transform);result.updateBranch(id);}
   for(const t of finalChannels(clip,time,overrides)){const p=result.get(t.node);if(p&&CHANNELS.includes(t.channel)){transforms.get(t.node)[t.channel]=t.value;result.updateBranch(t.node);}}
   return result;
 }
@@ -114,7 +120,7 @@ export function enableIK(project,clip,endId,time,{bend=1,stretch=1}={}){
 export function bakeMotion(project,clip){
   const original=clone(clip),tracks={},previous=new Map();
   const times=[];for(let frame=0;frame/clip.fps<clip.duration;frame++)times.push(frame/clip.fps);times.push(clip.duration);
-  for(const time of times){const rawProject={...project,joints:project.joints.map(j=>({...j,visual:j.visual?{...j.visual,motion:{...j.visual.motion,enabled:false}}:undefined}))};const pose=poseAt(rawProject,original,time);for(const j of project.joints){const t=pose.get(j.id).transform,v=identity();for(const c of CHANNELS)v[c]=c.startsWith('scale')?t[c]/j.rest[c]:t[c]-j.rest[c];const old=previous.get(j.id);if(old!==undefined){while(v.rotation-old>180)v.rotation-=360;while(v.rotation-old<-180)v.rotation+=360;}previous.set(j.id,v.rotation);(tracks[j.id]??=[]).push({time,value:v,easing:'linear'});}}
+  for(const time of times){const rawProject={...project,joints:project.joints.map(j=>({...j,visual:j.visual?{...j.visual,motion:{...j.visual.motion,enabled:false}}:undefined}))};const pose=poseAt(rawProject,original,time,{speech:false});for(const j of project.joints){const t=pose.get(j.id).transform,v=identity();for(const c of CHANNELS)v[c]=c.startsWith('scale')?t[c]/j.rest[c]:t[c]-j.rest[c];const old=previous.get(j.id);if(old!==undefined){while(v.rotation-old>180)v.rotation-=360;while(v.rotation-old<-180)v.rotation+=360;}previous.set(j.id,v.rotation);(tracks[j.id]??=[]).push({time,value:v,easing:'linear'});}}
   clip.tracks=tracks;delete clip.ik;delete clip.effects;delete clip.tools;
 }
 export function setKey(clip,id,time,value,easing='smooth'){
@@ -135,6 +141,9 @@ export function moveOrigin(project,id,delta){
 export function removeJoint(project,id){
   const ids=new Set([id]);let changed=true;
   while(changed){changed=false;for(const j of project.joints)if(ids.has(j.parent)&&!ids.has(j.id)){ids.add(j.id);changed=true;}}
+  project.illustrationBindings=(project.illustrationBindings??[]).filter(b=>!ids.has(b.joint));
+  for(const clip of project.clips)if(clip.illustrationTracks)clip.illustrationTracks=clip.illustrationTracks.filter(t=>!ids.has(t.joint));
+  for(const rig of Object.values(project.speech?.rigs??{})){for(const pose of Object.values(rig.poses))for(const id of ids){if(pose.values)delete pose.values[id];if(pose.artwork)delete pose.artwork[id];}if(ids.has(rig.envelope?.joint))delete rig.envelope;}
   project.joints=project.joints.filter(j=>!ids.has(j.id));for(const j of project.joints)if(ids.has(j.bodyJoin?.targetNode))delete j.bodyJoin;pruneAppearanceTargets(project);
   for(const c of project.clips){cleanToolReferences(c,new Set(project.joints.map(j=>j.id)));if(c.resolvedTracks)c.resolvedTracks=c.resolvedTracks.filter(t=>!ids.has(t.node));if(c.lightingTracks)c.lightingTracks=c.lightingTracks.filter(t=>!ids.has(t.node));for(const key of ids)delete c.tracks[key];if(c.effects)c.effects=c.effects.filter(e=>!ids.has(e.joint));for(const [end,chain]of Object.entries(c.ik??{}))if(ids.has(end)||ids.has(chain.root)||ids.has(chain.mid))delete c.ik[end];}
 }
@@ -176,7 +185,7 @@ export function validateProject(input){
     }
   }
   for(const c of p.clips)validateTools(c.tools,p.joints,c.duration,2,p.clips);
-  if(p.entityDefinitions)validateEntityLibrary(p.entityDefinitions);for(const node of p.scene3d?.nodes??[])if(node.controller?.entity&&!p.entityDefinitions?.entities.some(entity=>entity.id===node.controller.entity))fail('Missing controller entity template '+node.controller.entity);validatePuppetSources(p);validateLibrary(p);validateResolvedTracks(p);validateTiming(p);validateSound(p);validatePreview(p,validateProject);validateActions(p);validateBackdrop(p);validateAppearance(p);validateGrading(p.grading);validateLighting2D(p);finiteTree(p);if(p.scene3d){validateScene(p.scene3d,p.assets);if(p.appearance&&(p.scene3d.nodes.some(n=>n.variant||n.puppet?.variant)||p.appearance.variants.some(v=>v.effects||v.voices))){const view=projectAppearance(p);validateScene(view.scene3d,view.assets);}}validateFX(p);for(const c of p.clips){if(c.fx)validateFX({...p,fx:c.fx});validateCues(c);}
+  if(p.entityDefinitions)validateEntityLibrary(p.entityDefinitions);for(const node of p.scene3d?.nodes??[])if(node.controller?.entity&&!p.entityDefinitions?.entities.some(entity=>entity.id===node.controller.entity))fail('Missing controller entity template '+node.controller.entity);validatePuppetSources(p);validateLibrary(p);validateResolvedTracks(p);validateTiming(p);for(const j of p.joints)if(j.liquid)validateLiquid(j.liquid);validateEffectBindings(p.illustrationBindings,p.joints);for(const c of p.clips)validateIllustrationTracks(c.illustrationTracks,p.joints);validateSpeech(p);validateSound(p);validatePreview(p,validateProject);validateActions(p);validateBackdrop(p);validateAppearance(p);validateGrading(p.grading);validateLighting2D(p);finiteTree(p);if(p.scene3d){validateScene(p.scene3d,p.assets);if(p.appearance&&(p.scene3d.nodes.some(n=>n.variant||n.puppet?.variant)||p.appearance.variants.some(v=>v.effects||v.voices))){const view=projectAppearance(p);validateScene(view.scene3d,view.assets);}}validateFX(p);for(const c of p.clips){if(c.fx)validateFX({...p,fx:c.fx});validateCues(c);}
   return p;
 }
 export async function loadImages(project){
@@ -185,6 +194,7 @@ export async function loadImages(project){
  const models=[...(project.fx?.models??[]),...(project.clips??[]).flatMap(c=>(c.fx?.models??[]).map(m=>({...m,id:c.id+':'+m.id})))];if(models.length){const {loadModels}=await import('./fx/models.js');images.models=await loadModels(models);}return images;
 }
 export function drawPuppet(ctx,project,images,pose,{alpha=1}={}){
+  if(pose.speech)project={...project,joints:project.joints.map(j=>pose.speech.artwork[j.id]&&j.sprite?{...j,sprite:{...j.sprite,asset:pose.speech.artwork[j.id]}}:j)};
   const joins=bodyJoinFrame(project,pose,prepareBodyJoinProfiles(project,images));
   for(const j of [...project.joints].sort((a,b)=>a.layer-b.layer)){
     if(j.hidden||!j.sprite)continue;const s=j.sprite,img=images.get(s.asset);if(!img)continue;
@@ -193,7 +203,7 @@ export function drawPuppet(ctx,project,images,pose,{alpha=1}={}){
   }
 }
 export function bounds(project,pose){
-  const joins=bodyJoinFrame(project,pose),pts=[];for(const j of project.joints){if(j.hidden)continue;const s=j.sprite,m=pose.get(j.id).world;if(!s){pts.push(point(m,{x:0,y:0}));continue;}const morph=j.visual?.morph,max=v=>Array.isArray(v)?Math.max(0,...v.map(k=>Math.abs(k.value))):Math.abs(v??0),padding=morph?.enabled?s.width*(max(morph.inflate)+max(morph.taper)+2*max(morph.bend))/2:0;if(joins.has(j.id)){for(let row=0;row<=24;row++)for(let col=0;col<=24;col++)pts.push(point(m,deformBodyPoint((col/24-s.pivotX)*s.width,(row/24-s.pivotY)*s.height,joins.get(j.id))));}for(const x of [-s.pivotX*s.width-padding,(1-s.pivotX)*s.width+padding])for(const y of [-s.pivotY*s.height,(1-s.pivotY)*s.height])pts.push(point(m,{x,y}));}
+  const joins=bodyJoinFrame(project,pose),pts=[];for(const j of project.joints){if(j.hidden)continue;const s=j.sprite,m=pose.get(j.id).world;if(j.liquid?.enabled!==false&&j.liquid)for(const [x,y]of j.liquid.boundary)pts.push(point(m,{x,y}));if(!s){pts.push(point(m,{x:0,y:0}));continue;}const morph=j.visual?.morph,max=v=>Array.isArray(v)?Math.max(0,...v.map(k=>Math.abs(k.value))):Math.abs(v??0),padding=morph?.enabled?s.width*(max(morph.inflate)+max(morph.taper)+2*max(morph.bend))/2:0;if(joins.has(j.id)){for(let row=0;row<=24;row++)for(let col=0;col<=24;col++)pts.push(point(m,deformBodyPoint((col/24-s.pivotX)*s.width,(row/24-s.pivotY)*s.height,joins.get(j.id))));}for(const x of [-s.pivotX*s.width-padding,(1-s.pivotX)*s.width+padding])for(const y of [-s.pivotY*s.height,(1-s.pivotY)*s.height])pts.push(point(m,{x,y}));}
   return {minX:Math.min(...pts.map(p=>p.x)),maxX:Math.max(...pts.map(p=>p.x)),minY:Math.min(...pts.map(p=>p.y)),maxY:Math.max(...pts.map(p=>p.y))};
 }
 // Fit the motion envelope, so a falling tree or reaching arm stays in view.
@@ -206,10 +216,10 @@ export function motionBounds(project,clip){if(clip?.fx)project={...project,fx:cl
   return {minX:samples.reduce((v,b)=>Math.min(v,b.minX),Infinity),minY:samples.reduce((v,b)=>Math.min(v,b.minY),Infinity),maxX:samples.reduce((v,b)=>Math.max(v,b.maxX),-Infinity),maxY:samples.reduce((v,b)=>Math.max(v,b.maxY),-Infinity)};
 }
 export function createPlayer(canvas,project,images){
-  const ctx=canvas.getContext('2d'),sound=new ClipAudio();let playing=false,raf=0,start=0,clip=project.clips[0],framing=motionBounds(project,clip);
+  const ctx=canvas.getContext('2d'),sound=new ClipAudio();let playGeneration=0,playing=false,raf=0,start=0,clip=project.clips[0],framing=motionBounds(project,clip);
   function draw(time=0){ctx.clearRect(0,0,canvas.width,canvas.height);ctx.drawImage(renderFrame(project,images,clip,time,{width:canvas.width,height:canvas.height,framing}),0,0);}
   function frame(now){if(!playing)return;let t=(now-start)/1000;if(clip.loop)t%=clip.duration;else if(t>=clip.duration){t=clip.duration;playing=false;}sound.sync(project,clip,t,{audible:true});draw(t);if(playing)raf=requestAnimationFrame(frame);}
-  return {draw,play(id=clip.id){clip=project.clips.find(c=>c.id===id)??clip;framing=motionBounds(project,clip);cancelAnimationFrame(raf);sound.begin(clip,0);playing=true;start=performance.now();raf=requestAnimationFrame(frame);},stop(){playing=false;cancelAnimationFrame(raf);sound.stop();},dispose(){this.stop();sound.dispose();}};
+  return {draw,async play(id=clip.id){this.stop();const ticket=++playGeneration;clip=project.clips.find(c=>c.id===id)??clip;await sound.prepare(project,clip);if(ticket!==playGeneration)return;framing=motionBounds(project,clip);cancelAnimationFrame(raf);sound.begin(clip,0);playing=true;start=performance.now();raf=requestAnimationFrame(frame);},stop(){playGeneration++;playing=false;cancelAnimationFrame(raf);sound.stop();},dispose(){this.stop();sound.dispose();}};
 }
 
-export function renderFrame(project,images,clip,time,options={}){if(clip?.fx)project={...project,fx:clip.fx};const width=options.width??project.fx?.settings.width??512,height=options.height??project.fx?.settings.height??512;let camera=options.camera;if(!camera){const b=options.framing??motionBounds(project,clip),padding=project.fx?.settings.padding??50,scale=Math.min(width/(b.maxX-b.minX+padding*2||1),height/(b.maxY-b.minY+padding*2||1));camera=[scale,0,0,scale,width/2-(b.minX+b.maxX)/2*scale,height/2-(b.minY+b.maxY)/2*scale];}return renderSceneFrame(project,images,clip,time,{...options,width,height,camera,background:options.background??project.fx?.settings.background??'transparent'},options.overrides?.length?(p,c,t)=>poseAt(p,c,t,{overrides:options.overrides}):poseAt);}
+export function renderFrame(project,images,clip,time,options={}){if(clip?.fx)project={...project,fx:clip.fx};const width=options.width??project.fx?.settings.width??512,height=options.height??project.fx?.settings.height??512;let camera=options.camera;if(!camera){const b=options.framing??motionBounds(project,clip),padding=project.fx?.settings.padding??50,scale=Math.min(width/(b.maxX-b.minX+padding*2||1),height/(b.maxY-b.minY+padding*2||1));camera=[scale,0,0,scale,width/2-(b.minX+b.maxX)/2*scale,height/2-(b.minY+b.maxY)/2*scale];}return renderSceneFrame(project,images,clip,time,{...options,width,height,camera,background:options.background??project.fx?.settings.background??'transparent'},options.overrides?.length?(p,c,t,sampling={})=>poseAt(p,c,t,{...sampling,overrides:options.overrides}):poseAt);}

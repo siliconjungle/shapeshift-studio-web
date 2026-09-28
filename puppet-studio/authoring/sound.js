@@ -1,3 +1,4 @@
+import {SpeechAudio} from './speech-audio.js';
 import {appearanceState} from './appearance.js';
 import {ProceduralAudio} from '../scene3d/core/audio.js';
 import {validateAudioLibrary} from '../scene3d/core/library-validation.js';
@@ -5,9 +6,10 @@ export function soundDefaults({frequency=220,duration=.25,volume=.12,spread=.6}=
 export function validateSound(p){for(const lib of Object.values(p.audioLibraries??{}))validateAudioLibrary(lib);for(const c of p.clips)for(const e of c.cues??[])if(e.type==='sound'){const lib=p.audioLibraries?.[e.audio?.library]??p.scene3d?.audioLibraries?.[e.audio?.library];if(!lib?.cues[e.audio?.cue])throw Error('Sound cue needs an authored audio library and cue');}}
 export function applySoundCommand(p,c){const doc=c.dimension===3?p.scene3d:p;if(!doc)throw Error('Create a scene first');if(c.op==='audio.library'){if(!/^[\w.-]{1,80}$/.test(c.id)||['constructor','prototype','__proto__'].includes(c.id))throw Error('Invalid sound library ID');validateAudioLibrary(c.value);doc.audioLibraries??={};doc.audioLibraries[c.id]=structuredClone(c.value);return c.id;}throw Error('Unknown sound command');}
 export class ClipAudio{
- constructor(){this.entries=new Map();this.previous=-1e-6;this.clip='';}
+ constructor(){this.speech=new SpeechAudio();this.entries=new Map();this.previous=-1e-6;this.clip='';}
+ async prepare(project,clip){await this.speech.prepare(project,clip);}
  begin(clip,time=0){this.stop();this.clip=clip.id;this.previous=time-1e-6;}
- sync(project,clip,time,{audible=false}={}){if(!audible){this.stop();return;}if(this.clip!==clip.id||time<this.previous){this.stop();this.clip=clip.id;}for(const event of clip.cues??[]){if(event.type!=='sound'||event.enabled===false||event.time<=this.previous||event.time>time)continue;const b=event.audio,library=project.voiceOverrides?.[b.library]??appearanceState(project).variant?.voices?.[b.library]??b.library,definition=project.audioLibraries?.[library]??project.scene3d?.audioLibraries?.[library];if(!definition)continue;const signature=JSON.stringify(definition);let entry=this.entries.get(b.library);if(!entry||entry.signature!==signature){entry?.audio.dispose();entry={signature,audio:new ProceduralAudio(definition)};this.entries.set(b.library,entry);}entry.audio.unlock();entry.audio.cue(b.cue,(b.strength??1)*(event.amount??1));}this.previous=time;this.clip=clip.id;}
- stop(){for(const e of this.entries.values())e.audio.stop();this.previous=-1e-6;this.clip='';}
- dispose(){for(const e of this.entries.values())e.audio.dispose();this.entries.clear();}
+ sync(project,clip,time,{audible=false,rate=1}={}){if(!audible){this.stop();return;}if(this.clip!==clip.id||time<this.previous){this.stop();this.clip=clip.id;}for(const event of clip.cues??[]){if(event.type!=='sound'||event.enabled===false||event.time<=this.previous||event.time>time)continue;const b=event.audio,library=project.voiceOverrides?.[b.library]??appearanceState(project).variant?.voices?.[b.library]??b.library,definition=project.audioLibraries?.[library]??project.scene3d?.audioLibraries?.[library];if(!definition)continue;const signature=JSON.stringify(definition);let entry=this.entries.get(b.library);if(!entry||entry.signature!==signature){entry?.audio.dispose();entry={signature,audio:new ProceduralAudio(definition)};this.entries.set(b.library,entry);}entry.audio.unlock();entry.audio.cue(b.cue,(b.strength??1)*(event.amount??1));}this.speech.sync(project,clip,time,rate);this.previous=time;this.clip=clip.id;}
+ stop(){this.speech.stop();for(const e of this.entries.values())e.audio.stop();this.previous=-1e-6;this.clip='';}
+ dispose(){this.speech.dispose();for(const e of this.entries.values())e.audio.dispose();this.entries.clear();}
 }

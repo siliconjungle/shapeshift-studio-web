@@ -1,0 +1,16 @@
+export const ILLUSTRATION_COMMANDS=['illustration.liquid','illustration.key','illustration.removeKeys','illustration.soundPreset','illustration.binding','illustration.bindings'];
+import {validateEffectBindings} from '@shapeshift-labs/studio-core/illustration/effect-state';
+import {putIllustrationKey,validateIllustrationTracks} from '@shapeshift-labs/studio-core/illustration/tracks';
+import {liquidSoundPreset} from '@shapeshift-labs/studio-core/illustration/liquid-audio';
+import {soundDefaults} from '../authoring/sound.js';
+import {liquidDefaults,validateLiquid} from '@shapeshift-labs/studio-core/illustration/container-liquid';
+const merge=(a,b)=>{for(const [k,v]of Object.entries(b??{})){if(['__proto__','constructor','prototype','id'].includes(k))throw Error('Reserved illustration property');if(v&&typeof v==='object'&&!Array.isArray(v))merge(a[k]??={},v);else a[k]=structuredClone(v);}return a;};
+export function applyIllustrationCommand(project,c){if(c.dimension===3)throw Error('Liquid tools target 2D artwork');const doc=project,nodes=doc?.nodes??doc?.joints,clip=doc?.clips.find(x=>x.id===c.clip)??doc?.clips[0],node=nodes?.find(n=>n.id===c.joint);if(!node||!clip)throw Error('Select artwork and an animation');
+ if(c.op==='illustration.bindings'){if(c.dimension===3||!Array.isArray(c.bindings))throw Error('Provide 2D effect bindings as an array');const next=[...(project.illustrationBindings??[]).filter(b=>b.joint!==node.id),...c.bindings.map(b=>({...structuredClone(b),joint:node.id}))];validateEffectBindings(next,project.joints);project.illustrationBindings=next;return node.id;}
+ if(c.op==='illustration.binding'){if(c.dimension===3)throw Error('Illustration bindings currently target 2D artwork');const next=(project.illustrationBindings??[]).filter(b=>b.joint!==node.id||b.channel!==c.channel);if(!c.remove)next.push({joint:node.id,channel:c.channel,...structuredClone(c.values)});validateEffectBindings(next,project.joints);project.illustrationBindings=next;return node.id;}
+ if(c.op==='illustration.key'){if(c.dimension===3)throw Error('Illustration keys currently target 2D artwork');const next=putIllustrationKey(clip.illustrationTracks,node.id,c.channel,c.time,c.value,c.easing);validateIllustrationTracks(next,project.joints);clip.illustrationTracks=next;return node.id;}
+ if(c.op==='illustration.removeKeys'){clip.illustrationTracks=(clip.illustrationTracks??[]).filter(t=>t.joint!==node.id||!t.channel.startsWith(c.prefix+'.'));return node.id;}
+ if(c.op==='illustration.soundPreset'){project.audioLibraries??={};let id='liquid';for(let i=2;project.audioLibraries[id];i++)id='liquid-'+i;project.audioLibraries[id]=liquidSoundPreset(soundDefaults({frequency:520,duration:.14,volume:.1,spread:1.3}));return id;}
+ if(c.op==='illustration.liquid'){if(c.dimension===3)throw Error('Attach container liquid to a 2D puppet joint');if(c.remove){delete node.liquid;project.illustrationBindings=(project.illustrationBindings??[]).filter(b=>b.joint!==node.id||!b.channel.startsWith('liquid.'));for(const c of project.clips)c.illustrationTracks=(c.illustrationTracks??[]).filter(t=>t.joint!==node.id||!t.channel.startsWith('liquid.'));return node.id;}const next=merge(structuredClone(node.liquid??liquidDefaults()),c.values);validateLiquid(next);node.liquid=next;return node.id;}
+ throw Error('Unknown illustration command');
+}

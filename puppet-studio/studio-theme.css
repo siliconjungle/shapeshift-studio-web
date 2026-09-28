@@ -49,3 +49,5 @@ body .field-driver,body #scene3d-editor .field-driver {display:block;max-width:1
 .arena-stage[data-layout=overlay] #arena-reference .arena-lane-label{left:auto;right:14px}
 #arena-surface canvas{position:absolute;inset:0}
 #shared-timeline button[aria-pressed=true]{background:#37577b;border-color:#5883b3;color:#eef5ff}
+
+#speech-panel textarea,#illustration-panel textarea{width:100%;box-sizing:border-box;background:#222226;color:#e8e8ed;border:1px solid #505058;padding:7px;font:11px monospace}#speech-panel .sp-event{display:flex;gap:6px;margin:6px 0}

@@ -1,11 +1,11 @@
 {
   "name": "@shapeshift-labs/studio-web",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Shapeshift Studio web editor",
   "scripts": {
     "build": "node scripts/build.mjs",
     "start": "node scripts/serve.mjs",
-    "test": "node --test puppet-studio/entities/definitions.test.mjs puppet-studio/references/references.test.mjs puppet-studio/body-joins.test.mjs puppet-studio/authoring/behaviour.test.mjs puppet-studio/api/document-commands.test.mjs scripts/api-server.test.mjs",
+    "test": "node --test puppet-studio/entities/definitions.test.mjs puppet-studio/references/references.test.mjs puppet-studio/body-joins.test.mjs puppet-studio/authoring/behaviour.test.mjs puppet-studio/api/document-commands.test.mjs scripts/api-server.test.mjs puppet-studio/authoring/speech.test.mjs puppet-studio/illustration/container-liquid.test.mjs",
     "test:browser": "node scripts/qa/behaviour.mjs",
     "studio": "node scripts/studio.mjs",
     "test:api": "node scripts/qa/live-api.mjs"
@@ -17,7 +17,7 @@
     "@shapeshift-labs/frontier": "0.1.9",
     "@shapeshift-labs/frontier-scene": "0.1.0",
     "@shapeshift-labs/frontier-virtual": "0.1.0",
-    "@shapeshift-labs/studio-core": "github:siliconjungle/shapeshift-studio-core#519c4906d4b8a4f7c7f23e69404fd033494436b7",
+    "@shapeshift-labs/studio-core": "github:siliconjungle/shapeshift-studio-core#82527f6dc27bc4ea63ecd3b5425ea1784b75793a",
     "@silicon-jungle/inkwell-sdk": "0.0.7",
     "fflate": "0.8.2",
     "gifenc": "1.0.3",

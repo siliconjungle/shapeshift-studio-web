@@ -9,8 +9,8 @@ import {createUIControls} from './ui-controls.js';
 export function createEditorHost({studio,store,project,ui,dispatch,select,setMode,setTool,setTime,fit,pause,togglePlay,renderUI,importJSON,importArt,exportPlayer,timelineContext}){
  const controls=createUIControls(),{workspace,artwork,scene3d,arena}=studio;
  const view=()=>workspace.snapshot().view;
- const panels={entities:'entities-panel',library:'library-panel',styles:'styles-panel',environment:'backdrop-panel',ownership:'ownership-panel',actions:'actions-panel',sound:'sound-panel',bodyJoins:'body-joins-panel',timeline:'shared-timeline',resolved:'resolved-panel',references:'references-panel',fx:'fx-panel',motion:'motion-tool-panel',grading:'grading-panel'};
- const modules={
+ const panels={speech:'speech-panel',illustration:'illustration-panel',entities:'entities-panel',library:'library-panel',styles:'styles-panel',environment:'backdrop-panel',ownership:'ownership-panel',actions:'actions-panel',sound:'sound-panel',bodyJoins:'body-joins-panel',timeline:'shared-timeline',resolved:'resolved-panel',references:'references-panel',fx:'fx-panel',motion:'motion-tool-panel',grading:'grading-panel'};
+ const modules={speech:['show','hide','snapshot'],illustration:['show','hide','snapshot'],
   workspace:['capture','restore','editPuppet','editArtwork','back','snapshot'],
   bodyJoins:['show','hide','focus'],references:['show','open','label','refresh'],referenceNavigation:['open','back','snapshot','clear'],
   entities:['show','hide','context','restore','snapshot'],behaviours:['show'],library:['show','hide','context','restore','snapshot','audition'],
@@ -34,7 +34,7 @@ export function createEditorHost({studio,store,project,ui,dispatch,select,setMod
   if(args.time!==undefined){if(!Number.isFinite(args.time))throw Error('Time must be finite');if(current==='scene')scene3d.seek(args.time);else if(current==='artwork')artwork.seek(args.time);else if(current==='preview')arena.seek(args.time);else{pause();setTime(args.time,false);}}
   if(args.transport){const context=timelineContext();studioTransport.set(transportKey(context),clip().duration,args.transport);}
   if(args.playing!==undefined){
-   if(current==='puppet'){if(!!args.playing!==ui.playing)togglePlay();}
+   if(current==='puppet'){if(!!args.playing!==ui.playing)await togglePlay();}
    else await (current==='scene'?scene3d:current==='artwork'?artwork:arena).playback(args);
   }
  }
